@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="tBusCompleteBill">
+	<resultMap class="com.hansy.portal.model.vo.TBusCompleteBillVo" id="tBusCompleteBillVoResultMap">
+		<result property="billNo" column="BILL_NO"/>
+		<result property="billNatrue" column="BILL_NATRUE"/>
+		<result property="billStatus" column="BILL_STATUS"/>
+		<result property="billTitle" column="BILL_TITLE"/>
+		<result property="companyName" column="COMPANY_NAME"/>
+		<result property="billMoney" column="BILL_MONEY"/>
+		<result property="billDate" column="BILL_DATE"/>		
+		<result property="billType" column="BILL_TYPE"/>
+		<result property="billReceiveName" column="BILL_RECEIVE_NAME"/>
+		<result property="billReceiveAddress" column="BILL_RECEIVE_ADDRESS"/>
+		<result property="billReceiveMail" column="BILL_RECEIVE_MAIL"/>
+		<result property="billReceivePhone" column="BILL_RECEIVE_PHONE"/>
+		<result property="logisticsName" column="LOGISTICS_NAME"/>
+		<result property="expressNumber" column="EXPRESS_NUMBER"/>
+		<result property="custNo" column="CUST_NO"/>
+		<result property="supplyNo" column="SUPPLY_NO"/>
+		<result property="insertDate" column="INSERT_DATE"/>
+	</resultMap>
+	<sql id="allColumns">
+		BILL_NO,
+BILL_NATRUE,
+BILL_STATUS,
+BILL_TITLE,
+COMPANY_NAME,
+BILL_MONEY,
+BILL_DATE,
+BILL_TYPE,
+BILL_RECEIVE_NAME,
+BILL_RECEIVE_ADDRESS,
+BILL_RECEIVE_MAIL,
+BILL_RECEIVE_PHONE,
+LOGISTICS_NAME,
+EXPRESS_NUMBER,
+CUST_NO,
+SUPPLY_NO,
+INSERT_DATE
+	
+	</sql>
+	<insert id="save" parameterClass="com.hansy.portal.model.vo.TBusCompleteBillVo">
+		insert into T_BUS_COMPLETE_BILL(<include refid="allColumns"/>) values
+			(#billNo#,  
+	         #billNatrue#,  
+	         #billStatus#,  
+	         #billTitle#,  
+	         #companyName#,  
+	         #billMoney#,  
+	         #billDate#,  
+	         #billType#,  
+	         #billReceiveName#, 
+	         #billReceiveAddress#, 
+	         #billReceiveMail#,
+	         #billReceivePhone#,
+	         #logisticsName#,
+	         #expressNumber#,
+	         #custNo#,
+	         #supplyNo#,
+	         #insertDate#
+	         ) 
+	</insert>
+	
+	<select id = "getBillByOrderNo" parameterClass="map" resultMap="tBusCompleteBillVoResultMap">
+	select 
+	*
+	from T_BUS_COMPLETE_BILL where 1=1
+	
+	<dynamic>
+	   <isNotEmpty property="billNo" prepend="and">  
+		                <![CDATA[ 
+		                    BILL_NO = #billNo# 
+		                ]]>  
+	  </isNotEmpty>
+	</dynamic>
+	 <!-- <dynamic prepend="">
+	   <isNotEmpty property="orderNo" prepend="and">  
+		                <![CDATA[ 
+		                    ORDER_NO = #orderNo# 
+		                ]]>  
+	  </isNotEmpty>
+       <isNotEmpty property="custNo" prepend="and">  
+		                <![CDATA[ 
+		                    CUST_NO = #custNo# 
+		                ]]>  
+	  </isNotEmpty>
+	    <isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                   INSERT_DT>= #startTime#
+		                ]]>  
+	</isNotEmpty>
+	<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					        INSERT_DT< #endTime#
+					    ]]>
+	</isNotEmpty>  
+	  </dynamic>  -->
+	</select>
+		<delete id="delete" parameterClass="string">
+		delete from T_BUS_COMPLETE_BILL t where t.BILL_NO=#billNo#
+	</delete>
+	
+	<update id="update" parameterClass="com.hansy.portal.model.vo.TBusCompleteBillVo">
+		update T_BUS_COMPLETE_BILL t
+		<dynamic prepend="set">  
+            <isNotEmpty property="billNatrue" prepend=",">  
+                <![CDATA[  
+                    t.BILL_NATRUE = #billNatrue# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billStatus" prepend=",">  
+                <![CDATA[  
+                    t.BILL_STATUS = #billStatus# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billTitle" prepend=",">  
+                <![CDATA[  
+                    t.BILL_TITLE = #billTitle# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="companyName" prepend=",">  
+                <![CDATA[  
+                    t.COMPANY_NAME = #companyName# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billMoney" prepend=",">  
+                <![CDATA[  
+                    t.BILL_MONEY = #billMoney# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billDate" prepend=",">  
+                <![CDATA[  
+                    t.BILL_DATE = #billDate# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billType" prepend=",">  
+                <![CDATA[  
+                    t.BILL_TYPE = #billType# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billReceiveName" prepend=",">  
+                <![CDATA[  
+                    t.BILL_RECEIVE_NAME = #billReceiveName# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billReceiveAddress" prepend=",">  
+                <![CDATA[  
+                    t.BILL_RECEIVE_ADDRESS = #billReceiveAddress# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billReceiveMail" prepend=",">  
+                <![CDATA[  
+                    t.BILL_RECEIVE_MAIL = #billReceiveMail# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billReceivePhone" prepend=",">  
+                <![CDATA[  
+                    t.BILL_RECEIVE_PHONE = #billReceivePhone# 
+                ]]>  
+            </isNotEmpty> 
+            <isNotEmpty property="logisticsName" prepend=",">  
+                <![CDATA[  
+                    t.LOGISTICS_NAME = #logisticsName# 
+                ]]>  
+            </isNotEmpty> 
+            <isNotEmpty property="expressNumber" prepend=",">  
+                <![CDATA[  
+                    t.EXPRESS_NUMBER = #expressNumber# 
+                ]]>  
+            </isNotEmpty> 
+            <isNotEmpty property="custNo" prepend=",">  
+                <![CDATA[  
+                    t.CUST_NO = #custNo# 
+                ]]>  
+            </isNotEmpty> 
+            <isNotEmpty property="supplyNo" prepend=",">  
+                <![CDATA[  
+                    t.SUPPLY_NO = #supplyNo# 
+                ]]>  
+            </isNotEmpty> 
+            <isNotEmpty property="insertDate" prepend=",">  
+                <![CDATA[  
+                    t.INSERT_DATE = #insertDate# 
+                ]]>  
+            </isNotEmpty> 
+        </dynamic> 
+        <dynamic prepend="WHERE">  
+        	t.BILL_NO = #billNo#  
+   		 </dynamic> 
+	</update>
+	
+	
+	<select id = "getBillByOrderNoTotal" parameterClass="map" resultClass="java.lang.Integer">
+	select 
+	count(1)
+	from T_BUS_BILL where 1=1
+	 <dynamic prepend="">
+	   <isNotEmpty property="orderNo" prepend="and">  
+		                <![CDATA[ 
+		                    ORDER_NO = #orderNo# 
+		                ]]>  
+	  </isNotEmpty>
+       <isNotEmpty property="custNo" prepend="and">  
+		                <![CDATA[ 
+		                    CUST_NO = #custNo# 
+		                ]]>  
+	  </isNotEmpty>
+	    <isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                   INSERT_DT>= #startTime#
+		                ]]>  
+	</isNotEmpty>
+	<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					        INSERT_DT< #endTime#
+					    ]]>
+	</isNotEmpty>  
+	  </dynamic> 
+	</select>
+	
+	<select id="getContactOrder" parameterClass="map" resultClass="com.hansy.portal.model.vo.GoodsVo">
+	select totalAmt,  orderNo,  updateDate,  orderType, custNo  from (
+	SELECT SUM(GOODS_MONEY) totalAmt, ORDER_NO orderNo, UPDATE_DATE updateDate, ORDER_TYPE orderType,CUST_NO custNo
+          FROM T_BUS_ORDER T 
+          where
+            T.ORDER_STATUS = '090005'
+         and t.order_no in
+          (select order_no from T_BUS_PAYMENT where bill_no =#billNo#)
+                  GROUP BY ORDER_NO, UPDATE_DATE, ORDER_TYPE ,CUST_NO)tt
+	</select>
+	<select id="getContactOrderTotal" parameterClass="map" resultClass="java.lang.Integer">
+	select count(1)  from (
+	SELECT SUM(GOODS_MONEY) totalAmt, ORDER_NO orderNo, UPDATE_DATE updateDate, ORDER_TYPE orderType,CUST_NO custNo
+          FROM T_BUS_ORDER T 
+          where
+            T.ORDER_STATUS = '090005'
+         and t.order_no in
+          (select order_no from T_BUS_PAYMENT where bill_no =#billNo#)
+                  GROUP BY ORDER_NO, UPDATE_DATE, ORDER_TYPE ,CUST_NO)tt
+	</select>
+	</sqlMap>

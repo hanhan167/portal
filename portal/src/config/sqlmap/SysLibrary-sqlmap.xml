@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sysLibrary">
+	<sql id="allColumns">
+		lib_id,lib_create_time,lib_name,lib_title,lib_directory,lib_ext_name,lib_type,state,lib_size,lib_desc,lib_owner_name,lib_owner_id,lib_width,lib_height,lib_mini,lib_page,lib_role_id,menu_id
+	</sql>	
+	<!-- 批量新增 -->
+	<insert id="insert" parameterClass="java.util.List">
+        insert all 
+         <iterate conjunction=" ">
+         	into sys_library(<include refid="allColumns"/>) values 
+	           		   (#paramLib[].libId#,        
+						#paramLib[].libCreateTime#,
+						#paramLib[].libName#,      
+						#paramLib[].libTitle#,     
+						#paramLib[].libDirectory#, 
+						#paramLib[].libExtName#,   
+						#paramLib[].libType#,      
+						#paramLib[].state#,        
+						#paramLib[].libSize#,      
+						#paramLib[].libDesc#,      
+						#paramLib[].libOwnerName#, 
+						#paramLib[].libOwnerId#,   
+						#paramLib[].libWidth#,     
+						#paramLib[].libHeight#,    
+						#paramLib[].libMini#,      
+						#paramLib[].libPage#,      
+						#paramLib[].libRoleId#,    
+						#paramLib[].menuId#) 
+	      </iterate > 
+	       select * from dual 
+	</insert>
+</sqlMap>

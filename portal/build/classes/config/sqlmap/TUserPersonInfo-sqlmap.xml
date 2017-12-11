@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="userPersonInfo">
+	<resultMap class="com.hansy.portal.model.vo.TUserPersonInfoVo" id="userPersonInfoVoResultMap">
+		<result property="custNo" column="cust_no"/>
+		<result property="custName" column="cust_name"/>
+		<result property="userType" column="user_type"/>
+		<result property="userSex" column="user_sex"/>
+		<result property="userWork" column="user_work"/>
+		<result property="monthIncome" column="month_income"/>
+		<result property="education" column="education"/>		
+		<result property="maritalStatus" column="marital_status"/>	
+		<result property="userPhone" column="user_phone"/>
+		<result property="userEmail" column="user_email"/>
+		<result property="certType" column="cert_type"/>
+		<result property="certNo" column="cert_no"/>
+		<result property="insertDate" column="insert_date"/>
+		<result property="updateDate" column="update_date"/>
+	</resultMap>
+	
+	<insert id="insert" parameterClass="com.hansy.portal.model.vo.TUserPersonInfoVo">
+		insert into t_user_person_info (cust_no,cust_name,user_type,user_sex,user_work,month_income,education,marital_status, user_phone,user_email,cert_type,cert_no,insert_date,update_date) values(
+			#custNo#, 			
+			#custName#, 		
+			#userType#,			
+			#userSex#,			
+			#userWork#,			
+			#monthIncome#, 	
+			#education#, 		
+			#maritalStatus#,
+			#userPhone#,		
+			#userEmail#,		
+			#certType#, 		
+			#certNo#, 			
+			#insertDate#, 	
+			#updateDate#
+		)
+	</insert>
+</sqlMap>

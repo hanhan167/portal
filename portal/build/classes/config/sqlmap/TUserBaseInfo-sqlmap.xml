@@ -1,0 +1,1496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="userBaseInfo">
+	<resultMap class="com.hansy.portal.model.vo.TUserBaseInfoVo"
+		id="userBaseInfoVoResultMap">
+		<result property="userNo" column="user_no" />
+		<result property="userLoginName" column="user_login_name" />
+		<result property="userName" column="user_name" />
+		<result property="userType" column="user_type" />
+		<result property="userRole" column="user_role" />
+		<result property="userPwd" column="user_pwd" />
+		<result property="custNo" column="cust_no" />
+		<result property="custName" column="cust_name" />
+		<result property="userAlias" column="user_alias" />
+		<result property="userPhone" column="user_phone" />
+		<result property="userEmail" column="user_email" />
+		<result property="superUserNo" column="super_user_no" />
+		<result property="insertDate" column="insert_date" />
+		<result property="updateDate" column="update_date" />
+		<result property="registerStatus" column="register_Status" />
+	</resultMap>
+	<resultMap class="com.hansy.portal.model.bo.TUserBaseInfoBo"
+		id="userBaseInfoVoResultMapBO">
+		<result property="userNo" column="user_no" />
+		<result property="userLoginName" column="user_login_name" />
+		<result property="userName" column="user_name" />
+		<result property="userType" column="user_type" />
+		<result property="userRole" column="user_role" />
+		<result property="userPwd" column="user_pwd" />
+		<result property="custNo" column="cust_no" />
+		<result property="custName" column="cust_name" />
+		<result property="userAlias" column="user_alias" />
+		<result property="userPhone" column="user_phone" />
+		<result property="userEmail" column="user_email" />
+		<result property="superUserNo" column="super_user_no" />
+		<result property="insertDate" column="insert_date" />
+		<result property="updateDate" column="update_date" />
+		<result property="registerStatus" column="register_Status" />
+		<result property="gradeNo" column="grade_no" />
+		<result property="userStatus" column="USER_STATUS" />
+	</resultMap>
+	<select id="getBySessionCustNo" resultClass="com.hansy.portal.model.bo.TUserBaseInfoBo"
+		parameterClass="java.lang.String">
+		select t.user_no userNo,
+				t.user_login_name userLoginName,
+				t.user_name userName,
+				t.user_type userType,
+				t.user_role userRole,
+				t.user_pwd userPwd,
+				t.cust_no custNo,
+				t.cust_name custName,
+				t.user_alias userAlias,
+				t.user_phone userPhone,
+				t.user_email userEmail,
+				t.super_user_no superUserNo,
+				t.insert_date insertDate,
+				t.update_date updateDate,
+				t.register_Status registerStatus,
+				t.USER_STATUS userStatus,
+				ug.grade_no gradeNo
+		from t_user_base_info t
+		left join T_USER_GRADE ug on t.cust_no = ug.cust_no
+	 WHERE T.cust_no = #custNo#
+	</select>
+	<select id="selectUserbaseInfo" resultMap="userBaseInfoVoResultMap"
+		parameterClass="com.hansy.portal.model.bo.LoginUser">
+		select * from t_user_base_info
+	</select>
+
+	<!-- 登录判断 -->
+	<select id="findIsExist" resultMap="userBaseInfoVoResultMapBO">
+		select t.*,ug.grade_no
+		from t_user_base_info t
+		left join T_USER_GRADE ug on t.cust_no = ug.cust_no
+		where (t.user_login_name = #loginName#
+		or t.user_name = #loginName#
+		or t.user_alias = #loginName#
+		or t.user_email = #loginName#
+		or to_char(t.user_phone) = #loginName#
+		)
+		and t.user_pwd = #loginPwd#
+	</select>
+
+	<!-- 判断电话号码是否存在 -->
+	<select id="phoneIsExist" parameterClass="com.hansy.portal.model.vo.TUserBaseInfoVo"
+		resultClass="java.lang.Integer">
+		select count(1) from t_user_base_info t where t.user_phone=#userPhone#
+	</select>
+	<!-- 判断邮箱是否存在 -->
+	<select id="emailIsExist" parameterClass="com.hansy.portal.model.vo.TUserBaseInfoVo"
+		resultClass="java.lang.Integer">
+		select count(1) from t_user_base_info t where t.user_email=#userEmail#
+	</select>
+	<!-- 判断昵称是否存在 -->
+	<select id="userAliasIsExist" parameterClass="com.hansy.portal.model.vo.TUserBaseInfoVo"
+		resultClass="java.lang.Integer">
+		select count(1) from t_user_base_info t where t.user_alias=#userAlias#
+	</select>
+
+	<!-- 判断电话号码是否存在 除了当前号码 -->
+	<select id="phoneIsExistOther" parameterClass="com.hansy.portal.model.bo.TUserBaseInfoBo"
+		resultClass="java.lang.Integer">
+		select count(1) from t_user_base_info t where t.user_phone=#userPhone# and
+		t.user_no!=#userNo#
+	</select>
+	<!-- 判断邮箱是否存在 除了当前邮箱 -->
+	<select id="emailIsExistOther" parameterClass="com.hansy.portal.model.bo.TUserBaseInfoBo"
+		resultClass="java.lang.Integer">
+		select count(1) from t_user_base_info t where t.user_email=#userEmail# and
+		t.user_no!=#userNo#
+	</select>
+	<!-- 判断昵称是否存在 除了当前昵称 -->
+	<select id="userAliasIsExistOther" parameterClass="com.hansy.portal.model.bo.TUserBaseInfoBo"
+		resultClass="java.lang.Integer">
+		select count(1) from t_user_base_info t where t.user_alias=#userAlias# and
+		t.user_no!=#userNo#
+	</select>
+
+	<!-- 根据推荐人电话号码判断用户是否存在 -->
+	<select id="userIsExist" parameterClass="java.lang.String"
+		resultClass="java.lang.Integer">
+		select count(1) from t_user_base_info t where t.user_phone=#superUserPhone#
+	</select>
+
+	<!-- 根据userNo判断用户是否存在除了自己的userNo -->
+	<select id="userNoIsExistOther" parameterClass="java.util.Map"
+		resultClass="java.lang.Integer">
+		select count(1) from t_user_base_info t where t.SUPER_USER_NO=#superUserNo#
+		and t.USER_PHONE!=#superUserNo#
+	</select>
+
+	<!-- 根据userNo获取个人用户基本信息 -->
+	<select id="getPersonBasic" parameterClass="java.lang.String"
+		resultClass="com.hansy.portal.model.bo.UserBasic">
+		select
+		t.user_no userNo,
+		t.user_type userType,
+		t.user_name userName,
+		t.user_alias userAlias,
+		t.user_phone userPhone,
+		t.user_email userEmail,
+		t.super_user_no superUserNo,
+		p.cert_no certNo
+		from t_user_base_info t
+		left join t_user_person_info p on t.cust_no = p.cust_no
+		where t.user_no = #userNo#
+	</select>
+
+	<!-- 根据userNo获取企业用户基本信息 -->
+	<select id="getEnterBasic" parameterClass="java.lang.String"
+		resultClass="com.hansy.portal.model.bo.UserBasic">
+		select
+		t.user_no userNo,
+		t.user_type userType,
+		t.user_name userName,
+		t.user_alias userAlias,
+		t.user_phone userPhone,
+		t.user_email userEmail,
+		t.super_user_no superUserNo,
+		p.reg_no regNo
+		from t_user_base_info t
+		left join t_user_enter_info p on t.cust_no = p.cust_no
+		where t.user_no = #userNo#
+
+	</select>
+
+	<!-- 根据userNo获取供方用户基本信息 -->
+	<select id="getSupplyBasic" parameterClass="java.lang.String"
+		resultClass="com.hansy.portal.model.bo.UserBasic">
+		select
+		t.user_no userNo,
+		t.user_type userType,
+		t.user_name userName,
+		t.user_alias userAlias,
+		t.user_phone userPhone,
+		t.user_email userEmail,
+		t.super_user_no superUserNo,
+		p.reg_no regNo
+		from t_user_base_info t
+		left join T_USER_SUPPLY_INFO p on t.cust_no = p.cust_no
+		where t.user_no = #userNo#
+
+	</select>
+
+
+	<!-- 根据userNo获取供方用户基本信息 -->
+	<select id="getUserBaseInfoByCustName" parameterClass="java.lang.String"
+		resultClass="com.hansy.portal.model.bo.TUserBaseInfoBo">
+		select
+		t.cust_name custName,
+		t.cust_no custNo,
+		t.user_phone userPhone,
+		t.user_pwd userPwd
+		from t_user_base_info t
+		where t.cust_name = #custName#
+	</select>
+
+	<update id="updateUserPwd">
+		update t_user_base_info t set t.user_pwd = #userPwd# where t.cust_no =
+		#custNo#
+	</update>
+
+	<!-- 用户注册 -->
+	<insert id="insert" parameterClass="com.hansy.portal.model.vo.TUserBaseInfoVo">
+		insert into t_user_base_info
+		(user_No,user_login_name,user_name,user_type,user_role,user_pwd,cust_no,cust_name,user_alias,user_phone,user_email,super_user_no,insert_date,update_date,register_Status,USER_STATUS)
+		values (
+		#userNo#,
+		#userLoginName#,
+		#userName#,
+		#userType#,
+		#userRole#,
+		#userPwd#,
+		#custNo#,
+		#custName#,
+		#userAlias#,
+		#userPhone#,
+		#userEmail#,
+		#superUserNo#,
+		#insertDate#,
+		#updateDate#,
+		#registerStatus#,
+		#userStatus#
+		)
+	</insert>
+	<update id="update1" parameterClass="map">
+		update t_user_base_info t
+		<dynamic prepend="set">
+			<isNotEmpty property="newPhone" prepend=",">  
+                <![CDATA[ 
+                    t.super_user_no = #newPhone# 
+                ]]>
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="WHERE">
+			t.super_user_no = #oldPhone#
+		</dynamic>
+
+	</update>
+	<!-- 更新 -->
+	<update id="update" parameterClass="com.hansy.portal.model.bo.TUserBaseInfoBo">
+		update t_user_base_info t
+		<dynamic prepend="set">
+			<isNotEmpty property="superUserNo" prepend=",">  
+                <![CDATA[ 
+                    t.super_user_no = #superUserNo# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="userLoginName" prepend=",">  
+                <![CDATA[ 
+                    t.user_login_name = #userLoginName# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=",">  
+                <![CDATA[  
+                    t.user_name = #userName# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="userType" prepend=",">  
+                <![CDATA[  
+                    t.user_type = #userType# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="userRole" prepend=",">  
+                <![CDATA[  
+                    t.user_role = #userRole# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="userPwd" prepend=",">  
+                <![CDATA[  
+                    t.user_pwd = #userPwd# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="custNo" prepend=",">  
+                <![CDATA[  
+                    t.cust_no = #custNo# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="custName" prepend=",">  
+                <![CDATA[  
+                    t.cust_name = #custName# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="userAlias" prepend=",">  
+                <![CDATA[  
+                    t.user_alias = #userAlias# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="userPhone" prepend=",">  
+                <![CDATA[  
+                    t.user_phone = #userPhone# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="userEmail" prepend=",">  
+                <![CDATA[  
+                    t.user_email = #userEmail# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="updateDate" prepend=",">  
+                <![CDATA[  
+                    t.update_date = #updateDate# 
+                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="registerStatus" prepend=",">  
+                <![CDATA[  
+                    t.register_Status = #registerStatus# 
+                ]]>
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="WHERE">
+			t.user_no = #userNo#
+		</dynamic>
+	</update>
+
+	<!-- 获取粉丝列表 -->
+	<select id="selectFans" parameterClass="map"
+		resultClass="com.hansy.portal.model.bo.Fans">
+		SELECT TEMP0.CUST_NO CUSTNO,
+		TEMP0.USER_name NAME,
+		TEMP0.USER_EMAIL EMAIL,
+		TEMP0.USER_PHONE PHONENO,
+		NVL(TEMP2.tota, 0) tota,
+		TEMP1.GRADE_NAME GRADE,
+		TEMP4.loginTime logintime,
+		NVL(TEMP2.TOTAL, 0) TOTALCONSUME,
+		 tempp.CODE_INFO_VALUE*NVL(TEMP2.TOTAL, 0)  reward
+		FROM (SELECT USER_NO, CUST_NO, USER_PHONE, USER_EMAIL, USER_name
+		FROM T_USER_BASE_INFO
+		WHERE SUPER_USER_NO = #userPhone#) TEMP0
+		LEFT JOIN (SELECT G.CUST_NO, C.GRADE_NAME
+		FROM T_USER_GRADE_CODE C,
+		(SELECT R.GRADE_NO, T1.CUST_NO
+		FROM T_USER_GRADE R,
+		(SELECT USER_NO, CUST_NO
+		FROM T_USER_BASE_INFO
+		WHERE SUPER_USER_NO = #userPhone#) T1
+		WHERE R.CUST_NO = T1.CUST_NO) G
+		WHERE C.GRADE_NO = G.GRADE_NO) TEMP1
+		ON TEMP0.CUST_NO = TEMP1.CUST_NO
+		LEFT JOIN (SELECT SUM(o.GOODS_MONEY) TOTAL,count(distinct o.order_no)
+		tota,
+		O.CUST_NO
+		FROM T_BUS_ORDER O
+		WHERE o.ORDER_STATUS='090005' and O.CUST_NO IN (SELECT T.CUST_NO
+		FROM T_USER_BASE_INFO T
+		WHERE T.SUPER_USER_NO = #userPhone#)
+		GROUP BY O.CUST_NO
+		) TEMP2
+		ON TEMP1.CUST_NO = TEMP2.CUST_NO
+		left join
+		(select  max(h.login_date) loginTime,h.cust_NO custNo from T_USER_LOGIN_LOG h group by h.cust_NO) TEMP4
+		ON TEMP4.custNo = TEMP0.CUSt_no
+		left join (select CODE_INFO_VALUE from SYS_CODE_INFO where CODE_TYPE_ID='reward') tempp
+		on 1=1 
+		where 1=1
+		<dynamic prepend="">
+			<isNotEmpty property="name" prepend="and">  
+		                <![CDATA[ 
+		                    temp0.USER_name like '%$name$%'
+		                ]]>
+			</isNotEmpty>
+			 <isNotEmpty property="query" prepend="and">  
+				                <![CDATA[ 
+				                    (temp0.USER_name  like '%$query$%' or TEMP0.USER_PHONE like '%$query$%')
+				                ]]>  
+				            </isNotEmpty> 
+				            
+			<isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                    TEMP4.loginTime >= to_date(#startTime#, 'yy-mm-dd')
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					         TEMP4.loginTime < to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+			</isNotEmpty>	
+			
+			
+			<isNotEmpty property="Sort1">
+				<isEqual property="Sort1" compareValue="0">
+						order by TEMP2.TOTAL desc
+				</isEqual>
+				<isEqual property="Sort1" compareValue="1">
+						order by TEMP2.TOTAL asc
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="Sort2">
+				<isEqual property="Sort2" compareValue="0">
+						order by TEMP2.tota desc
+				</isEqual>
+
+				<isEqual property="Sort2" compareValue="1">
+						order by TEMP2.tota asc
+				</isEqual>
+			</isNotEmpty>
+			
+		</dynamic>
+
+	</select>
+
+	<!-- 获取粉丝列表 -->
+	<select id="selectCountFans" parameterClass="map" resultClass="java.lang.Integer">
+		SELECT count(1)
+		FROM (SELECT USER_NO, CUST_NO, USER_PHONE, USER_EMAIL, USER_name
+		FROM T_USER_BASE_INFO
+		WHERE SUPER_USER_NO = #userPhone#) TEMP0
+		LEFT JOIN (SELECT G.CUST_NO, C.GRADE_NAME
+		FROM T_USER_GRADE_CODE C,
+		(SELECT R.GRADE_NO, T1.CUST_NO
+		FROM T_USER_GRADE R,
+		(SELECT USER_NO, CUST_NO
+		FROM T_USER_BASE_INFO
+		WHERE SUPER_USER_NO = #userPhone#) T1
+		WHERE R.CUST_NO = T1.CUST_NO) G
+		WHERE C.GRADE_NO = G.GRADE_NO) TEMP1
+		ON TEMP0.CUST_NO = TEMP1.CUST_NO
+		LEFT JOIN (SELECT SUM(o.GOODS_MONEY) TOTAL,count(distinct o.order_no)
+		tota,
+		O.CUST_NO
+		FROM T_BUS_ORDER O
+		WHERE o.ORDER_STATUS='090005' and O.CUST_NO IN (SELECT T.CUST_NO
+		FROM T_USER_BASE_INFO T
+		WHERE T.SUPER_USER_NO = #userPhone#)
+		GROUP BY O.CUST_NO
+		) TEMP2
+		ON TEMP1.CUST_NO = TEMP2.CUST_NO
+			left join
+		(select  max(h.login_date) loginTime,h.cust_NO custNo from T_USER_LOGIN_LOG h group by cust_NO) TEMP4
+		ON TEMP4.custNo = TEMP0.CUSt_no
+		left join (select CODE_INFO_VALUE from SYS_CODE_INFO where CODE_TYPE_ID='reward') tempp
+		on 1=1 
+		where 1=1
+		<dynamic prepend="">
+			<isNotEmpty property="name" prepend="and">  
+		                <![CDATA[ 
+		                   temp0.USER_name like '%$name$%'
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="query" prepend="and">  
+				                <![CDATA[ 
+				                    (temp0.USER_name  like '%$query$%' or TEMP0.USER_PHONE like '%$query$%')
+				                ]]>  
+				            </isNotEmpty>
+				            	<isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                    TEMP4.loginTime >= to_date(#startTime#, 'yy-mm-dd')
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					         TEMP4.loginTime < to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+			</isNotEmpty>	
+			<!-- <isNotEmpty property="startDate" prepend="and"> <![CDATA[ submit_time>= 
+				#startDate# ]]> </isNotEmpty> <isNotEmpty property="endDate" prepend="and"> 
+				<![CDATA[ submit_time<= #endDate# ]]> </isNotEmpty> -->
+		</dynamic>
+	</select>
+
+	<select id="getMyCustomer" resultClass="com.hansy.portal.model.bo.MyCustomer">
+		select t1.cust_name name,
+		t1.totalnum totalNum,
+		t1.totalamt totalAmt,
+		ubi.user_phone phone,
+		ua.address addr
+		from (select t.cust_no,
+		t.cust_name,
+		sum(t.buy_num) totalnum,
+		sum(t.goods_price) totalamt
+		from T_BUS_SHOPP_CART t
+		where t.supply_no = #custNo#
+		group by t.cust_no,t.cust_name) t1
+		left join t_user_base_info ubi on t1.cust_no = ubi.cust_no
+		left join t_user_address ua on t1.cust_no = ua.user_no where
+		ua.address_status = '1' or ua.address_status is null
+
+
+	</select>
+	<select id="getMyCustmer1" parameterClass="map"
+		resultClass="com.hansy.portal.model.bo.MyCustomer">
+		SELECT TEMP1.name, TEMP2.totalAmt,
+		TEMP2.totalNum,TEMP1.phone,TEMP1.addr
+		FROM (SELECT SUM(T2.GOODS_MONEY) totalAmt,
+		COUNT(distinct T2.ORDER_NO) totalNum,
+		T2.CUST_NO CUSTNO
+		FROM T_BUS_ORDER T2
+		WHERE T2.ORDER_STATUS = '090005'
+		and t2.supply_no=#custNo#
+		GROUP BY T2.CUST_NO) TEMP2
+		JOIN (SELECT T.CUST_NO CUSTNO, T.USER_NAME name,T.USER_PHONE
+		phone,t.user_email addr
+		FROM T_USER_BASE_INFO T
+		) TEMP1
+		ON TEMP1.CUSTNO = TEMP2.CUSTNO
+		<!-- LEFT JOIN (SELECT T3.ADDRESS ADDR, T3.USER_NO USERNO FROM T_USER_ADDRESS 
+			T3 WHERE T3.ADDRESS_STATUS = '1') TEMP3 ON TEMP3.USERNO = TEMP2.CUSTNO -->
+		where 1=1
+		<dynamic prepend="">
+			<isNotEmpty property="name" prepend="and">  
+	                <![CDATA[ 
+	                   TEMP1.name  like '%$name$%'
+	                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="totalAmt" prepend="and">  
+	                <![CDATA[ 
+	                   TEMP2.totalAmt = #totalAmt# 
+	                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="totalNum" prepend="and">  
+	                <![CDATA[ 
+	                   TEMP2.totalNum = #totalNum# 
+	                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="phone" prepend="and">  
+	                <![CDATA[ 
+	                   TEMP1.phone = #phone# 
+	                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="Sort1">
+				<isEqual property="Sort1" compareValue="0">
+						order by TEMP2.totalAmt desc
+				</isEqual>
+				<isEqual property="Sort1" compareValue="1">
+						order by TEMP2.totalAmt asc
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="Sort2">
+				<isEqual property="Sort2" compareValue="0">
+						order by TEMP2.totalNum desc
+				</isEqual>
+
+				<isEqual property="Sort2" compareValue="1">
+						order by TEMP2.totalNum asc
+				</isEqual>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<select id="getMyCustmer1count" parameterClass="map"
+		resultClass="java.lang.Integer">
+		SELECT count(1)
+		FROM (SELECT SUM(T2.GOODS_MONEY) totalAmt,
+		COUNT(distinct T2.ORDER_NO) totalNum,
+		T2.CUST_NO CUSTNO
+		FROM T_BUS_ORDER T2
+		WHERE T2.ORDER_STATUS = '090005'
+		and t2.supply_no=#custNo#
+		GROUP BY T2.CUST_NO) TEMP2
+		JOIN (SELECT T.CUST_NO CUSTNO, T.USER_NAME name,T.USER_PHONE phone
+		FROM T_USER_BASE_INFO T
+		) TEMP1
+		ON TEMP1.CUSTNO = TEMP2.CUSTNO
+		<!-- LEFT JOIN (SELECT T3.ADDRESS ADDR, T3.USER_NO USERNO FROM T_USER_ADDRESS 
+			T3 WHERE T3.ADDRESS_STATUS = '1') TEMP3 ON TEMP3.USERNO = TEMP2.CUSTNO -->
+		where 1=1
+		<dynamic prepend="">
+			<isNotEmpty property="name" prepend="and">  
+	                <![CDATA[ 
+	                   TEMP1.name  like '%$name$%'
+	                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="totalAmt" prepend="and">  
+	                <![CDATA[ 
+	                   TEMP2.totalAmt = #totalAmt# 
+	                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="totalNum" prepend="and">  
+	                <![CDATA[ 
+	                   TEMP2.totalNum = #totalNum# 
+	                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="phone" prepend="and">  
+	                <![CDATA[ 
+	                   TEMP1.phone = #phone# 
+	                ]]>
+			</isNotEmpty>
+		</dynamic>
+
+	</select>
+
+
+	<select id="getMyCustomerCount" resultClass="java.lang.Integer">
+		select count(1)
+		from (select t.cust_no,
+		t.cust_name,
+		sum(t.buy_num) totalnum,
+		sum(t.goods_price) totalamt
+		from T_BUS_SHOPP_CART t
+		where t.supply_no = #custNo#
+		group by t.cust_no,t.cust_name) t1
+		left join t_user_base_info ubi on t1.cust_no = ubi.cust_no
+		left join t_user_address ua on t1.cust_no = ua.user_no where
+		ua.address_status = '1' or ua.address_status is null
+	</select>
+
+	<select id="getOrderCount" resultClass="java.lang.Integer">
+		select count(1)
+		from t_bus_order temp
+		left join data_cp cp on temp.goods_no = cp.cpdm
+		left join data_cpmls mls on cp.code = mls.code
+		left join t_user_base_info u
+		on temp.supply_no = u.cust_no
+		where temp.status = '1'
+		and (temp.supply_no = #custNo# or temp.cust_no=#custNo#)
+	</select>
+	<!-- 获取买方订单分页总条数 -->
+	<select id="selectBuyerOrdersCount" parameterClass="java.util.HashMap"
+		resultClass="java.lang.Integer">
+		select count(distinct TEMP.ORDER_NO)from
+		(SELECT ORDER_NO,
+		ORDER_TYPE,
+		SPLIT_STATUS,
+		CUST_NO,
+		GOODS_NO,
+		GOODS_PRICE,
+		GOODS_DISCOUNT,
+		DEFAULT_PAY_DT,
+		WISH_PAY_DT,
+		ORDER_STATUS,
+		INSERT_DATE,
+		UPDATE_DATE,
+		SUPPLY_NO,
+		GOODS_COUNT,
+		ADDRESS,
+		STATUS,
+		UPDATE_CUST_TYPE,
+		TABLE_KEY,
+		ORDER_STATUS_SEL
+		FROM T_BUS_ORDER TEMP
+		WHERE ORDER_STATUS_SEL = '1'
+		AND SPLIT_STATUS in ('0','2')
+		) TEMP
+		LEFT JOIN DATA_CP CP
+		ON TEMP.GOODS_NO = CP.CPDM
+		LEFT JOIN DATA_CPMLS MLS
+		ON CP.CODE = MLS.CODE
+		LEFT JOIN T_USER_BASE_INFO U
+		ON TEMP.CUST_NO = U.CUST_NO
+		LEFT JOIN T_BUS_ADDRESS D
+		ON TEMP.ORDER_NO = D.ORDER_NO
+		where 1=1
+		<isNotEmpty property="orderStatus" prepend="and">  
+		                <![CDATA[ 
+		                    temp.order_status = #orderStatus# 
+		                ]]>
+		</isNotEmpty>
+		<isNotEmpty property="custNo" prepend="and">  
+		                <![CDATA[ 
+		                    temp.cust_no = #custNo# 
+		                ]]>
+		</isNotEmpty>
+	</select>
+	<!-- 获取供方订单分页总条数 -->
+	<select id="selectSupplyOrdersCount" parameterClass="java.util.HashMap"
+		resultClass="java.lang.Integer">
+		select count(distinct TEMP.ORDER_NO)from
+		(SELECT ORDER_NO,
+		ORDER_TYPE,
+		SPLIT_STATUS,
+		CUST_NO,
+		GOODS_NO,
+		GOODS_PRICE,
+		GOODS_DISCOUNT,
+		DEFAULT_PAY_DT,
+		WISH_PAY_DT,
+		ORDER_STATUS,
+		INSERT_DATE,
+		UPDATE_DATE,
+		SUPPLY_NO,
+		GOODS_COUNT,
+		ADDRESS,
+		STATUS,
+		UPDATE_CUST_TYPE,
+		TABLE_KEY,
+		ORDER_STATUS_SEL
+		FROM T_BUS_ORDER TEMP
+		WHERE ORDER_STATUS_SEL = '1'
+		AND SPLIT_STATUS in ('0','2') ) TEMP
+		LEFT JOIN DATA_CP CP
+		ON TEMP.GOODS_NO = CP.CPDM
+		LEFT JOIN DATA_CPMLS MLS
+		ON CP.CODE = MLS.CODE
+		LEFT JOIN T_USER_BASE_INFO U
+		ON TEMP.CUST_NO = U.CUST_NO
+		LEFT JOIN T_BUS_ADDRESS D
+		ON TEMP.ORDER_NO = D.ORDER_NO
+		where 1=1
+		<isNotEmpty property="orderStatus" prepend="and">  
+		                <![CDATA[ 
+		                    temp.order_status = #orderStatus# 
+		                ]]>
+		</isNotEmpty>
+		<isNotEmpty property="custNo" prepend="and">  
+		                <![CDATA[ 
+		                    temp.supply_no = #custNo# 
+		                ]]>
+		</isNotEmpty>
+	</select>
+	<!-- 获取供方信息 -->
+	<select id="SelectUserSupplyInfoQuery" parameterClass="map"
+		resultClass="com.hansy.portal.model.vo.TUserSupplyInfoVo">
+		SELECT T1.CUST_NO AS CUSTNO,
+		T1.CUST_NAME AS CUSTNAME,
+		T1.REG_NO AS REGNO,
+		T1.ORG_NO AS ORGNO,
+		T1.FAX_NO AS FAXNO,
+		T1.REG_TYPE AS REGTYPE,
+		T1.CERT_BEGIN_DT AS CERTBEGINDT,
+		T1.CERT_END_DT AS CERTENDDT,
+		T1.SCALE AS SCALE,
+		T1.LEGAL_PERSON AS LEGALPERSON,
+		T1.LEGAL_CERT_TYPE AS LEGALCERTTYPE,
+		T1.LEGAL_CERT_NO AS LEGALCERTNO,
+		T1.BASE_ACCT_ORG AS BASEACCTORG,
+		T1.BASE_ACCT_NO AS BASEACCTNO,
+		T1.BASE_ACCT_NAME AS BASEACCTNAME,
+		T1.ANNUAL_INSP_DT AS ANNUALINSPDT,
+		T1.CHANGE_DT AS CHANGEDT,
+		T1.REG_CAPITAL AS REGCAPITAL,
+		T1.REG_ADDRESS AS REGADDRESS,
+		T1.REG_CURRENCY AS REGCURRENCY,
+		T1.PAID_IN_CAPITAL AS PAIDINCAPITAL,
+		T1.PAID_CURRENCY AS PAIDCURRENCY,
+		T1.BIZ_ADDRESS AS BIZADDRESS,
+		T1.BRANCH_CNT AS BRANCHCNT,
+		T1.INSERT_DATE AS INSERTDATE,
+		T1.UPDATE_DATE AS UPDATEDATE,
+		T1.FILE_ID AS FILEID,
+		T1.STAFF_ID AS STAFFID,
+		T1.STAFF_NAME AS STAFFNAME,
+		t1.SUPPLY_NAME as supplyName,
+		t1.SUPPLY_REMARK as supplyRemark,
+		t1.SUPPLY_MOBILE as supplyMobile,
+		t1.SUPPLY_SERVER_MOBILE as supplyServerMobile,
+		T2.LIB_NAME AS LIBNAME,
+		T2.LIB_TITLE AS LIBTITLE,
+		substr(t2.LIB_DIRECTORY, instr(t2.LIB_DIRECTORY, 'files')) AS LIBDIRECTORY,
+		T2.LIB_EXT_NAME AS LIBEXTNAME,
+		t2.LIB_ID as libId,
+		T3.LIB_NAME AS LIBNAME1,
+		T3.LIB_TITLE AS LIBTITLE1,
+		substr(t3.LIB_DIRECTORY, instr(t3.LIB_DIRECTORY, 'files')) AS LIBDIRECTORY1,
+		T3.LIB_EXT_NAME AS LIBEXTNAME1,
+		t3.LIB_ID as libId1
+		FROM T_USER_SUPPLY_INFO T1
+		LEFT JOIN (SELECT * FROM SYS_LIBRARY WHERE LIB_TYPE = '003') T2
+		ON T1.CUST_NO = T2.MENU_ID
+		LEFT JOIN (SELECT * FROM SYS_LIBRARY WHERE LIB_TYPE = '001' ) T3
+		ON T1.CUST_NO = T3.MENU_ID
+		<dynamic prepend="">
+			<isNotEmpty property="custName" prepend="and">  
+	                <![CDATA[ 
+	                   t1.CUST_NAME = #custName# 
+	                ]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="getUserSupplyDetail" parameterClass="java.lang.String"
+		resultClass="com.hansy.portal.model.vo.TUserSupplyInfoVo">
+		SELECT T1.CUST_NO AS CUSTNO,
+		T1.CUST_NAME AS CUSTNAME,
+		T1.REG_NO AS REGNO,
+		T1.ORG_NO AS ORGNO,
+		T1.FAX_NO AS FAXNO,
+		T1.REG_TYPE AS REGTYPE,
+		T1.CERT_BEGIN_DT AS CERTBEGINDT,
+		T1.CERT_END_DT AS CERTENDDT,
+		T1.SCALE AS SCALE,
+		T1.LEGAL_PERSON AS LEGALPERSON,
+		T1.LEGAL_CERT_TYPE AS LEGALCERTTYPE,
+		T1.LEGAL_CERT_NO AS LEGALCERTNO,
+		T1.BASE_ACCT_ORG AS BASEACCTORG,
+		T1.BASE_ACCT_NO AS BASEACCTNO,
+		T1.BASE_ACCT_NAME AS BASEACCTNAME,
+		T1.ANNUAL_INSP_DT AS ANNUALINSPDT,
+		T1.CHANGE_DT AS CHANGEDT,
+		T1.REG_CAPITAL AS REGCAPITAL,
+		T1.REG_ADDRESS AS REGADDRESS,
+		T1.REG_CURRENCY AS REGCURRENCY,
+		T1.PAID_IN_CAPITAL AS PAIDINCAPITAL,
+		T1.PAID_CURRENCY AS PAIDCURRENCY,
+		T1.BIZ_ADDRESS AS BIZADDRESS,
+		T1.BRANCH_CNT AS BRANCHCNT,
+		T1.INSERT_DATE AS INSERTDATE,
+		T1.UPDATE_DATE AS UPDATEDATE,
+		T1.FILE_ID AS FILEID,
+		T1.STAFF_ID AS STAFFID,
+		T1.STAFF_NAME AS STAFFNAME,
+		t1.SUPPLY_NAME as supplyName,
+		t1.SUPPLY_REMARK as supplyRemark,
+		t1.SUPPLY_MOBILE as supplyMobile,
+		t1.SUPPLY_SERVER_MOBILE as supplyServerMobile,
+		T2.LIB_NAME AS LIBNAME,
+		T2.LIB_TITLE AS LIBTITLE,
+		substr(t2.LIB_DIRECTORY, instr(t2.LIB_DIRECTORY, 'files')) AS LIBDIRECTORY,
+		T2.LIB_EXT_NAME AS LIBEXTNAME,
+		t2.LIB_ID as libId,
+		T3.LIB_NAME AS LIBNAME1,
+		T3.LIB_TITLE AS LIBTITLE1,
+		substr(t3.LIB_DIRECTORY, instr(t3.LIB_DIRECTORY, 'files')) AS LIBDIRECTORY1,
+		T3.LIB_EXT_NAME AS LIBEXTNAME1,
+		t3.LIB_ID as libId1
+		FROM T_USER_SUPPLY_INFO T1
+		LEFT JOIN (SELECT * FROM SYS_LIBRARY WHERE LIB_TYPE = '003') T2
+		ON T1.CUST_NO = T2.MENU_ID
+		LEFT JOIN (SELECT * FROM SYS_LIBRARY WHERE LIB_TYPE = '001' ) T3
+		ON T1.CUST_NO = T3.MENU_ID
+		where t1.CUST_NO = #custNo#
+	</select>
+	<select id="filterByMoneyOrNum" parameterClass="map"
+		resultClass="com.hansy.portal.model.vo.Order">
+		SELECT TEMP.ORDER_STATUS ORDERSTATUS,
+		TEMP.ORDER_NO ORDERNO,
+		TEMP.GOODS_PRICE GOODSPRICE,
+		TEMP.GOODS_COUNT GOODSCOUNT,
+		TEMP.GOODS_DISCOUNT GOODSDISCOUNT,
+		TEMP.INSERT_DATE INSERTDATE,
+		TEMP.ORDER_TYPE ORDERTYPE,
+		TEMP.TABLE_KEY TABLEKEY,
+		TEMP.SPLIT_STATUS splitStatus,
+		u.cust_name applyName,
+		u.user_phone applyPhone,
+		u.cust_no custNo,
+		SP.cust_name supperName,
+		SP.user_phone supperPhone,
+		TEMP.SUPPLY_NO supplyNo,
+		MLS.NAME GOODSNAME,
+		MLS.CODE GOODSCODE,
+		TO_CHAR(TEMP.INSERT_DATE + TEMP.DEFAULT_PAY_DT, 'yyyy-mm-dd') DEFAULTPAYDT,
+		TO_CHAR(TEMP.INSERT_DATE + TEMP.WISH_PAY_DT, 'yyyy-mm-dd') WISHPAYDT,
+		D.TELEPHONE ADDRESSEEPHONE,
+		D.ADDRESSEE_NAME ADDRESSEENAME,
+		D.ADDRESS ADDRESS,
+		substr(CP.c1,1,INSTR(CP.c1,',',1,3)-1) par,
+		TEMP.GOODS_NO GOODSNO
+		FROM (SELECT ORDER_NO,
+		ORDER_TYPE,
+		SPLIT_STATUS,
+		CUST_NO,
+		GOODS_NO,
+		GOODS_PRICE,
+		GOODS_DISCOUNT,
+		DEFAULT_PAY_DT,
+		WISH_PAY_DT,
+		ORDER_STATUS,
+		INSERT_DATE,
+		UPDATE_DATE,
+		SUPPLY_NO,
+		GOODS_COUNT,
+		ADDRESS,
+		STATUS,
+		UPDATE_CUST_TYPE,
+		TABLE_KEY,
+		ORDER_STATUS_SEL
+		FROM T_BUS_ORDER TEMP
+		WHERE STATUS = '1'
+		AND SPLIT_STATUS in ('0','2')
+		) TEMP
+		LEFT JOIN DATA_CP CP
+		ON TEMP.GOODS_NO = CP.CPDM
+		LEFT JOIN DATA_CPMLS MLS
+		ON CP.CODE = MLS.CODE
+		LEFT JOIN T_USER_BASE_INFO U
+		ON TEMP.CUST_NO = U.CUST_NO
+		LEFT JOIN T_BUS_ADDRESS D
+		ON TEMP.ORDER_NO = D.ORDER_NO
+		left join T_USER_BASE_INFO SP
+		ON TEMP.SUPPLY_NO = SP.CUST_NO
+		where 1=1
+		<dynamic prepend="">
+			<isNotEmpty property="custNo" prepend="and">  
+		                <![CDATA[ 
+		                    temp.cust_no = #custNo# 
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="orderStatus" prepend="and">  
+		                <![CDATA[ 
+		                    temp.order_status = #orderStatus# 
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                   temp.insert_date>= to_date(#startTime#, 'yy-mm-dd')
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					        temp.insert_date< to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="order by">
+			<isNotEmpty property="Sort1">
+				<isEqual property="Sort1" compareValue="0">
+					temp.GOODS_COUNT desc,
+				</isEqual>
+
+				<isEqual property="Sort1" compareValue="1">
+					temp.GOODS_COUNT asc,
+				</isEqual>
+			</isNotEmpty>
+
+			<isNotEmpty property="Sort2">
+				<isEqual property="Sort2" compareValue="0">
+					temp.GOODS_PRICE desc,
+				</isEqual>
+
+				<isEqual property="Sort2" compareValue="1">
+					temp.GOODS_PRICE asc,
+				</isEqual>
+			</isNotEmpty>
+
+			temp.insert_date desc
+		</dynamic>
+	</select>
+	<select id="filterByMoneyOrNumTotal" parameterClass="map"
+		resultClass="java.lang.Integer">
+		select count(distinct TEMP.ORDER_NO)from
+		(SELECT ORDER_NO,
+		ORDER_TYPE,
+		SPLIT_STATUS,
+		CUST_NO,
+		GOODS_NO,
+		GOODS_PRICE,
+		GOODS_DISCOUNT,
+		DEFAULT_PAY_DT,
+		WISH_PAY_DT,
+		ORDER_STATUS,
+		INSERT_DATE,
+		UPDATE_DATE,
+		SUPPLY_NO,
+		GOODS_COUNT,
+		ADDRESS,
+		STATUS,
+		UPDATE_CUST_TYPE,
+		TABLE_KEY,
+		ORDER_STATUS_SEL
+		FROM T_BUS_ORDER TEMP
+		WHERE STATUS = '1'
+		AND SPLIT_STATUS in ('0','2')
+		) TEMP
+		LEFT JOIN DATA_CP CP
+		ON TEMP.GOODS_NO = CP.CPDM
+		LEFT JOIN DATA_CPMLS MLS
+		ON CP.CODE = MLS.CODE
+		LEFT JOIN T_USER_BASE_INFO U
+		ON TEMP.CUST_NO = U.CUST_NO
+		LEFT JOIN T_BUS_ADDRESS D
+		ON TEMP.ORDER_NO = D.ORDER_NO
+		left join T_USER_BASE_INFO SP
+		ON TEMP.SUPPLY_NO = SP.CUST_NO
+		where 1=1
+		<dynamic prepend="">
+			<isNotEmpty property="custNo" prepend="and">  
+		                <![CDATA[ 
+		                    temp.cust_no = #custNo# 
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="orderStatus" prepend="and">  
+		                <![CDATA[ 
+		                    temp.order_status = #orderStatus# 
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                   temp.insert_date>= to_date(#startTime#, 'yy-mm-dd')
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					        temp.insert_date< to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="order by">
+			<isNotEmpty property="Sort1">
+				<isEqual property="Sort1" compareValue="0">
+					temp.GOODS_COUNT desc,
+				</isEqual>
+
+				<isEqual property="Sort1" compareValue="1">
+					temp.GOODS_COUNT asc,
+				</isEqual>
+			</isNotEmpty>
+
+			<isNotEmpty property="Sort2">
+				<isEqual property="Sort2" compareValue="0">
+					temp.GOODS_PRICE desc,
+				</isEqual>
+
+				<isEqual property="Sort2" compareValue="1">
+					temp.GOODS_PRICE asc,
+				</isEqual>
+			</isNotEmpty>
+
+			temp.insert_date desc
+		</dynamic>
+
+	</select>
+	
+	
+	<select id="selectSale" parameterClass="map"
+		resultClass="com.hansy.portal.model.bo.Fans">
+SELECT T1.USER_NAME NAME,
+       T1.USER_PHONE PHONENO,
+      SUM(NVL(T3.TOTAL_AMT, 0)) TOTALCONSUME,
+       T4.LL LOGINTIME
+  FROM (SELECT T.USER_PHONE, T.USER_NAME, T.CUST_NO
+          FROM T_USER_BASE_INFO T
+         WHERE T.SUPER_USER_NO = #userPhone#) T1
+  LEFT JOIN T_USER_BASE_INFO T2
+    ON T1.USER_PHONE = T2.SUPER_USER_NO
+  LEFT JOIN (SELECT SUM(GOODS_MONEY) TOTAL_AMT, CUST_NO
+               FROM T_BUS_ORDER T
+              WHERE T.ORDER_STATUS = '090005'
+              GROUP BY CUST_NO) T3
+    ON T3.CUST_NO = T2.CUST_NO
+  LEFT JOIN (SELECT MAX(LOGIN_DATE) LL, CUST_NO
+               FROM T_USER_LOGIN_LOG
+              WHERE CUST_NO IN
+                    (SELECT CUST_NO
+                       FROM T_USER_BASE_INFO
+                      WHERE SUPER_USER_NO = #userPhone#)
+              GROUP BY CUST_NO) T4
+    ON T4.CUST_NO = T1.CUST_NO
+    where 1=1
+        <dynamic prepend="">
+			 <isNotEmpty property="query" prepend="and">  
+				                <![CDATA[ 
+				                    (T1.USER_NAME  like '%$query$%' or T1.USER_PHONE like '%$query$%')
+				                ]]>  
+				            </isNotEmpty> 
+				            </dynamic>
+ GROUP BY T1.USER_NAME, T1.USER_PHONE, T4.LL
+
+    	<dynamic prepend="order by">
+
+			TOTALCONSUME desc
+		</dynamic>
+	
+	</select>
+	
+	<select id="selectSaleTotal" parameterClass="map"
+		 resultClass="java.lang.Integer">
+ SELECT count(1)
+    FROM (SELECT T.USER_PHONE, T.USER_NAME, T.CUST_NO
+          FROM T_USER_BASE_INFO T
+         WHERE T.SUPER_USER_NO = #userPhone#) T1
+    where 1=1
+        <dynamic prepend="">
+			 <isNotEmpty property="query" prepend="and">  
+				                <![CDATA[ 
+				                    (T1.USER_NAME  like '%$query$%' or T1.USER_PHONE like '%$query$%')
+				                ]]>  
+				            </isNotEmpty> 
+				            </dynamic>
+
+   
+	</select>
+	<select id = "consumeRank" parameterClass="map" resultClass="com.hansy.portal.model.bo.Fans">
+	SELECT TEMP0.CUST_NO CUSTNO,
+  TEMP0.USER_name NAME,
+  TEMP0.USER_EMAIL EMAIL,
+  TEMP0.USER_PHONE PHONENO,
+  NVL(TEMP2.tota, 0) tota,
+  TEMP1.GRADE_NAME GRADE,
+  TEMP4.loginTime logintime,
+  NVL(TEMP2.TOTAL, 0) TOTALCONSUME
+FROM
+  (SELECT USER_NO,
+    CUST_NO,
+    USER_PHONE,
+    USER_EMAIL,
+    USER_name
+  FROM T_USER_BASE_INFO
+  ) TEMP0
+LEFT JOIN
+  (SELECT G.CUST_NO,
+    C.GRADE_NAME
+  FROM T_USER_GRADE_CODE C,
+    (SELECT R.GRADE_NO,
+      T1.CUST_NO
+    FROM T_USER_GRADE R,
+      (SELECT USER_NO,
+        CUST_NO
+      FROM T_USER_BASE_INFO
+      ) T1
+    WHERE R.CUST_NO = T1.CUST_NO
+    ) G
+  WHERE C.GRADE_NO = G.GRADE_NO
+  ) TEMP1
+ON TEMP0.CUST_NO = TEMP1.CUST_NO
+LEFT JOIN
+  (SELECT SUM(o.GOODS_MONEY) TOTAL,
+    COUNT(DISTINCT o.order_no) tota,
+    O.CUST_NO
+  FROM T_BUS_ORDER O
+  WHERE o.ORDER_STATUS='090005'
+  AND O.CUST_NO      IN
+    (SELECT T.CUST_NO
+    FROM T_USER_BASE_INFO T
+    )
+  GROUP BY O.CUST_NO
+  ) TEMP2
+ON TEMP1.CUST_NO = TEMP2.CUST_NO
+LEFT JOIN
+  (SELECT MAX(h.login_date) loginTime,
+    h.cust_NO custNo
+  FROM T_USER_LOGIN_LOG h
+  GROUP BY h.cust_NO
+  ) TEMP4
+ON TEMP4.custNo = TEMP0.CUSt_no
+where 1=1
+<dynamic prepend="">
+			 <isNotEmpty property="query" prepend="and">  
+				                <![CDATA[ 
+				                    (TEMP0.USER_NAME  like '%$query$%' or TEMP0.USER_PHONE like '%$query$%')
+				                ]]>  
+				            </isNotEmpty> 
+		<isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                   TEMP4.loginTime>= to_date(#startTime#, 'yy-mm-dd')
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					        TEMP4.loginTime< to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+			</isNotEmpty>
+				            
+	 	<isNotEmpty property="Sort1">
+				<isEqual property="Sort1" compareValue="0">
+						order by TEMP2.TOTAL desc
+				</isEqual>
+				<isEqual property="Sort1" compareValue="1">
+						order by TEMP2.TOTAL asc
+				</isEqual>
+			</isNotEmpty>
+			
+		</dynamic>
+	</select>
+	
+	<select id = "consumeRankTotal" parameterClass="map" resultClass="java.lang.Integer">
+	SELECT count(1)
+FROM
+  (SELECT USER_NO,
+    CUST_NO,
+    USER_PHONE,
+    USER_EMAIL,
+    USER_name
+  FROM T_USER_BASE_INFO
+  ) TEMP0
+LEFT JOIN
+  (SELECT G.CUST_NO,
+    C.GRADE_NAME
+  FROM T_USER_GRADE_CODE C,
+    (SELECT R.GRADE_NO,
+      T1.CUST_NO
+    FROM T_USER_GRADE R,
+      (SELECT USER_NO,
+        CUST_NO
+      FROM T_USER_BASE_INFO
+      ) T1
+    WHERE R.CUST_NO = T1.CUST_NO
+    ) G
+  WHERE C.GRADE_NO = G.GRADE_NO
+  ) TEMP1
+ON TEMP0.CUST_NO = TEMP1.CUST_NO
+LEFT JOIN
+  (SELECT SUM(o.GOODS_MONEY) TOTAL,
+    COUNT(DISTINCT o.order_no) tota,
+    O.CUST_NO
+  FROM T_BUS_ORDER O
+  WHERE o.ORDER_STATUS='090005'
+  AND O.CUST_NO      IN
+    (SELECT T.CUST_NO
+    FROM T_USER_BASE_INFO T
+    )
+  GROUP BY O.CUST_NO
+  ) TEMP2
+ON TEMP1.CUST_NO = TEMP2.CUST_NO
+LEFT JOIN
+  (SELECT MAX(h.login_date) loginTime,
+    h.cust_NO custNo
+  FROM T_USER_LOGIN_LOG h
+  GROUP BY h.cust_NO
+  ) TEMP4
+ON TEMP4.custNo = TEMP0.CUSt_no
+where 1=1
+<dynamic prepend="">
+			 <isNotEmpty property="query" prepend="and">  
+				                <![CDATA[ 
+				                    (TEMP0.USER_NAME  like '%$query$%' or TEMP0.USER_PHONE like '%$query$%')
+				                ]]>  
+				            </isNotEmpty> 
+		<isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                   TEMP4.loginTime>= to_date(#startTime#, 'yy-mm-dd')
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					        TEMP4.loginTime< to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+			</isNotEmpty>
+				            
+			
+		</dynamic>
+	</select>
+	<select id = "productRank" parameterClass="map" resultClass="com.hansy.portal.model.vo.GoodsVo">
+	SELECT t1.TOTAL_AMT totalAmt ,
+  t1.totalNum totalNum,
+  NVL(t2.guige
+  ||''
+  || t2.product_property,'') guigee,
+  p.name
+  ||SUBSTR(t2.c1,1,INSTR(t2.c1,',',1,3)-1) goodsName
+FROM
+  (SELECT SUM(GOODS_MONEY) TOTAL_AMT,
+    SUM(GOODS_COUNT) totalNum,
+    goods_no gg
+  FROM T_BUS_ORDER T
+  WHERE 1            =1
+  <dynamic prepend="">	
+  <isNotEmpty property="orderStatus" prepend="and">
+   						  <![CDATA[ 
+		                   T.ORDER_STATUS= #orderStatus#
+		                ]]>
+			</isNotEmpty>
+  
+		<isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                    t.UPDATE_DATE >= to_date(#startTime#, 'yy-mm-dd')
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					         t.UPDATE_DATE < to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+			</isNotEmpty>				         
+		</dynamic>
+  GROUP BY goods_no
+  )t1
+LEFT JOIN DATA_CP t2
+ON t2.id = t1.gg
+LEFT JOIN data_cpmls p
+ON p.code = t2.code
+where 1=1
+	  <dynamic prepend="">	
+ <isNotEmpty property="query" prepend="and">  
+				                <![CDATA[ 
+				                    ( NVL(t2.guige
+  ||''
+  || t2.product_property,'')  like '%$query$%' or  p.name
+  ||SUBSTR(t2.c1,1,INSTR(t2.c1,',',1,3)-1)  like '%$query$%')
+				                ]]>  
+				            </isNotEmpty> 
+				            
+				            <isNotEmpty property="Sort1" >
+				<isEqual property="Sort1" compareValue="0">
+						order by t1.totalNum desc
+				</isEqual>
+				<isEqual property="Sort1" compareValue="1">
+						order by t1.totalNum asc
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="Sort2" >
+				<isEqual property="Sort2" compareValue="0">
+						order by t1.TOTAL_AMT desc
+				</isEqual>
+
+				<isEqual property="Sort2" compareValue="1">
+						order by t1.TOTAL_AMT asc
+				</isEqual>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+		<select id = "productRankTotal" parameterClass="map" resultClass="java.lang.Integer">
+	SELECT count(1)
+FROM
+  (SELECT SUM(GOODS_MONEY) TOTAL_AMT,
+    SUM(GOODS_COUNT) totalNum,
+    goods_no gg
+  FROM T_BUS_ORDER T
+  WHERE 1            =1
+  <dynamic prepend="">	
+  <isNotEmpty property="orderStatus" prepend="and">
+   						  <![CDATA[ 
+		                   T.ORDER_STATUS= #orderStatus#
+		                ]]>
+			</isNotEmpty>
+  
+		<isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                    t.UPDATE_DATE >= to_date(#startTime#, 'yy-mm-dd')
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					         t.UPDATE_DATE < to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+			</isNotEmpty>				         
+		</dynamic>
+  GROUP BY goods_no
+  )t1
+LEFT JOIN DATA_CP t2
+ON t2.id = t1.gg
+LEFT JOIN data_cpmls p
+ON p.code = t2.code
+ where 1=1
+	  <dynamic prepend="">	
+ <isNotEmpty property="query" prepend="and">  
+				                <![CDATA[ 
+				                    ( NVL(t2.guige
+  ||''
+  || t2.product_property,'')  like '%$query$%' or  p.name
+  ||SUBSTR(t2.c1,1,INSTR(t2.c1,',',1,3)-1)  like '%$query$%')
+				                ]]>  
+				            </isNotEmpty> 
+		</dynamic> 
+		</select>
+		
+		
+		<select id = "getMyOrderNoBill" parameterClass="map" resultClass="com.hansy.portal.model.vo.GoodsVo">
+select tt.totalAmt,  tt.orderNo,  tt.updateDate,  tt.orderType, tt.custNo,t2.cust_name custName  from (
+SELECT SUM(GOODS_MONEY) totalAmt, ORDER_NO orderNo, UPDATE_DATE updateDate, ORDER_TYPE orderType,CUST_NO custNo
+          FROM T_BUS_ORDER T
+        where T.ORDER_STATUS = '090005' 
+         AND T.SUPPLY_NO = #supplyNo#
+           GROUP BY ORDER_NO, UPDATE_DATE, ORDER_TYPE ,CUST_NO) tt  
+            left join t_user_base_info t2
+    		 on tt.custNo=t2.cust_no
+         left join T_BUS_PAYMENT t3
+         on t3.order_no = tt.orderNo
+           where t3.order_no is null
+                    <dynamic prepend="">	
+  <isNotEmpty property="query" prepend="and">
+   						  <![CDATA[ 
+   						    (tt.orderNo  like '%$query$%' or t2.cust_name like '%$query$%')
+		                ]]>
+			</isNotEmpty>
+			  <isNotEmpty property="custNos" prepend="and">
+   						  <![CDATA[ 
+   						   tt.custNo = #custNos#
+		                ]]>
+			</isNotEmpty>
+		<isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                    tt.updateDate >= to_date(#startTime#, 'yy-mm-dd')
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					         tt.updateDate < to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+			</isNotEmpty>	
+			
+			<isNotEmpty property="startAmt" prepend="and">
+					    <![CDATA[
+					         tt.totalAmt >= #startAmt#
+					    ]]>
+			</isNotEmpty>	
+				<isNotEmpty property="endAmt" prepend="and">
+					    <![CDATA[
+					         tt.totalAmt < #endAmt#
+					    ]]>
+			</isNotEmpty>
+		</dynamic>
+		</select>
+		<select id = "getMyOrderNoBillTotal" parameterClass="map" resultClass="java.lang.Integer">
+select count(1) from (
+SELECT SUM(GOODS_MONEY) totalAmt, ORDER_NO orderNo, UPDATE_DATE updateDate, ORDER_TYPE orderType,CUST_NO custNo
+          FROM T_BUS_ORDER T
+        where T.ORDER_STATUS = '090005' 
+         AND T.SUPPLY_NO = #supplyNo#
+           GROUP BY ORDER_NO, UPDATE_DATE, ORDER_TYPE ,CUST_NO) tt  
+            left join t_user_base_info t2
+    		 on tt.custNo=t2.cust_no
+         left join T_BUS_PAYMENT t3
+         on t3.order_no = tt.orderNo
+           where t3.order_no is null
+                             <dynamic prepend="">	
+  <isNotEmpty property="query" prepend="and">
+   						  <![CDATA[ 
+   						    (tt.orderNo  like '%$query$%' or t2.cust_name like '%$query$%')
+		                ]]>
+			</isNotEmpty>
+			  <isNotEmpty property="custNos" prepend="and">
+   						  <![CDATA[ 
+   						   tt.custNo = #custNos#
+		                ]]>
+			</isNotEmpty>
+		<isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                    tt.updateDate >= to_date(#startTime#, 'yy-mm-dd')
+		                ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					         tt.updateDate < to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+			</isNotEmpty>	
+			
+			<isNotEmpty property="startAmt" prepend="and">
+					    <![CDATA[
+					         tt.totalAmt >= #startAmt#
+					    ]]>
+			</isNotEmpty>	
+				<isNotEmpty property="endAmt" prepend="and">
+					    <![CDATA[
+					         tt.totalAmt < #endAmt#
+					    ]]>
+			</isNotEmpty>
+		</dynamic>
+		</select>
+		
+		<select id ="getMyOrderNoBillDetail" parameterClass="map" resultClass="com.hansy.portal.model.vo.GoodsVo">
+		 SELECT t1.TOTAL_AMT totalAmt ,
+    t1.totalNum totalNum,
+    p.name
+    ||SUBSTR(t2.c1,1,INSTR(t2.c1,',',1,3)-1) goodsName
+  FROM
+    (SELECT SUM(GOODS_MONEY) TOTAL_AMT,
+      SUM(GOODS_COUNT) totalNum,
+      goods_no gg
+    FROM T_BUS_ORDER T
+    WHERE 1            =1
+    AND
+      T.ORDER_STATUS='090005' 
+      AND T.ORDER_NO in ($orderNo$)
+       GROUP BY goods_no
+    )t1
+  LEFT JOIN DATA_CP t2
+  ON t2.id = t1.gg
+  LEFT JOIN data_cpmls p
+  ON p.code = t2.code
+		</select>
+		<select id ="getMyOrderNoBillDetailTotal" parameterClass="map" resultClass="java.lang.Integer">
+		  SELECT count(1) from
+    (SELECT SUM(GOODS_MONEY) TOTAL_AMT,
+      SUM(GOODS_COUNT) totalNum,
+      goods_no gg
+    FROM T_BUS_ORDER T
+    WHERE 1            =1
+    AND
+      T.ORDER_STATUS='090005' 
+       AND T.ORDER_NO in ($orderNo$)
+       GROUP BY goods_no
+    )t1
+  LEFT JOIN DATA_CP t2
+  ON t2.id = t1.gg
+  LEFT JOIN data_cpmls p
+  ON p.code = t2.code
+		</select>
+		<select id = "getOrderCustName" parameterClass="map" resultClass="com.hansy.portal.model.vo.GoodsVo">
+    select distinct  t2.cust_no custNo,t2.cust_name custName,t2.user_phone phone  from 
+   ( select distinct cust_no ,order_NO from T_BUS_ORDER t where t.supply_no=#supplyNo#
+   and T.ORDER_STATUS='090005' 
+   ) t1
+   left join t_user_base_info t2
+   on t1.cust_no=t2.cust_no 
+   left join T_BUS_PAYMENT t3
+   on t3.order_no =  t1.order_NO
+   where t3.order_no is null
+                             <dynamic prepend="">	
+  <isNotEmpty property="query" prepend="and">
+   						  <![CDATA[ 
+   						    (t2.cust_name  like '%$query$%' or t2.user_phone like '%$query$%')
+		                ]]>
+			</isNotEmpty>
+		</dynamic>
+   
+		</select>
+		<select id = "getOrderCustNameTotal" parameterClass="map" resultClass="java.lang.Integer">
+	    select count(distinct  t2.cust_no)  from 
+   ( select distinct cust_no ,order_NO from T_BUS_ORDER t where t.supply_no= #supplyNo#
+   and T.ORDER_STATUS='090005' 
+   ) t1
+   left join t_user_base_info t2
+   on t1.cust_no=t2.cust_no 
+   left join T_BUS_PAYMENT t3
+  on t3.order_no =  t1.order_NO
+   where t3.order_no is null
+                             <dynamic prepend="">	
+  <isNotEmpty property="query" prepend="and">
+   						  <![CDATA[ 
+   						    (t2.cust_name  like '%$query$%' or t2.user_phone like '%$query$%' )
+		                ]]>
+			</isNotEmpty>
+		</dynamic>
+   
+		</select>
+</sqlMap>

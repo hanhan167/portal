@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+h2{
+	font-size: 24px;
+	font-weight: normal;
+	color: #03A1A4;
+}
+#amend_password>div{
+	display: table;
+}
+#amend_password label{
+	width: 85px;
+	display: block;
+	text-align: right;
+	float: left;
+	line-height: 26px;
+}
+#amend_password input{
+	/* border: 1px solid #D2D2D2; */
+	border:none;
+	float:left;
+	width: 234px;
+}
+#amend_password>div>span{
+	float: left;
+	margin-left: 14px;
+}
+#amend_password>div>span>label{
+	width: 300px;
+    text-align: left;
+    color: rgb(228, 112, 104);
+}
+.old_password{
+	margin-top: 48px;
+}
+.new_password{
+	margin-top: 14px;
+}
+.fillet{
+	margin: 24px 0 0 85px;
+}

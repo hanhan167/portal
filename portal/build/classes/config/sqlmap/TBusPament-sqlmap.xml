@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="tbusPament">
+	<resultMap class="com.hansy.portal.model.vo.TBusPamentVo" id="busPamentVoResultMap">
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="custNo" column="CUST_NO"/>
+		<result property="custName" column="CUST_NAME"/>
+		<result property="supplyNo" column="SUPPLY_NO"/>
+		<result property="goodsMoney" column="GOODS_MONEY"/>
+		<result property="payDate" column="PAY_DATE"/>
+		<result property="billNo" column="BILL_NO"/>		
+		<result property="billDate" column="BILL_DATE"/>
+	</resultMap>
+	<sql id="allColumns">
+	TABLE_KEY,
+	ORDER_NO,
+CUST_NO,
+CUST_NAME,
+SUPPLY_NO,
+GOODS_MONEY,
+PAY_DATE,
+BILL_NO,
+BILL_DATE
+	</sql>
+	<insert id="save" parameterClass="com.hansy.portal.model.vo.TBusPamentVo">
+		insert into T_BUS_PAYMENT(<include refid="allColumns"/>) values
+			(
+			#tableKey#,
+			#orderNo#,  
+	         #custNo#,  
+	         #custName#,  
+	         #supplyNo#,  
+	         #goodsMoney#,  
+	         #payDate#,  
+	         #billNo#,  
+	         #billDate#
+	         ) 
+	</insert>
+	<insert id="savePament" parameterClass="java.util.List">
+        insert all 
+         <iterate conjunction=" ">
+         	into T_BUS_PAYMENT(<include refid="allColumns"/>) values 
+	           		  (#orderList[].tableKey#,
+	           		  #orderList[].orderNo#,
+	           		  #orderList[].custNo#,  
+	             	  #orderList[].custName#,  
+	                  #orderList[].supplyNo#,  
+	                  #orderList[].goodsMoney#,  
+	                  #orderList[].payDate#,  
+	                  #orderList[].billNo#,  
+	                  #orderList[].billDate#
+	                  ) 
+	      </iterate > 
+	       select * from dual 
+	       <iterate conjunction="">
+	       		
+	       </iterate>
+	</insert>
+	
+	<delete id="delete" parameterClass="string">
+		delete from T_BUS_PAYMENT t where t.TABLE_KEY=#tableKey#
+	</delete>
+	
+	
+	<update id="update" parameterClass="com.hansy.portal.model.vo.TBusPamentVo">
+		update T_BUS_PAYMENT t
+		<dynamic prepend="set">  
+            <isNotEmpty property="custNo" prepend=",">  
+                <![CDATA[  
+                    t.CUST_NO = #custNo# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="custName" prepend=",">  
+                <![CDATA[  
+                    t.CUST_NAME = #custName# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="supplyNo" prepend=",">  
+                <![CDATA[  
+                    t.SUPPLY_NO = #supplyNo# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="goodsMoney" prepend=",">  
+                <![CDATA[  
+                    t.GOODS_MONEY = #goodsMoney# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="payDate" prepend=",">  
+                <![CDATA[  
+                    t.PAY_DATE = #payDate# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billNo" prepend=",">  
+                <![CDATA[  
+                    t.BILL_NO = #billNo# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billDate" prepend=",">  
+                <![CDATA[  
+                    t.BILL_DATE = #billDate# 
+                ]]>  
+            </isNotEmpty>  
+        </dynamic> 
+        <dynamic prepend="WHERE">  
+        	t.TABLE_KEY = #tableKey#  
+   		 </dynamic> 
+	</update>
+	
+	
+	<select id = "getBillByOrderNo" parameterClass="map" resultClass="com.hansy.portal.model.vo.TBusPamentVo">
+	select 
+t2.CUST_NO custNo,
+t2.SUPPLY_NO supplyNo,
+t2.BILL_NO billNo,
+t2.BILL_DATE billDate,
+t2.BILL_NATRUE billNatrue,
+t2.BILL_STATUS billStatus,
+t2.BILL_TITLE billTitle,
+t2.COMPANY_NAME companyName,
+t2.BILL_MONEY billMoney,
+t2.BILL_TYPE billType,
+t2.BILL_RECEIVE_NAME billReceiveName,
+t2.BILL_RECEIVE_ADDRESS billReceiveAddress,
+t2.BILL_RECEIVE_MAIL billReceiveMail,
+t2.BILL_RECEIVE_PHONE billReceivePhone,
+t2.LOGISTICS_NAME logisticsName,
+t2.EXPRESS_NUMBER expressNumber,
+t2.INSERT_DATE insertDate
+	from T_BUS_COMPLETE_BILL t2
+  where 1=1
+	  <dynamic prepend="">
+	   <isNotEmpty property="billNo" prepend="and">  
+		                <![CDATA[ 
+		                    t2.BILL_NO = #billNo# 
+		                ]]>  
+	  </isNotEmpty>
+	  
+     <!--   <isNotEmpty property="custNo" prepend="and">  
+		                <![CDATA[ 
+		                    CUST_NO = #custNo# 
+		                ]]>  
+	  </isNotEmpty> -->
+	    <isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+   						 
+		                 t2.BILL_DATE>=  to_date(#startTime#, 'yy-mm-dd')
+		                ]]>  
+	</isNotEmpty>
+	<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					          t2.BILL_DATE< to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+	</isNotEmpty>  
+	<isNotEmpty property="billStatus" prepend="and">
+					    <![CDATA[
+					          t2.BILL_STATUS=#billStatus#
+					    ]]>
+	</isNotEmpty> 
+	<isNotEmpty property="supplyNo" prepend="and">
+					    <![CDATA[
+					          t2.supply_no = #supplyNo#
+					    ]]>
+	</isNotEmpty> 
+	  </dynamic>  
+	 
+	</select>
+	
+	<select id = "getBillByOrderNoTotal" parameterClass="map" resultClass="java.lang.Integer">
+	select 
+count(1)
+	from T_BUS_COMPLETE_BILL t2
+	   where 1=1
+	  <dynamic prepend="">
+	   <isNotEmpty property="billNo" prepend="and">  
+		                <![CDATA[ 
+		                    t2.BILL_NO = #billNo# 
+		                ]]>  
+	  </isNotEmpty>
+	  
+     <!--   <isNotEmpty property="custNo" prepend="and">  
+		                <![CDATA[ 
+		                    CUST_NO = #custNo# 
+		                ]]>  
+	  </isNotEmpty> -->
+	    <isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+   						 
+		                 t2.BILL_DATE>=  to_date(#startTime#, 'yy-mm-dd')
+		                ]]>  
+	</isNotEmpty>
+	<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					          t2.BILL_DATE< to_date(#endTime#, 'yy-mm-dd')
+					    ]]>
+	</isNotEmpty>  
+	<isNotEmpty property="billStatus" prepend="and">
+					    <![CDATA[
+					          t2.BILL_STATUS=#billStatus#
+					    ]]>
+	</isNotEmpty> 
+	<isNotEmpty property="supplyNo" prepend="and">
+					    <![CDATA[
+					          t2.supply_no = #supplyNo#
+					    ]]>
+	</isNotEmpty> 
+	  </dynamic>  
+
+	</select>
+	</sqlMap>

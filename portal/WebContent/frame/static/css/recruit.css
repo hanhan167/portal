@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+/*
+ * 刀具
+ * 招聘
+ * 2017-02-24创建
+ * wanghongyi
+*/
+.centre h1{
+	font-size: 30px;
+    text-align: center;
+}
+.centre h4{
+	color: #03a1a4;
+    text-align: center;
+    font-size: 16px;
+}
+.centre>.content{padding-top: 50px;}
+.centre>.content>p{
+	color: #333333;
+	text-align: center;
+	margin: 48px 0 14px 0;
+}
+.centre>.content>span{
+	font-size: 16px;
+	color: #333333;
+	display: block;
+	text-align: center;
+}
+.relation{text-align: center;}
+.relation:nth-of-type(1){margin: 10px 0 24px 0;}
+.relation:nth-of-type(2){margin: 10px 0 100px 0;}
+.relation>span{
+	font-size: 30px;
+	color: #03A1A4;
+}
+article{padding-bottom: 80px;}
+article>h1{margin-bottom: 30px;}
+article>span{
+	display: block;
+	margin-bottom: 10px;
+}
+article>ol{
+	padding-left: 20px;
+	list-style-type: decimal;
+}
+article>ol>li{margin-bottom: 10px;}
+article>ol:nth-of-type(1){margin-bottom: 36px;}

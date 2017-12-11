@@ -1,0 +1,68 @@
+@CHARSET "UTF-8";
+/*
+ * 刀具
+ * 公司简介
+ * 2017-02-24创建
+ * wanghongyi
+*/
+.centre>.content>h1{
+	font-size: 30px;
+	color: #333333;
+	padding: 50px 0 16px 0;
+	text-align: center;
+}
+.centre>.content>h4{
+	color: #03A1A4;
+	margin-bottom: 70px;
+	text-align: center;
+}
+.centre>.content>img{
+	float: left;
+	height: 300px;
+	width: 300px;
+	background: #fff;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 1);
+    border-radius:5px;
+}
+.article{
+	margin: 0 0 40px 60px;
+	float: left;
+	display: table;
+	width: 630px;
+}
+.article>article{
+	margin-bottom: 55px;
+	line-height: 24px;
+}
+.article>h2{
+	color: #03A1A4;
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+.article>h2>img{
+	margin-right: 14px;
+}
+.article>span{
+	color: #03A1A4;
+	display: block;
+	margin: 0 18px 18px 53px;
+}
+.article .pre>pre{
+	line-height:150%;
+	font-size:18px;
+}
+.article>p{
+	margin-bottom: 12px;
+	margin-left: 53px;
+    font-size: 16px;
+}
+.article>p>img{
+	margin-right: 8px;
+}
+form input{
+	margin-bottom: 14px;
+}
+.pre{
+	min-height: 355px;
+	font-size: 16px;
+}

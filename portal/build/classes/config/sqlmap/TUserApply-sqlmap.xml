@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="userApply">
+	<resultMap class="com.hansy.portal.model.vo.TUserApplyVo" id="userApplyVoResultMap">
+		<result property="applyNo" column="apply_no"/>
+		<result property="custNo" column="cust_no"/>
+		<result property="custName" column="cust_name"/>
+		<result property="userType" column="user_type"/>
+		<result property="certNo" column="cert_no"/>
+		<result property="applyCustNo" column="apply_cust_no"/>
+		<result property="applyCustName" column="apply_cust_name"/>
+		<result property="aprovResult" column="aprov_result"/>
+		<result property="aprovRemark" column="aprov_remark"/>
+		<result property="aprovDate" column="aprov_date"/>
+		<result property="aprovStaffNo" column="aprov_staff_no"/>
+		<result property="aprovStaffName" column="aprov_staff_name"/>
+		<result property="aprovDecision" column="aprov_decision"/>
+		<result property="aprovStatus" column="aprov_status"/>
+		<result property="applyDate" column="apply_date"/>
+		<result property="regDate" column="reg_date"/>
+	</resultMap>
+ 	<insert id="insert" parameterClass="com.hansy.portal.model.vo.TUserApplyVo">
+ 		insert into t_user_apply(apply_no,cust_no,cust_name,user_type,cert_no,apply_cust_no,apply_cust_name,aprov_result,aprov_remark,aprov_date,aprov_staff_no,aprov_staff_name,aprov_decision,aprov_status,apply_date,reg_date) values 
+	 	(#applyNo#,				    
+			#custNo#, 				    
+			#custName#,				  
+			#userType#,				  
+			#certNo#, 				    
+			#applyCustNo#,		    
+			#applyCustName#,	    
+			#aprovResult#,		    
+			#aprovRemark#,		    
+			#aprovDate#,			    
+			#aprovStaffNo#, 	    
+			#aprovStaffName#,    
+			#aprovDecision#,	    
+			#aprovStatus#, 		  
+			#applyDate#,			    
+			#regDate#
+ 		)
+ 	</insert>
+ 	
+ 	<insert id="insertFlowInfo" parameterClass="com.hansy.portal.model.vo.TFlowTaskInfoVo">
+ 		insert into t_flow_task_info
+ 		(TASK_NO,
+		   FLOW_NO,
+		   BUSI_KEY,
+		   TASK_DESC,
+		   INSERT_USER,
+		   INSERT_USER_NAME,
+		   INSERT_TIME,
+		   TASK_STATE,
+		   BUSI_KEY1,
+		   BUSI_KEY2) 
+		values
+		(#taskNo#,
+		   #flowNo#,
+		   #busiKey#,
+		   #taskDesc#,
+		   #insertUser#,
+		   #insertUserName#,
+		   #insertTime#,
+		   #taskState#,
+		   #busiKey1#,
+		   #busiKey2#
+		)
+ 	</insert>
+ 	
+ 	<sql id="flowLogColumns">
+ 		   TABLE_KEY,
+		   TASK_NO,
+		   RECT_NAME,
+		   RECT_STATE,
+		   RECT_ORDER,
+		   DEAL_USER,
+		   DEAL_USER_NAME,
+		   DEAL_ROLE,
+		   TAKE_TIME,
+		   FINISH_TIME,
+		   RECT_TYPE,
+		   DEAL_COMMENT,
+		   DEAL_RESULT,
+		   DEAL_PAGE,
+		   DEAL_DECISION,
+		   REJECT_COMMENT,
+		   INSERT_TIME,
+		   UPDATE_USER,
+		   UPDATE_USER_NAME
+ 	</sql>
+ 	
+ 	<insert id="insertFlowLog" parameterClass="java.util.List">
+ 		insert all 
+         <iterate conjunction=" ">
+         	into t_flow_task_log(<include refid="flowLogColumns"/>) values 
+	           		 	 (#param[].tableKey#,                      
+		                  #param[].taskNo#,        
+		                  #param[].rectName#,      
+		                  #param[].rectState#,     
+		                  #param[].rectOrder#,     
+		                  #param[].dealUser#,      
+		                  #param[].dealUserName#, 
+		                  #param[].dealRole#, 
+						  #param[].takeTime#,       
+                       	  #param[].finishTime#,     
+                       	  #param[].rectType#,       
+                       	  #param[].dealComment#,    
+                       	  #param[].dealResult#,      
+                       	  #param[].dealPage#,       
+                          #param[].dealDecision#,   
+                          #param[].rejectComment#,  
+                          #param[].insertTime#,     
+                          #param[].updateUser#,     
+                          #param[].updateUserName#
+                           ) 
+	      </iterate > 
+	       select * from dual 
+ 	</insert>
+</sqlMap>

@@ -1,0 +1,51 @@
+/*
+ * 刀具
+ * 首页css
+ * 2017-02-14
+ * wanghongyi
+*/
+
+.publicity{
+	height: 380px;
+}
+.character{
+	display:table;
+	margin: 35px auto 26px; 
+}
+.character>h1{
+	color: #333;
+	display: block;
+	font-size: 30px;
+	margin: 0 auto 16px auto;
+}
+.character>span{
+	color: #03A1A4;
+	display: block;
+	text-align: center;
+}
+.module{
+	display:table;
+}
+.module>div{
+	float: left;
+}
+.module>div>span{
+	color:#333;
+	display: block;
+	margin: 20px auto 50px auto;
+	text-align: center;
+}
+.module2{
+	margin: 0 39px;
+}
+.module .print{
+	background-color:#fff;
+	border-radius: 6px;
+	display:table;
+	height: 110px;
+	width: 304px;
+}
+.module .print>img{
+	display: block;
+	margin: 21px auto;
+}

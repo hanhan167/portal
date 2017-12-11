@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="busBill1">
+	<resultMap class="com.hansy.portal.model.vo.TBusBillVo" id="busBillVoResultMap">
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="billType" column="BILL_TYPE"/>
+		<result property="billTitle" column="BILL_TITLE"/>
+		<result property="billReceipt" column="BILL_RECEIPT"/>
+		<result property="billContent" column="BILL_CONTENT"/>
+		<result property="billReceivePhone" column="BILL_RECEIVE_PHONE"/>
+		<result property="billReceiveAddress" column="BILL_RECEIVE_ADDRESS"/>		
+		<result property="billStatus" column="BILL_STATUS"/>
+		<result property="insertDate" column="INSERT_DT"/>
+		<result property="updateDate" column="UPDATE_DT"/>
+		<result property="billMoney" column="BILL_MONEY"/>
+		<result property="custNo" column="CUST_NO"/>
+		<result property="companyName" column="COMPANY_NAME"/>
+		<result property="registerAddress" column="REGISTER_ADDRESS"/>
+		<result property="registerPhone" column="REGISTER_PHONE"/>
+		<result property="openBand" column="OPEN_BAND"/>
+		<result property="bandCard" column="BAND_CARD"/>
+		<result property="billReceiveName" column="BILL_RECEIVE_NAME"/>
+		<result property="billReceiveMail" column="BILL_RECEIVE_MAIL"/>
+	</resultMap>
+	<sql id="allColumns">
+		ORDER_NO ,
+	BILL_TYPE,
+	BILL_TITLE,
+	BILL_RECEIPT,
+	BILL_CONTENT,
+	BILL_RECEIVE_PHONE,
+	BILL_RECEIVE_ADDRESS,
+	BILL_STATUS,
+	INSERT_DT,
+	UPDATE_DT,
+	BILL_MONEY,
+	CUST_NO,
+	COMPANY_NAME,
+REGISTER_ADDRESS,
+REGISTER_PHONE,
+OPEN_BAND,
+BAND_CARD,
+BILL_RECEIVE_NAME,
+BILL_RECEIVE_MAIL
+	
+	</sql>
+	<insert id="save" parameterClass="com.hansy.portal.model.vo.TBusBillVo">
+		insert into T_BUS_BILL(<include refid="allColumns"/>) values
+			(#orderNo#,  
+	         #billType#,  
+	         #billTitle#,  
+	         #billReceipt#,  
+	         #billContent#,  
+	         #billReceivePhone#,  
+	         #billReceiveAddress#,  
+	         #billStatus#,  
+	         #insertDate#, 
+	         #updateDate#, 
+	         #billMoney#,
+	         #custNo#,
+	         #companyName#,
+	         #registerAddress#,
+	         #registerPhone#,
+	         #openBand#,
+	         #bandCard#,
+	         #billReceiveName#,
+	          #billReceiveMail#
+	         ) 
+	</insert>
+	
+	<select id = "getBillByOrderNo" parameterClass="map" resultClass="com.hansy.portal.model.vo.TBusBillVo">
+	select 
+	ORDER_NO orderNo,
+	BILL_TYPE billType,
+	BILL_TITLE billTitle,
+	BILL_RECEIPT billReceipt,
+	BILL_CONTENT billContent,
+	BILL_RECEIVE_PHONE billReceivePhone,
+	BILL_RECEIVE_ADDRESS billReceiveAddress,
+	BILL_STATUS billStatus,
+	INSERT_DT insertDate,
+	UPDATE_DT updateDate,
+	BILL_MONEY billMoney,
+	CUST_NO custNo,
+	COMPANY_NAME companyName,
+REGISTER_ADDRESS registerAddress,
+REGISTER_PHONE registerPhone,
+OPEN_BAND openBand,
+BAND_CARD bandCard,
+BILL_RECEIVE_NAME billReceiveName,
+BILL_RECEIVE_MAIL billReceiveMail
+	from T_BUS_BILL where 1=1
+	 <dynamic prepend="">
+	   <isNotEmpty property="orderNo" prepend="and">  
+		                <![CDATA[ 
+		                    ORDER_NO = #orderNo# 
+		                ]]>  
+	  </isNotEmpty>
+       <isNotEmpty property="custNo" prepend="and">  
+		                <![CDATA[ 
+		                    CUST_NO = #custNo# 
+		                ]]>  
+	  </isNotEmpty>
+	    <isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                   INSERT_DT>= #startTime#
+		                ]]>  
+	</isNotEmpty>
+	<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					        INSERT_DT< #endTime#
+					    ]]>
+	</isNotEmpty>  
+	  </dynamic> 
+	</select>
+	
+	<select id = "getBillByOrderNoTotal" parameterClass="map" resultClass="java.lang.Integer">
+	select 
+	count(1)
+	from T_BUS_BILL where 1=1
+	 <dynamic prepend="">
+	   <isNotEmpty property="orderNo" prepend="and">  
+		                <![CDATA[ 
+		                    ORDER_NO = #orderNo# 
+		                ]]>  
+	  </isNotEmpty>
+       <isNotEmpty property="custNo" prepend="and">  
+		                <![CDATA[ 
+		                    CUST_NO = #custNo# 
+		                ]]>  
+	  </isNotEmpty>
+	    <isNotEmpty property="startTime" prepend="and">
+   						  <![CDATA[ 
+		                   INSERT_DT>= #startTime#
+		                ]]>  
+	</isNotEmpty>
+	<isNotEmpty property="endTime" prepend="and">
+					    <![CDATA[
+					        INSERT_DT< #endTime#
+					    ]]>
+	</isNotEmpty>  
+	  </dynamic> 
+	</select>
+	</sqlMap>

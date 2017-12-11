@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig  PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="true"  
+       maxRequests="32" maxSessions="10" maxTransactions="5" useStatementNamespaces="true" />
+    <sqlMap resource="config/sqlmap/TUserBaseInfo-sqlmap.xml" />
+    <sqlMap resource="config/sqlmap/TUserApply-sqlmap.xml" />
+    <sqlMap resource="config/sqlmap/TUserEnterInfo-sqlmap.xml" />
+    <sqlMap resource="config/sqlmap/TUserAddress-sqlmap.xml" />
+    <sqlMap resource="config/sqlmap/TUserPersonInfo-sqlmap.xml" />
+    <sqlMap resource="config/sqlmap/TUserGrade-sqlmap.xml" />
+    <sqlMap resource="config/sqlmap/SysLibrary-sqlmap.xml" />
+    <sqlMap resource="config/sqlmap/TUserBill-sqlmap.xml"/> 
+     <sqlMap resource="config/sqlmap/TUserLoginLog-sqlmap.xml"/> 
+     <sqlMap resource="config/sqlmap/TBusCompleteBill-sqlmap.xml"/> 
+     <sqlMap resource="config/sqlmap/TBusPament-sqlmap.xml"/> 
+</sqlMapConfig>
+
+

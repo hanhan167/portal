@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="userAddress">
+	<resultMap class="com.hansy.portal.model.vo.TUserAddressVo" id="userAddressVoResultMap">
+		<result property="tableKey" column="table_key"/>
+		<result property="userNo" column="user_no"/>
+		<result property="userName" column="user_name"/>
+		<result property="addresseeName" column="addressee_name"/>
+		<result property="addressNo" column="address_no"/>
+		<result property="address" column="address"/>
+		<result property="province" column="province"/>		
+		<result property="city" column="city"/>	
+		<result property="area" column="area"/>
+		<result property="street" column="street"/>
+		<result property="telephone" column="telephone"/>
+		<result property="postCode" column="post_code"/>
+		<result property="addressStatus" column="address_status"/>
+		<result property="status" column="status"/>
+		<result property="insertDate" column="insert_date"/>
+		<result property="updateDate" column="update_date"/>
+	</resultMap>
+	
+	<!-- 新增收货地址 -->
+	<insert id="insert" parameterClass="com.hansy.portal.model.vo.TUserAddressVo">
+		insert into t_user_address (table_key,user_no,user_name,addressee_name,address_no,address,province,city,area,street,telephone,post_code,address_status,status,insert_date,update_date) values(
+			#tableKey#, 		
+			#userNo#, 			
+			#userName#,			
+			#addresseeName#,
+			#addressNo#, 		
+			#address#, 			
+			#province#, 		
+			#city#,					
+			#area#,					
+			#street#,				
+			#telephone#,		
+			#postCode#, 		
+			#addressStatus#,
+			#status#, 			
+			#insertDate#,		
+			#updateDate#
+		)
+	</insert>
+	
+	<!-- 根据用户编号查询 -->
+	<select id="selectByUserNo" parameterClass="java.lang.String" resultMap="userAddressVoResultMap">
+		select * from t_user_address t where t.user_no=#custNo# order by t.insert_Date desc
+	</select>
+	
+	<!-- 根据用户编号查询 总记录数-->
+	<select id="selectCountByUserNo" parameterClass="java.lang.String" resultClass="java.lang.Integer">
+		select count(1) from t_user_address t where t.user_no=#custNo# 
+	</select>
+	
+	<!-- 根据主键查询 -->
+	<select id="getByTableKey" parameterClass="string" resultMap="userAddressVoResultMap">
+		select * from t_user_address t where t.table_key=#tableKey# 
+	</select>
+	
+	<delete id="delete" parameterClass="string">
+		delete from t_user_address t where t.table_key=#tableKey#
+	</delete>
+	
+	<!-- 把原先默认地址改为非默认地址 -->
+	<update id="updateAddressNo" parameterClass="java.util.Map">
+		update t_user_address t set t.address_status=#statusNo# where t.table_key=(select a.table_key from t_user_address a where a.address_status=#status# and user_no=#custNo#)
+	</update>
+	
+	<!-- 设置默认地址 -->
+	<update id="updateAddress" parameterClass="java.util.Map">
+		update t_user_address t set t.address_status=#status# where t.table_key=#tableKey#
+	</update>
+	<!-- 更新 -->
+	<update id="update" parameterClass="com.hansy.portal.model.vo.TUserAddressVo">
+		update t_user_address t
+		<dynamic prepend="set">  
+            <isNotEmpty property="addresseeName" prepend=",">  
+                <![CDATA[ 
+                    t.addressee_name = #addresseeName# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="addressNo" prepend=",">  
+                <![CDATA[  
+                    t.address_no = #addressNo# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="address" prepend=",">  
+                <![CDATA[  
+                    t.address = #address# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="province" prepend=",">  
+                <![CDATA[  
+                    t.province = #province# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="city" prepend=",">  
+                <![CDATA[  
+                    t.city = #city# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="area" prepend=",">  
+                <![CDATA[  
+                    t.area = #area# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="street" prepend=",">  
+                <![CDATA[  
+                    t.street = #street# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="telephone" prepend=",">  
+                <![CDATA[  
+                    t.telephone = #telephone# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="postCode" prepend=",">  
+                <![CDATA[  
+                    t.post_code = #postCode# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="addressStatus" prepend=",">  
+                <![CDATA[  
+                    t.address_status = #addressStatus# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="status" prepend=",">  
+                <![CDATA[  
+                    t.status = #status# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="updateDate" prepend=",">  
+                <![CDATA[  
+                    t.update_date = #updateDate# 
+                ]]>  
+            </isNotEmpty>  
+        </dynamic> 
+        <dynamic prepend="WHERE">  
+        	t.table_key = #tableKey#  
+   		 </dynamic> 
+	</update>
+</sqlMap>

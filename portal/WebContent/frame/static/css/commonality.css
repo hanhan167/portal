@@ -1,0 +1,167 @@
+/*
+ * 閸掞拷鍙�
+ * 閸忣剙鍙�
+ * 2017-02-21
+ * wanghongyi
+*/
+/* 閸掓繂顫愰崠锟�*/
+body,h1,h2,h3,h4,h5,h6,hr,p,
+dl,dt,dd,ul,ol,li,
+pre,
+form,fieldset,legend,button,input,textarea,
+th,td,img{
+	border: medium none;
+	margin: 0;
+	padding: 0;
+}
+body,button,input,select,textarea,p,li,th,td{font: 14px "瀹嬩綋";}
+/* h1,h2,h3,h4,h5,h6{font-size: 100%;} */
+ul,ol{list-style: none;}
+a,a:hover{text-decoration: none; color: #000;cursor:pointer;}
+img{border: none;}
+table{border-collapse: collapse;border-spacing: 0;}
+pre{
+	white-space: pre-wrap;       
+	white-space: -moz-pre-wrap;  
+	white-space: -pre-wrap;      
+	white-space: -o-pre-wrap;    
+	word-wrap: break-word;       
+}
+/* 閸掓繂顫愰崠鏉刵d */
+
+.head{/*妞ゅ爼鍎�*/
+	background: #000 \9;
+	background:linear-gradient(#363636, #1a1a1a);;
+	height: 48px;
+	width: 100%;
+	min-width: 990px;
+}
+.content{
+	width: 990px;
+	margin: 0 auto;
+}
+.head ul li{
+	float: left;
+    line-height: 48px;
+    text-align: center;
+    width: 80px;
+}
+/* 澶撮儴瀵艰埅鏍忛�変腑鐨凜SS */
+.header-cur{
+	background:#fff;
+    filter: Alpha(Opacity=15);
+	background:rgba(255, 255, 255, 0.15);
+}
+.head ul>li>a{
+	color: #FFFFFF;
+	width: 60px;
+    height: 48px;
+    display: block;
+}
+#loginName0{width:100px}
+.head #login li a{height: 34px;}
+#login li{
+	height: 34px;
+	line-height: 34px;
+	width: 60px;
+	margin-top: 7px;
+	border-radius: 3px;
+}
+#login li:nth-of-type(1){
+	background-color: #03A1A4;
+	margin-right: 10px;
+}
+#login li:nth-of-type(2){background-color: #fff;}
+#login li:nth-of-type(2) a{color: #000;}
+ul#login,
+ul#loginOut{
+	float: right;
+	display: none;
+}
+ul#loginOut>li:nth-of-type(4){
+	background: url("../img/arrow_down.png") no-repeat center right;
+}
+.centre{/*娑擃參妫�*/
+	background-color: rgb(230,230,230);
+	min-width: 990px;
+}
+.centre .content{display: table;}
+.base{/*鎼存洟鍎�*/
+	border-top: 1px solid rgb(220,220,220);
+    height: 100px;
+    width: 100%;
+    min-width: 990px;
+    background: #fff;
+}
+.base .content{
+	text-align: center;
+	margin-top: 20px;
+}
+.base .content div{height: 26px;}
+.preview{margin: 0 0 14px 0;}
+.fillet{
+	background: #03A1A4;
+	border-radius: 4px;
+	float:left;
+	height: 40px;
+	width: 234px;
+	color: #FFFFFF;
+	margin-left: 215px;
+}
+#loginOut .personage_overview{
+	background-color: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    display: none;
+    height: 166px;
+    width: 272px;
+    position: absolute;
+    text-align: left;
+    line-height: 16px;
+}
+#loginOut li:HOVER .personage_overview{display: block;}
+#first{
+	border-bottom: 1px solid #e5e5e5;
+	height: 85px;
+	padding: 0 24px;
+}
+#first>.portrait{
+	float: left;
+	height: 60px;
+	width: 60px;
+	margin: 12px 10px 0 0;
+}
+#first>.portrait>img{
+	height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+#first>img{
+	float:left;
+    margin: 10px 0 5px 0
+}
+#first>h3{
+	display:block;
+	margin: 20px 0 0 0;
+	font-weight: normal;
+}
+#first>.exit{
+	float:left;
+    color: #333;
+    margin: 10px 0 5px 10px
+}
+#second{
+	border-bottom: 1px solid #E5E5E5;
+	height: 40px;
+	line-height: 40px;
+	padding: 0 24px;
+}
+#thirdly{
+	line-height: 38px;
+	padding: 0 24px;
+}
+#second>span:nth-of-type(2),
+#thirdly>span:nth-of-type(2){
+	float: right;
+    line-height: 40px;
+    color: #ec7720;
+}

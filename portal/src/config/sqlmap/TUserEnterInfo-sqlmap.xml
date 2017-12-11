@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="userEnterInfo">
+	<resultMap class="com.hansy.portal.model.vo.TUserEnterInfoVo" id="userEnterInfoVoResultMap">
+		<result property="custNo" column="cust_no"/>
+		<result property="custName" column="cust_name"/>
+		<result property="regNo" column="reg_no"/>
+		<result property="orgNo" column="org_no"/>
+		<result property="faxNo" column="fax_no"/>
+		<result property="regType" column="reg_type"/>
+		<result property="certBeginDt" column="cert_begin_dt"/>
+		<result property="certEndDt" column="cert_end_dt"/>
+		<result property="scale" column="scale"/>
+		<result property="legalPerson" column="legal_person"/>
+		<result property="legalCertType" column="legal_cert_type"/>
+		<result property="legalCertNo" column="legal_cert_no"/>
+		<result property="baseAcctOrg" column="base_acct_org"/>
+		<result property="baseAcctNo" column="base_acct_no"/>
+		<result property="baseAcctName" column="base_acct_name"/>
+		<result property="annualInspDt" column="annual_insp_dt"/>
+		<result property="changeDt" column="change_dt"/>
+		<result property="regCapital" column="reg_capital"/>
+		<result property="regAddress" column="reg_address"/>
+		<result property="regCurrency" column="reg_currency"/>
+		<result property="paidInCapital" column="paid_in_capital"/>
+		<result property="paidCurrency" column="paid_currency"/>
+		<result property="bizAddress" column="biz_address"/>
+		<result property="branchCnt" column="branch_cnt"/>
+		<result property="insertDate" column="insert_date"/>
+		<result property="updateDate" column="update_date"/>
+		
+	</resultMap>
+ 	<insert id="insert" parameterClass="com.hansy.portal.model.vo.TUserEnterInfoVo">
+		insert into t_user_enter_info (
+		    cust_no,        
+			cust_name,      
+			reg_no,         
+			org_no,         
+			fax_no,         
+			reg_type,       
+			cert_begin_dt,  
+			cert_end_dt,    
+			scale ,         
+			legal_person ,  
+			legal_cert_type,
+			legal_cert_no,  
+			base_acct_org , 
+			base_acct_no ,  
+			base_acct_name, 
+			annual_insp_dt,
+			change_dt ,     
+			reg_capital,   
+			reg_address,   
+			reg_currency ,  
+			paid_in_capital,
+			paid_currency , 
+			biz_address,    
+			branch_cnt,     
+			insert_date,    
+			update_date ) values(
+			#custNo#, 				
+			#custName#, 			
+			#regNo#, 					
+			#orgNo#, 					
+			#faxNo#, 					
+			#regType#,				
+			#certBeginDt#, 		
+			#certEndDt#, 			
+			#scale#, 					
+			#legalPerson#, 		
+			#legalCertType#, 	
+			#legalCertNo#, 		
+			#baseAcctOrg#,		
+			#baseAcctNo#, 		
+			#baseAcctName#, 	
+			#annualInspDt#,		
+			#changeDt#, 			
+			#regCapital#, 		
+			#regAddress#, 		
+			#regCurrency#, 		
+			#paidInCapital#, 	
+			#paidCurrency#,		
+			#bizAddress#, 		
+			#branchCnt#, 			
+			#insertDate#, 		
+			#updateDate# 		
+			)
+	</insert>
+ 	
+</sqlMap>

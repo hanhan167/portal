@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="userBill">
+	<resultMap class="com.hansy.portal.model.vo.TUserBillVo" id="userBillResultMap">
+		<result property="custNo" column="CUST_NO"/>
+		<result property="billType" column="BILL_TYPE"/>
+		<result property="billTitle" column="BILL_TITLE"/>
+		<result property="billReceipt" column="BILL_RECEIPT"/>
+		<result property="billContent" column="BILL_CONTENT"/>
+		<result property="billReceivePhone" column="BILL_RECEIVE_PHONE"/>
+		<result property="billReceiveAddress" column="BILL_RECEIVE_ADDRESS"/>		
+		<result property="billStatus" column="BILL_STATUS"/>
+		<result property="insertDate" column="INSERT_DT"/>
+		<result property="updateDate" column="UPDATE_DT"/>
+		<result property="billMoney" column="BILL_MONEY"/>
+		<result property="companyName" column="COMPANY_NAME"/>
+		<result property="registerAddress" column="REGISTER_ADDRESS"/>
+		<result property="registerPhone" column="REGISTER_PHONE"/>
+		<result property="openBand" column="OPEN_BAND"/>
+		<result property="bandCard" column="BAND_CARD"/>
+		<result property="billReceiveName" column="BILL_RECEIVE_NAME"/>
+		<result property="billReceiveMail" column="BILL_RECEIVE_MAIL"/>
+	</resultMap>
+	<sql id="allColumns">
+		CUST_NO,
+	BILL_TYPE,
+	BILL_TITLE,
+	BILL_RECEIPT,
+	BILL_CONTENT,
+	BILL_RECEIVE_PHONE,
+	BILL_RECEIVE_ADDRESS,
+	BILL_STATUS,
+	INSERT_DT,
+	UPDATE_DT,
+	BILL_MONEY,
+	COMPANY_NAME,
+REGISTER_ADDRESS,
+REGISTER_PHONE,
+OPEN_BAND,
+BAND_CARD,
+BILL_RECEIVE_NAME,
+BILL_RECEIVE_MAIL
+	
+	</sql>
+	<insert id="save" parameterClass="com.hansy.portal.model.vo.TUserBillVo">
+		insert into T_USER_BILL(<include refid="allColumns"/>) values
+			( #custNo#,  
+	         #billType#,  
+	         #billTitle#,  
+	         #billReceipt#,  
+	         #billContent#,  
+	         #billReceivePhone#,  
+	         #billReceiveAddress#,  
+	         #billStatus#,  
+	         #insertDate#, 
+	         #updateDate#, 
+	         #billMoney#,
+	         #companyName#,
+	         #registerAddress#,
+	         #registerPhone#,
+	         #openBand#,
+	         #bandCard#,
+	         #billReceiveName#,
+	          #billReceiveMail#
+	         ) 
+	</insert>
+	<delete id="delete" parameterClass="string">
+		delete from T_USER_BILL t where t.CUST_NO=#custNo#
+	</delete>
+	<update id="update" parameterClass="com.hansy.portal.model.vo.TUserBillVo">
+		update T_USER_BILL t
+		<dynamic prepend="set">  
+            <isNotEmpty property="billType" prepend=",">  
+                <![CDATA[  
+                    t.BILL_TYPE = #billType# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billTitle" prepend=",">  
+                <![CDATA[  
+                    t.BILL_TITLE = #billTitle# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billReceipt" prepend=",">  
+                <![CDATA[  
+                    t.BILL_RECEIPT = #billReceipt# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billContent" prepend=",">  
+                <![CDATA[  
+                    t.BILL_CONTENT = #billContent# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billReceivePhone" prepend=",">  
+                <![CDATA[  
+                    t.BILL_RECEIVE_PHONE = #billReceivePhone# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billReceiveAddress" prepend=",">  
+                <![CDATA[  
+                    t.BILL_RECEIVE_ADDRESS = #billReceiveAddress# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billStatus" prepend=",">  
+                <![CDATA[  
+                    t.BILL_STATUS = #billStatus# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="insertDate" prepend=",">  
+                <![CDATA[  
+                    t.INSERT_DT = #insertDate# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="updateDate" prepend=",">  
+                <![CDATA[  
+                    t.UPDATE_DT = #updateDate# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="billMoney" prepend=",">  
+                <![CDATA[  
+                    t.BILL_MONEY = #billMoney# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="companyName" prepend=",">  
+                <![CDATA[  
+                    t.COMPANY_NAME = #companyName# 
+                ]]>  
+            </isNotEmpty>  
+            <isNotEmpty property="registerAddress" prepend=",">  
+                <![CDATA[  
+                    t.REGISTER_ADDRESS = #registerAddress# 
+                ]]>  
+            </isNotEmpty> 
+            <isNotEmpty property="registerPhone" prepend=",">  
+                <![CDATA[  
+                    t.REGISTER_PHONE = #registerPhone# 
+                ]]>  
+            </isNotEmpty> 
+            <isNotEmpty property="openBand" prepend=",">  
+                <![CDATA[  
+                    t.OPEN_BAND = #openBand# 
+                ]]>  
+            </isNotEmpty> 
+            <isNotEmpty property="bandCard" prepend=",">  
+                <![CDATA[  
+                    t.BAND_CARD = #bandCard# 
+                ]]>  
+            </isNotEmpty> 
+            <isNotEmpty property="billReceiveName" prepend=",">  
+                <![CDATA[  
+                    t.BILL_RECEIVE_NAME = #billReceiveName# 
+                ]]>  
+            </isNotEmpty> 
+            <isNotEmpty property="billReceiveMail" prepend=",">  
+                <![CDATA[  
+                    t.BILL_RECEIVE_MAIL = #billReceiveMail# 
+                ]]>  
+            </isNotEmpty> 
+        </dynamic> 
+        <dynamic prepend="WHERE">  
+        	t.CUST_NO = #custNo#  
+   		 </dynamic> 
+	</update>
+		<!-- 根据主键查询 -->
+	<select id="getByTableKey" parameterClass="string" resultMap="userBillResultMap">
+		select *
+		from T_USER_BILL t where t.CUST_NO=#custNo# 
+	</select>	
+	</sqlMap>

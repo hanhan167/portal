@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="userGrade">
+	<resultMap class="com.hansy.portal.model.vo.TUserGradeVo" id="userGradeVoResultMap">
+		<result property="custNo" column="cust_no"/>
+		<result property="custName" column="cust_name"/>
+		<result property="userType" column="user_type"/>
+		<result property="gradeNo" column="grade_no"/>
+		<result property="insertDate" column="insert_date"/>
+		<result property="updateDate" column="update_date"/>
+	</resultMap>
+	
+	<insert id="insert" parameterClass="com.hansy.portal.model.vo.TUserGradeVo">
+		insert into t_user_grade (cust_no,cust_name,user_type,grade_no,insert_date,update_date) values(
+			#custNo#, 			
+			#custName#, 		
+			#userType#,			
+			#gradeNo#,			
+			#insertDate#,			
+			#updateDate# 	
+		)
+	</insert>
+</sqlMap>

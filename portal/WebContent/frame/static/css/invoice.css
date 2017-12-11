@@ -1,0 +1,152 @@
+/* ∑¢∆±π‹¿Ì */
+.bgfff{background-color:#fff}
+.invoiceContennt,.invoiceContenntTop{width:735px;};
+.clearFix:after{content:"";display:block;height:"0";clear:both;visibility:hidden}
+.invoiceContennt .invoiceTop,.invoiceContenntTop .invoiceTop{margin-bottom:20px;overflow:hidden}
+.invoiceContennt h4,.invoiceContenntTop h4{
+	color: #03A1A4;
+    float:left;
+    line-height: 33px;
+    margin-bottom:5px!important
+}
+.invoiceContennt .callBackList{
+	border:none;
+	height:auto!important;
+	float: right;
+	background-color: #03A1A4;
+	color: #fff;
+	padding:5px 10px;
+	border-radius:3px;
+	margin-top: 0;
+}
+.invoiceMangeSearch{color:#5c5c5c;font-size:14px;font-weight:normal;overflow:hidden;background-color:#fff;padding:5px}
+.invoiceMangeSearch .groupInput{float:left;padding-right:15px;}
+.groupInput label{padding-right:5px;font-weight:normal;display:inline-block!important;width:auto!important;margin-bottom:0}
+.groupInput input{width:120px;}
+.groupInput input,.groupInput select{display:inline-block;border:solid 1px #d2d2d2;padding:3px 5px;border-radius:3px}
+.invoiceMangeSearch .search,.kaiInvoice .search{display:inline-block;cursor:pointer;width:38px;height:29px;;background:url(../img/search.png) no-repeat center;background-size:22px 22px; }
+
+.invoiceCont{margin:10px 0}
+.invoiceCont table{background-color:#fff}
+.invoiceCont table tr td:first-child{color:#ed6e0f}
+
+.js_invoice,.xq_invoice{height:22px!important;border:none;padding:3px 8px;margin:0!important;font-size:12px;border-radius:3px;}
+.js_invoice{background-color:#f2782b!important;color:#fff}
+
+.pageTotall {background-color:#fff;padding:0 10px;overflow:hidden}
+.pageTotall #page_list{width:70%;float:right}
+.pageTotall .totalPage{font-size:14px;float:left;line-height:35px;margin:8px 0}
+
+#page_list .layui-laypage,#pageNo_list1 .layui-laypage{float:right}
+#pageNo_list1{margin-top:10px}
+.invoiceXq .xqInvoiceTop{
+	padding:8px 5px;
+	font-size:14px;
+	line-height:24px;
+	background-color:#fff
+}
+
+.invoiceXq .xqInvoiceTop .title{font-weight:bold}
+.invoiceXq .xqInvoiceTop .tips{color:#eb6c0b}
+.invoicelistItem{border-bottom:solid 1px #e6e6e6;margin-top:10px;background-color:#fff;color:#494949;line-height:34px;overflow:hidden;padding:0 5px;}
+.invoicelistItem .fl_tit{float:left}
+.invoicelistItem .fr_money{float:right}
+.money{color:#ef7c2c}
+.invoiceXq table{background-color:#fff;margin-bottom:0}
+.invoiceXq table.listNO tr td{border:none}
+.a2{color:#2aa7ab;font-weight:bold}
+
+.invoiceTopNav{overflow:hidden}
+.invoiceTopNav .handle_teap{
+	color:#fff;
+	font-size:14px;
+	line-height:32px;
+	text-align:center;
+	width:183.7px;
+	float:left;
+	background-color:#03a1a4;
+	position:relative;
+}
+.invoiceTopNav .handle_teap.active{
+	background-color:#26c4c7
+}
+.invoiceTopNav .handle_teap i{
+	display:block;
+	height:32px;
+	width:22px;
+	position:absolute;
+	top:0;
+	right:-12px;
+	background:url(../img/lined.png) no-repeat center;
+	z-index:22;
+}
+.invoiceMiddleTitle,.invoiceMiddleTitle1,.invoiceMiddleTitle2{
+	margin-top:15px;
+}
+.invoiceMiddleTitle .kaiInvoice,.invoiceMiddleTitle1 .kaiInvoice{padding:5px;border-bottom:solid 1px #e6e6e6;background-color:#fff;}
+.kaiInvoice .groupInput{display:inline-block}
+.kaiInvoice .groupInput label{width:90px!important;text-align:left}
+.kaiInvoice .search{position:relative;top:10px;left:0px;}
+
+.invoiceContTitle{font-size:14px;line-height:22px;padding:5px;margin-top:10px;background-color:#fff;overflow:hidden}
+
+.invoiceContTitle .amt_all{float:left}
+.invoiceContTitle .amt_all_now{float:right}
+.invoiceContTitle .pics{color:#a4a4a4}
+
+.invoiceMangeList{background-color:#fff;margin-top:10px;margin-bottom:10px;}
+.invoiceMangePageList,.invoiceMangePageList2{background-color:#fff;padding:0 5px;overflow:hidden;}
+.invoiceMangeList input,.invoiceMangePageList2 input{width:auto;height:auto;margin:0;margin-top:4px}
+
+.invoiceMangePageList p,.invoiceMangePageList2 p{line-height:48px}
+.invoiceMangePageList p,.invoiceMangePageList #page_list,.invoiceMangePageList2 p,.invoiceMangePageList2 #page_list{float:left;margin-right:10px;}
+.invoiceMangePageList button.goInvoice,.invoiceMangePageList2 button.goInvoice,#goInvoiceWC{
+	float:right;
+	height: 32px!important;line-height:32px;
+    border: none;
+    padding: 0 8px;
+    margin: 10px 0 0!important;
+    font-size: 12px;
+    border-radius: 3px;
+}
+#goInvoiceWC{margin:0!important;padding:0 30px}
+.fll{float:left}
+.flr{float:right}
+
+.go_invoiceBill_title{margin-top:20px}
+.go_invoiceBill_table{margin-top:10px}
+.go_invoiceBill_title .line-title{
+	overflow:hidden;
+	font-size:14px;
+	padding:8px 15px;
+	border-bottom:solid 1px #f1f1f1
+}
+.go_invoiceBill_title .line-title p{
+	padding-left:30px;
+}
+.go_invoiceBill_title .line-title p:first-child{padding-left:0}
+.go_invoiceBill_table table{margin-bottom:7px}
+.go_invoiceBill_table table tr th{text-align:right}
+
+.go_invoiceBill_table table tr th.align{text-align:left}
+table.table tr:hover{background-color:#f1f1f1}
+
+
+.layer-public-style{padding:5px 10px}
+.invoiceMangeCount3 .go_invoiceBill_table{padding:5px 10px}
+
+.invoiceMangeCount3 .go_invoiceBill_table input,.invoiceMangeCount3 .go_invoiceBill_table select{height:34px}
+.invoiceMangeCount3 .go_invoiceBill_table label{margin-top:5px}
+
+
+
+
+
+
+
+
+
+
+
+
+

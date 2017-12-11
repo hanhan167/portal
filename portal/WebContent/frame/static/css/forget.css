@@ -1,0 +1,55 @@
+@CHARSET "UTF-8";
+/*
+ * 2017-0227创建
+ * wanghongyi
+ * 忘记密码
+ */
+h4{
+	font-size: 24px;
+	font-weight: normal;
+	color: #03A1A4;
+	text-align: center;
+}
+.form-forget{
+	width:400px;
+	margin: 130px auto;
+}
+form label{
+	display: block;
+	float: left;
+	height: 34px;
+	line-height: 34px;
+	width: 80px;
+	text-align: right;
+}
+form .phone{
+	margin-top:20px;
+}
+form .phone input{
+	height: 34px;
+	width: 234px;
+	border: 1px solid #D2D2D2;
+}
+.proving{
+	margin: 14px 0 0px 0;
+}
+form .proving input{
+	border: 1px solid #D2D2D2;
+	float: left;
+	height: 34px;
+	width: 120px;
+	margin-right: 10px;
+}
+form .proving img{
+	height: 34px;
+	width: 104px;
+}
+form .proving a{
+	margin-left: 14px;
+	position: relative;
+	bottom: 12px;
+	color: #EC7720;
+}
+.fillet{
+	margin-left: 80px;
+}

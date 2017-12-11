@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="userLoginLog">
+	<resultMap class="com.hansy.portal.model.vo.TUserLoginLog" id="userLoginResultMap">
+		<result property="tableKey" column="TABLE_KEY"/>
+		<result property="custNo" column="CUST_NO"/>
+		<result property="loginDate" column="LOGIN_DATE"/>
+		<result property="loginIp" column="LOGIN_IP"/>
+	</resultMap>
+<sql id="allColumns">
+		TABLE_KEY,
+	CUST_NO,
+	LOGIN_DATE,
+	LOGIN_IP
+	</sql>
+	<insert id="save" parameterClass="com.hansy.portal.model.vo.TUserLoginLog">
+		insert into T_USER_LOGIN_LOG(<include refid="allColumns"/>) values
+			(#tableKey#,  
+	         #custNo#,  
+	         #loginDate#,  
+	         #loginIp#
+	         ) 
+	</insert>
+	</sqlMap>
