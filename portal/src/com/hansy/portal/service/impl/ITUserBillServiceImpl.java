@@ -58,6 +58,7 @@ public class ITUserBillServiceImpl extends BaseDao implements ITUserBillService{
 		BusinessMap<Object> bMap=new BusinessMap<Object>();
 		try {
 			TUserBillVo tUserBill=(TUserBillVo) getSqlMapClientTemplate().queryForObject("userBill.getByTableKey", id);
+			System.out.println(tUserBill.toString());
 			bMap.setInfoBody(tUserBill);
 		} catch (Exception e) {
 			bMap.setIsSucc(false);

@@ -401,6 +401,7 @@ public class TUserBaseInfoServiceImpl extends BaseDao implements ITUserBaseInfoS
 		//获取pager后的list
 		try {
 			list=getSqlMapClientTemplate().queryForList("userBaseInfo.getMyOrderNoBillDetail", map, (pager.getPageNo()-1)*pager.getPageSize(), pager.getPageSize());
+			System.out.println(list.toString());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

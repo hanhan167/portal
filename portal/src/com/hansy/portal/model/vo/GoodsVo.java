@@ -75,5 +75,16 @@ public class GoodsVo {
 		this.guigee = guigee;
 	}
 	
+	@Override
+	public String toString() {
+		return "GoodsVo [goodsName=" + goodsName + ", totalAmt=" + totalAmt
+				+ ", totalNum=" + totalNum + ", guigee=" + guigee
+				+ ", orderNo=" + orderNo + ", updateDate=" + updateDate
+				+ ", orderType=" + orderType + ", custNo=" + custNo
+				+ ", custName=" + custName + ", phone=" + phone + "]";
+	}
+	
+	
+	
 }
 
