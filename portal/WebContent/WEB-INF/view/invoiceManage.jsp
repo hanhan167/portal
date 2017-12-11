@@ -78,9 +78,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr>
 					<td><input type="checkbox" id="checkAll"></td>
 					<td>订单编号</td>
-					<td>类型</td>
+					<td>发票类型</td>
 					<td>总额</td>
 					<td>订单日期</td>
+					<td>收票地址</td>
 				</tr>
 			</table>
 			<div class="invoiceMangePageList">

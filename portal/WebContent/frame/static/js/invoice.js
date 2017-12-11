@@ -5,6 +5,21 @@ var dict = {
 	"logisticsName":{"1":"圆通快递","2":"中通快递","3":"申通快递","4":"韵达快递","5":"顺丰快递","6":"邮政快递","20":"其它"},
 	"orderType":{"091001":"试刀","091002":"购买"}
 };
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
 var custCat = {};
 var invoice = {
 	//开票列表查询
@@ -306,6 +321,7 @@ var invoice = {
 	        	layer.close(before);
 	        	var row = data.obj.rows;
 	        	if(data.success){
+	        		debugger;
 	        		var html=[];
 	        		var check = ""
 	        		if(row.length >0){
@@ -319,9 +335,16 @@ var invoice = {
 	        				
 	        				html.push("<tr data-order='"+row[j].orderNo+"' data-custno='"+row[j].custNo+"' data-amt='"+row[j].totalAmt+"' data-custName='"+row[j].custName+"'><td><input type='checkbox' "+check+"></td>");
 	        				html.push("<td>"+row[j].orderNo+"</td>");	
-	        				html.push("<td>"+dict['orderType'][row[j].orderType]+"</td>");	
-	        				html.push("<td class='money'>￥"+row[j].totalAmt+"</td>");	
-	        				html.push("<td>"+row[j].updateDate+"</td></tr>");	
+	        				if(row[j].billType == "01"){
+	        					html.push("<td>普通发票</td>");	
+	        				}else if(row[j].billType == "02"){
+	        					html.push("<td>增值税发票</td>");	
+	        				}else{
+	        					html.push("<td>无法识别</td>");	
+	        				}
+	        				html.push("<td class='money'>￥"+row[j].billMoney+"</td>");	
+	        				html.push("<td>"+new Date( row[j].startTime).Format("yy-MM-dd hh:mm")+"</td>");	
+	        				html.push("<td>"+row[j].billReceiveAddress+"</td></tr>");	
 	        				
 	        			}
 	        			$invoice.nextAll().remove();

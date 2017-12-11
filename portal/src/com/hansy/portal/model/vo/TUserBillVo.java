@@ -131,22 +131,5 @@ public class TUserBillVo {
 		this.billReceiveMail = billReceiveMail;
 	}
 	
-	@Override
-	public String toString() {
-		return "TUserBillVo [custNo=" + custNo + ", billType=" + billType
-				+ ", billTitle=" + billTitle + ", billReceipt=" + billReceipt
-				+ ", billContent=" + billContent + ", billReceivePhone="
-				+ billReceivePhone + ", billReceiveAddress="
-				+ billReceiveAddress + ", billStatus=" + billStatus
-				+ ", insertDate=" + insertDate + ", updateDate=" + updateDate
-				+ ", billMoney=" + billMoney + ", companyName=" + companyName
-				+ ", registerAddress=" + registerAddress + ", registerPhone="
-				+ registerPhone + ", openBand=" + openBand + ", bandCard="
-				+ bandCard + ", billReceiveName=" + billReceiveName
-				+ ", billReceiveMail=" + billReceiveMail + "]";
-	}
-	
-	
-	
 }
 

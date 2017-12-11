@@ -21,6 +21,11 @@
 		<result property="bandCard" column="BAND_CARD"/>
 		<result property="billReceiveName" column="BILL_RECEIVE_NAME"/>
 		<result property="billReceiveMail" column="BILL_RECEIVE_MAIL"/>
+		<result property="billNatrue" column="BILL_NATRUE"/>
+		<result property="supplyNo" column="SUPPLY_NO"/>
+		<result property="tableKey" column="TABLE_KEY"/>
+		<result property="startTime" column="START_TIME"/>
+		<result property="endTime" column="END_TIME"/>
 	</resultMap>
 	<sql id="allColumns">
 		ORDER_NO ,
@@ -36,14 +41,19 @@
 	BILL_MONEY,
 	CUST_NO,
 	COMPANY_NAME,
-REGISTER_ADDRESS,
-REGISTER_PHONE,
-OPEN_BAND,
-BAND_CARD,
-BILL_RECEIVE_NAME,
-BILL_RECEIVE_MAIL
-	
+	REGISTER_ADDRESS,
+	REGISTER_PHONE,
+	OPEN_BAND,
+	BAND_CARD,
+	BILL_RECEIVE_NAME,
+	BILL_RECEIVE_MAIL,
+	BILL_NATRUE,
+	SUPPLY_NO,
+	START_TIME,
+	END_TIME,
+	TABLE_KEY
 	</sql>
+	
 	<insert id="save" parameterClass="com.hansy.portal.model.vo.TBusBillVo">
 		insert into T_BUS_BILL(<include refid="allColumns"/>) values
 			(#orderNo#,  
@@ -64,13 +74,24 @@ BILL_RECEIVE_MAIL
 	         #openBand#,
 	         #bandCard#,
 	         #billReceiveName#,
-	          #billReceiveMail#
+	          #billReceiveMail#,
+	          #billNatrue#,
+	          #supplyNo#,
+	          #startTime#,
+	          #endTime#,
+	          #tableKey#
 	         ) 
 	</insert>
 	
-	<select id = "getBillByOrderNo" parameterClass="map" resultClass="com.hansy.portal.model.vo.TBusBillVo">
+	
+	<select id = "getBillByCustNo" parameterClass="map" resultClass="com.hansy.portal.model.vo.TBusBillVo">
 	select 
 	ORDER_NO orderNo,
+	BILL_NATRUE billNatrue,
+	SUPPLY_NO supplyNo,
+	START_TIME startTime,
+	END_TIME endTime,
+	TABLE_KEY tableKey,
 	BILL_TYPE billType,
 	BILL_TITLE billTitle,
 	BILL_RECEIPT billReceipt,
@@ -96,11 +117,16 @@ BILL_RECEIVE_MAIL billReceiveMail
 		                    ORDER_NO = #orderNo# 
 		                ]]>  
 	  </isNotEmpty>
-       <isNotEmpty property="custNo" prepend="and">  
-		                <![CDATA[ 
-		                    CUST_NO = #custNo# 
-		                ]]>  
-	  </isNotEmpty>
+        <isNotEmpty property="supplyNo" prepend="and">
+   						  <![CDATA[ 
+   						   SUPPLY_NO = #supplyNo#
+		                ]]>
+			</isNotEmpty>
+        <isNotEmpty property="custNos" prepend="and">
+   						  <![CDATA[ 
+   						   CUST_NO = #custNos#
+		                ]]>
+			</isNotEmpty>
 	    <isNotEmpty property="startTime" prepend="and">
    						  <![CDATA[ 
 		                   INSERT_DT>= #startTime#
@@ -111,6 +137,16 @@ BILL_RECEIVE_MAIL billReceiveMail
 					        INSERT_DT< #endTime#
 					    ]]>
 	</isNotEmpty>  
+	<isNotEmpty property="startAmt" prepend="and">
+					    <![CDATA[
+					         BILL_MONEY >= #startAmt#
+					    ]]>
+			</isNotEmpty>	
+				<isNotEmpty property="endAmt" prepend="and">
+					    <![CDATA[
+					         BILL_MONEY < #endAmt#
+					    ]]>
+			</isNotEmpty>
 	  </dynamic> 
 	</select>
 	

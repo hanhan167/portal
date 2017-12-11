@@ -20,6 +20,7 @@
 		<result property="bandCard" column="BAND_CARD"/>
 		<result property="billReceiveName" column="BILL_RECEIVE_NAME"/>
 		<result property="billReceiveMail" column="BILL_RECEIVE_MAIL"/>
+		<result property="billNatrue" column="BILL_NATRUE"/>
 	</resultMap>
 	<sql id="allColumns">
 		CUST_NO,
