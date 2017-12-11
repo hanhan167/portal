@@ -3,10 +3,15 @@ package com.hansy.portal.model.vo;
 
 import java.util.Date;
 
+/**
+ * 客户发票信息表
+ * @author Administrator
+ *
+ */
 public class TUserBillVo {
 	private String custNo;//商户编号
-	private String billType;//发票类型普通发票,电子发票,增值税发票
-	private String billTitle;//发票抬头,个人，公司
+	private String billType;//发票类型:01普通发票,02增值税发票
+	private String billTitle;//发票抬头,001个人，002公司
 	private String billReceipt;//纳税人识别号
 	private String billContent;//发票内容
 	private String billReceivePhone;//收票人手机号
@@ -22,6 +27,10 @@ public class TUserBillVo {
 	private String  bandCard;//银行卡
 	private String	billReceiveName;//收票人姓名
 	private String billReceiveMail;//收票人邮箱
+	private Date startTime;
+	private Date endTime;
+	private String billNatrue;//发票状态 "0":"电子发票","1":"纸质发票"
+	
 	public String getCustNo() {
 		return custNo;
 	}
@@ -130,6 +139,44 @@ public class TUserBillVo {
 	public void setBillReceiveMail(String billReceiveMail) {
 		this.billReceiveMail = billReceiveMail;
 	}
+	public Date getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+	public Date getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+	
+	public String getBillNatrue() {
+		return billNatrue;
+	}
+	public void setBillNatrue(String billNatrue) {
+		this.billNatrue = billNatrue;
+	}
+	@Override
+	public String toString() {
+		return "TUserBill [custNo=" + custNo + ", billType=" + billType
+				+ ", billTitle=" + billTitle + ", billReceipt=" + billReceipt
+				+ ", billContent=" + billContent + ", billReceivePhone="
+				+ billReceivePhone + ", billReceiveAddress="
+				+ billReceiveAddress + ", billStatus=" + billStatus
+				+ ", insertDate=" + insertDate + ", updateDate=" + updateDate
+				+ ", billMoney=" + billMoney + ", companyName=" + companyName
+				+ ", registerAddress=" + registerAddress + ", registerPhone="
+				+ registerPhone + ", openBand=" + openBand + ", bandCard="
+				+ bandCard + ", billReceiveName=" + billReceiveName
+				+ ", billReceiveMail=" + billReceiveMail + ", startTime="
+				+ startTime + ", endTime=" + endTime + ", billNatrue="
+				+ billNatrue + "]";
+	}
+
+	
+	
 	
 }
 

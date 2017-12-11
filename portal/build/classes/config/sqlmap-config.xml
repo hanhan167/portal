@@ -14,6 +14,7 @@
      <sqlMap resource="config/sqlmap/TUserLoginLog-sqlmap.xml"/> 
      <sqlMap resource="config/sqlmap/TBusCompleteBill-sqlmap.xml"/> 
      <sqlMap resource="config/sqlmap/TBusPament-sqlmap.xml"/> 
+     <sqlMap resource="config/sqlmap/TBusBill-sqlmap.xml"/> 
 </sqlMapConfig>
 
 
