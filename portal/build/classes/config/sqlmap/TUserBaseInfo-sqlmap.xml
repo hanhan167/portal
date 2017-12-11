@@ -1434,7 +1434,7 @@ SELECT SUM(GOODS_MONEY) totalAmt, ORDER_NO orderNo, UPDATE_DATE updateDate, ORDE
        GROUP BY goods_no
     )t1
   LEFT JOIN DATA_CP t2
-  ON t2.id = t1.gg
+  ON t2.CPDM = t1.gg
   LEFT JOIN data_cpmls p
   ON p.code = t2.code
 		</select>
@@ -1451,7 +1451,7 @@ SELECT SUM(GOODS_MONEY) totalAmt, ORDER_NO orderNo, UPDATE_DATE updateDate, ORDE
        GROUP BY goods_no
     )t1
   LEFT JOIN DATA_CP t2
-  ON t2.id = t1.gg
+  ON t2.CPDM = t1.gg
   LEFT JOIN data_cpmls p
   ON p.code = t2.code
 		</select>
