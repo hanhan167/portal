@@ -103,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 		
-		<div class="invoiceMangeCount2 invoiceTeap hidden">
+	<!-- 	<div class="invoiceMangeCount2 invoiceTeap hidden">
 			<div class="go_invoiceBill_title bgfff">
 				<div class="line-title">
 					<p class="fll">税务号：<span class="bandCard">--</span></p>
@@ -130,9 +130,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div id="page_list"></div>
 				<button class="goInvoice" id="goInvoiceQR">确定</button>
 			</div>
-		</div>
+		</div> -->
 		
-		<div class="invoiceMangeCount3 invoiceTeap hidden">
+		<div class="invoiceMangeCount3 invoiceTeap hidden"><!-- invoiceMangeCount2 invoiceTeap hidden -->
 			<div class="go_invoiceBill_title bgfff">
 				<div class="line-title">
 					<p class="fll">发票编号：<span class="billNo">--</span></p>
@@ -190,12 +190,13 @@ $(function(){
 		if(custNo != ""){
 			$(".invoiceMiddleTitle").attr("data-custno",custNo).removeClass("hidden").siblings(".invoiceTeap").addClass("hidden");
 			$(".invoiceTopNav .handle_teap").eq(1).addClass("active").siblings(".handle_teap").removeClass("active");
-			invoice.invoiceManageList();
+			invoice.goInvoice();
 			custCat = {};
 		}
 	});
 	
 	$("#invoice_search1").click(function(){
+		
 		invoice.invoiceManageListUser();
 	});
 	
