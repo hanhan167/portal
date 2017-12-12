@@ -422,14 +422,14 @@ public class TUserBaseInfoServiceImpl extends BaseDao implements ITUserBaseInfoS
 		List<GoodsVo> list=new ArrayList<GoodsVo>();
 		//获取pager后的list
 		try {
-			list=getSqlMapClientTemplate().queryForList("userBaseInfo.getOrderCustName", map, (pager.getPageNo()-1)*pager.getPageSize(), pager.getPageSize());
+			list=getSqlMapClientTemplate().queryForList("busBill1.getOrderCustName", map, (pager.getPageNo()-1)*pager.getPageSize(), pager.getPageSize());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		//获取总记录数
 				int count=0;
 				try {
-					count=(int) getSqlMapClientTemplate().queryForObject("userBaseInfo.getOrderCustNameTotal", map);
+					count=(int) getSqlMapClientTemplate().queryForObject("busBill1.getOrderCustNameTotal", map);
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}
