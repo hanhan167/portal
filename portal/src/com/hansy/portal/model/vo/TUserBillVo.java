@@ -22,9 +22,19 @@ public class TUserBillVo {
 	private String  bandCard;//银行卡
 	private String	billReceiveName;//收票人姓名
 	private String billReceiveMail;//收票人邮箱
+	private String billNatrue;//类型
 	public String getCustNo() {
 		return custNo;
 	}
+	
+	public String getBillNatrue() {
+		return billNatrue;
+	}
+
+	public void setBillNatrue(String billNatrue) {
+		this.billNatrue = billNatrue;
+	}
+
 	public void setCustNo(String custNo) {
 		this.custNo = custNo;
 	}
