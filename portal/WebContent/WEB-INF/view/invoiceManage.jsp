@@ -25,8 +25,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="invoiceTopNav">
 			<div class="handle_teap teatpde1 active">1、选择用户<i>&nbsp;</i></div>
 			<!-- <div class="handle_teap teatpde1">2、选择订单开票<i>&nbsp;</i></div> -->
-			<div class="handle_teap teatpde2">2、开票信息、开票编号<i>&nbsp;</i></div>
-			<div class="handle_teap teatpde3">3、发票地址、快递单号</div>
+			<div class="handle_teap teatpde1">2、开票信息、开票编号<i>&nbsp;</i></div>
+			<div class="handle_teap teatpde2">3、发票地址、快递单号</div>
 		</div>
 		
 		<div class="invoiceMiddleTitle1 invoiceTeap">
@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 		
-		<div class="invoiceMiddleTitle invoiceTeap hidden">
+	<!-- 	<div class="invoiceMiddleTitle invoiceTeap hidden">
 			<div class="kaiInvoice">
 				<div class="groupInput">
 					<label>订单成功时间</label>
@@ -101,9 +101,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div id="page_list"></div>
 				<button class="goInvoice" id="goInvoice">去开票</button>
 			</div>
-		</div>
-		
-	<!-- 	<div class="invoiceMangeCount2 invoiceTeap hidden">
+		</div> -->
+		<!-- invoiceMangeCount2 invoiceTeap hidden -->
+		<div class="invoiceMiddleTitle invoiceTeap hidden">
 			<div class="go_invoiceBill_title bgfff">
 				<div class="line-title">
 					<p class="fll">税务号：<span class="bandCard">--</span></p>
@@ -130,9 +130,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div id="page_list"></div>
 				<button class="goInvoice" id="goInvoiceQR">确定</button>
 			</div>
-		</div> -->
+		</div>
 		
-		<div class="invoiceMangeCount3 invoiceTeap hidden"><!-- invoiceMangeCount2 invoiceTeap hidden -->
+		<div class="invoiceMangeCount3 invoiceTeap hidden">
 			<div class="go_invoiceBill_title bgfff">
 				<div class="line-title">
 					<p class="fll">发票编号：<span class="billNo">--</span></p>

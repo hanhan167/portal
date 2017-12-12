@@ -409,9 +409,8 @@ var invoice = {
 		objs.pageNo = pageNo;
 		/*if(JSON.stringify(data) == "{}"){
 			layer.msg("请选择订单！");
-		}else{
-			$(".invoiceMangeCount2").removeClass("hidden").siblings(".invoiceTeap").addClass("hidden");
-			$(".invoiceTopNav .handle_teap").eq(2).addClass("active").siblings(".handle_teap").removeClass("active");
+		}else{*/
+			//$(".invoiceTopNav .handle_teap").eq(2).addClass("active").siblings(".handle_teap").removeClass("active");
 			
 			
 			objs.pageNo = pageNo;
@@ -425,7 +424,7 @@ var invoice = {
 			objs.orderNo = orderNo;
 			objs.custNos = custNo;
 			
-			$(".go_invoiceBill_title p span.money").text("￥"+allAmt);*/
+			$(".go_invoiceBill_title p span.money").text("￥"+allAmt);
 			
 			$.ajax({
 				url: "user/getMyOrderNoBillDetail.do",
