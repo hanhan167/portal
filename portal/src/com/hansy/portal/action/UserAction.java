@@ -1131,7 +1131,7 @@ public class UserAction {
 		//开发票(第三步)
 		@RequestMapping("/getMyOrderNoBillDetail")
 		@ResponseBody
-		public BaseReslt<Object> getMyOrderNoBillDetail(Integer pageNo,HttpSession session,String custNos,String orderNo)throws Exception{
+		public BaseReslt<Object> getMyOrderNoBillDetail(Integer pageNo,HttpSession session,String custNos,String orderNo,String applyNo)throws Exception{
 		BaseReslt<Object> bReslt=new BaseReslt<Object>();
 			if (pageNo==null) {
 			pageNo=1;
@@ -1142,11 +1142,11 @@ public class UserAction {
 			pager.setPageNo(pageNo);
 			pager.setPageSize(pageSize);
 			//发票单位的custNo查询出地址
-			BusinessMap<Object> bMap1=itUserBillService.getById(custNos);
-			String orderNos[] = orderNo.split(",");
+			BusinessMap<Object> bMap1=itUserBillService.getById(applyNo);
+//			String orderNos[] = orderNo.split(",");
 			Map<String, Object>map =new HashMap<>();
-			String checkIdArray[] = null;
-			String checkIds = "";
+//			String checkIdArray[] = null;
+			/*String checkIds = "";
 			if(!StringUtil.isEmpty(orderNo)){
 				checkIdArray = orderNo.split(",");
 				for(int i = 0; i < checkIdArray.length; i++){
@@ -1155,9 +1155,9 @@ public class UserAction {
 				checkIds = checkIds.substring(0, checkIds.length()-1);
 			}else{
 				checkIds = "''";
-			}
+			}*/
 			
-			map.put("spplyNo", checkIds);
+			map.put("applyNo", applyNo);
 			Pager resultPage=baseInfoService.getMyOrderNoBillDetail(map, pager);
 			bReslt.setObj(resultPage);
 			map.clear();
