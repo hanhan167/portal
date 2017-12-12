@@ -266,7 +266,7 @@ var invoice = {
 	        		var check = ""
 	        		if(row.length >0){
 	        			for(var j=0;j<row.length;j++){
-	        				html.push("<tr data-custno='"+row[j].custNo+"'>");
+	        				html.push("<tr data-custno='"+row[j].applyNo+"'>");
 	        				html.push("<td>"+row[j].custName+"</td>");		
 	        				html.push("<td>"+row[j].phone+"</td>");	
 	        				html.push("<td>"+row[j].applyNo+"</td></tr>");	
@@ -299,12 +299,13 @@ var invoice = {
 	},
 	invoiceManageList:function(pageNo){
 		var data  = invoice.getInputVal2();
+		
 		var $invoice = $(".invoiceMiddleTitle.invoiceTeap tr:first");
 		data.custNos = $(".invoiceMiddleTitle.invoiceTeap").attr("data-custno");
+		alert(data.custNos);
 		var before;
 		pageNo = pageNo || 1;
 		data.pageNo = pageNo;
-		data.billNatrue = $('#chooseFpType option:selected').val();
 		$.ajax({
 			url: "user/getMyOrderNoBill.do",
 	        type: "post",
@@ -396,21 +397,23 @@ var invoice = {
 	},
 	//去开票
 	goInvoice:function(pageNo){
+		debugger;
 		var $invoice = $(".invoiceMangeCount2 .go_invoiceBill_table tr:first");
 		var before;
-		
 		var data  = custCat;
 		var objs = {};
 		//选择多个买家
-		
-		
-		if(JSON.stringify(data) == "{}"){
+		applyNo = $(".invoiceMiddleTitle.invoiceTeap").attr("data-custno");
+		pageNo = pageNo || 1;
+		objs.applyNo = applyNo;
+		objs.pageNo = pageNo;
+		/*if(JSON.stringify(data) == "{}"){
 			layer.msg("请选择订单！");
 		}else{
 			$(".invoiceMangeCount2").removeClass("hidden").siblings(".invoiceTeap").addClass("hidden");
 			$(".invoiceTopNav .handle_teap").eq(2).addClass("active").siblings(".handle_teap").removeClass("active");
 			
-			pageNo = pageNo || 1;
+			
 			objs.pageNo = pageNo;
 			var orderNo = custNo ="";
 			var allAmt = 0;
@@ -422,7 +425,7 @@ var invoice = {
 			objs.orderNo = orderNo;
 			objs.custNos = custNo;
 			
-			$(".go_invoiceBill_title p span.money").text("￥"+allAmt);
+			$(".go_invoiceBill_title p span.money").text("￥"+allAmt);*/
 			
 			$.ajax({
 				url: "user/getMyOrderNoBillDetail.do",
@@ -479,7 +482,7 @@ var invoice = {
 		        	$invoice.after("<tr align='center'><td colspan='3'>查询失败！</td></tr>");
 		        }
 			});
-		}
+		/*}*/
 	},
 	//确认开票
 	goInvoiceQR:function(){
