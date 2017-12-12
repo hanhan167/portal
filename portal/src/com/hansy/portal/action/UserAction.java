@@ -1157,7 +1157,7 @@ public class UserAction {
 				checkIds = "''";
 			}
 			
-			map.put("orderNo", checkIds);
+			map.put("spplyNo", checkIds);
 			Pager resultPage=baseInfoService.getMyOrderNoBillDetail(map, pager);
 			bReslt.setObj(resultPage);
 			map.clear();

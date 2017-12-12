@@ -86,15 +86,12 @@
 	         ) 
 	</insert>
 	
-	
-	<select id = "getBillByCustNo" parameterClass="map" resultClass="com.hansy.portal.model.vo.TBusBillVo">
+	<!-- 获取发票的地址信息 -->
+	<select id = "getByapplyNo" parameterClass="map" resultClass="com.hansy.portal.model.vo.TBusBillVo">
 	select 
-	ORDER_NO orderNo,
-	BILL_NATRUE billNatrue,
-	SUPPLY_NO supplyNo,
-	START_TIME startTime,
-	END_TIME endTime,
-	TABLE_KEY tableKey,
+DISTINCT 
+  BILL_NATRUE billNatrue,
+	APPLY_NO applyNo,
 	BILL_TYPE billType,
 	BILL_TITLE billTitle,
 	BILL_RECEIPT billReceipt,
@@ -102,9 +99,7 @@
 	BILL_RECEIVE_PHONE billReceivePhone,
 	BILL_RECEIVE_ADDRESS billReceiveAddress,
 	BILL_STATUS billStatus,
-	INSERT_DT insertDate,
-	UPDATE_DT updateDate,
-	BILL_MONEY billMoney,
+  SUPPLY_NO supplyNo,
 	CUST_NO custNo,
 	COMPANY_NAME companyName,
 REGISTER_ADDRESS registerAddress,
@@ -113,8 +108,13 @@ OPEN_BAND openBand,
 BAND_CARD bandCard,
 BILL_RECEIVE_NAME billReceiveName,
 BILL_RECEIVE_MAIL billReceiveMail
-	from T_BUS_BILL where 1=1
+	from T_BUS_BILL where 1=1 
 	 <dynamic prepend="">
+	   <isNotEmpty property="applyNo" prepend="and">  
+		                <![CDATA[ 
+		                    APPLY_NO = #applyNo# 
+		                ]]>  
+	  </isNotEmpty>
 	   <isNotEmpty property="orderNo" prepend="and">  
 		                <![CDATA[ 
 		                    ORDER_NO = #orderNo# 
@@ -191,47 +191,26 @@ BILL_RECEIVE_MAIL billReceiveMail
 	  </dynamic> 
 	</select>
 	
-	
-	<!-- 查询客户姓名和电话bycustNo -->
-	<select id = "getOrderCustName" parameterClass="map" resultClass="com.hansy.portal.model.vo.GoodsVo">
-  SELECT 
-  t1.cust_name custName,
-  t1.user_phone phone,
-  apply_no applyNo
-  FROM t_user_base_info t1
-INNER JOIN 
-(SELECT DISTINCT   t.cust_no,t.supply_no,t.apply_no FROM T_BUS_BILL t ) t2
-ON t1.cust_no=t2.cust_no   where 1=1
 
-                             <dynamic prepend="">	
-  <isNotEmpty property="query" prepend="and">
-   						  <![CDATA[ 
-   						    (t2.cust_name  like '%$query$%' or t2.user_phone like '%$query$%')
-		                ]]>
-			</isNotEmpty>
-		</dynamic>
-   
-		</select>
-	<!-- 查询客户姓名和电话bycustNo -->
-	<select id = "getOrderCustNameTotal" parameterClass="map" resultClass="java.lang.Integer">
-        SELECT 	count(DISTINCT T1.apply_no)
-    	FROM 
-    		T_BUS_BILL T1 
-    	join 
-    		T_USER_BASE_INFO T2 
-    	on 
-    		T1.CUST_NO=T2.CUST_NO 
-    	WHERE 
-    		T1.BILL_STATUS = '1'
-                       <dynamic prepend="">	
-  						<isNotEmpty property="query" prepend="and">
-   						  <![CDATA[ 
-   						    (t2.cust_name  like '%$query$%' or t2.user_phone like '%$query$%')
-		                ]]>
-			</isNotEmpty>
-		</dynamic>
-   
-		</select>
+	<!-- 获取发票的商品信息 -->
+	<select id = "getMyOrderNoBillDetail" parameterClass="map" resultClass="com.hansy.portal.model.vo.GoodsVo">
+	SELECT 	t3.GUIGE goodsName,
+			substr(t3.c1,1,INSTR(t3.c1,',',1,3)-1) guigee,
+			SUM(t2.goods_money) totalAmt,
+			SUM(t2.goods_count) totalNum 
+	FROM 
+		( SELECT * FROM T_BUS_BILL t WHERE t.apply_no =#applyNo#) t1
+		LEFT JOIN t_bus_order t2
+		LEFT JOIN data_cp t3
+		ON t3.cpdm=t2.goods_no
+		ON t1.order_no=t2.order_no GROUP BY t3.GUIGE,substr(t3.c1,1,INSTR(t3.c1,',',1,3)-1);
+	</select>
+	
+	
+	
+	
+	
+	
 	
 	
 	</sqlMap>

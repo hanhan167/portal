@@ -4,6 +4,7 @@ package com.hansy.portal.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.hansy.portal.common.BusinessMap;
+import com.hansy.portal.model.vo.TBusBillVo;
 import com.hansy.portal.model.vo.TUserBillVo;
 import com.hansy.portal.service.ITUserBillService;
 import com.hansy.portal.service.base.BaseDao;
@@ -57,12 +58,12 @@ public class ITUserBillServiceImpl extends BaseDao implements ITUserBillService{
 	public BusinessMap<Object> getById(String id) {
 		BusinessMap<Object> bMap=new BusinessMap<Object>();
 		try {
-			TUserBillVo tUserBill=(TUserBillVo) getSqlMapClientTemplate().queryForObject("userBill.getByTableKey", id);
-			System.out.println(tUserBill.toString());
-			bMap.setInfoBody(tUserBill);
+			TBusBillVo tBusBill = (TBusBillVo) getSqlMapClientTemplate().queryForObject("busBill1.getByapplyNo", id);
+			System.out.println(tBusBill.toString());
+			bMap.setInfoBody(tBusBill);
 		} catch (Exception e) {
 			bMap.setIsSucc(false);
-			bMap.setMsg("更新发票地址失败");
+			bMap.setMsg("获取发票地址失败");
 		}
 		bMap.setIsSucc(true);
 		return bMap;

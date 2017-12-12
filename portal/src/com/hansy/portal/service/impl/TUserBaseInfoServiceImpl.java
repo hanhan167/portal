@@ -400,7 +400,7 @@ public class TUserBaseInfoServiceImpl extends BaseDao implements ITUserBaseInfoS
 		List<GoodsVo> list=new ArrayList<GoodsVo>();
 		//获取pager后的list
 		try {
-			list=getSqlMapClientTemplate().queryForList("userBaseInfo.getMyOrderNoBillDetail", map, (pager.getPageNo()-1)*pager.getPageSize(), pager.getPageSize());
+			list=getSqlMapClientTemplate().queryForList("busBill1.getMyOrderNoBillDetail", map, (pager.getPageNo()-1)*pager.getPageSize(), pager.getPageSize());
 			System.out.println(list.toString());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -408,7 +408,8 @@ public class TUserBaseInfoServiceImpl extends BaseDao implements ITUserBaseInfoS
 		//获取总记录数
 		int count=0;
 		try {
-			count=(int) getSqlMapClientTemplate().queryForObject("userBaseInfo.getMyOrderNoBillDetailTotal", map);
+			count=list.size();
+			//count=(int) getSqlMapClientTemplate().queryForObject("busBill1.getMyOrderNoBillDetailTotal", map);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
