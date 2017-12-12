@@ -41,6 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr>
 					<td>用户名称</td>
 					<td>手机号码</td>
+					<td>发票序号</td>
 				</tr>
 			</table>
 			<div class="invoiceMangePageList">
@@ -68,6 +69,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<input style="width:140px" type="text" placeholder="订单编号/客户编号" class="form-type" id="query" name="query">
 				</div>
 				<div class="search" id="invoice_search"></div>
+				<div class="groupInput">
+					<select style="width:140px;height: 28px;" id="chooseFpType" class="form-type" id="query" name="query">
+  					<option value ="2" selected="selected">纸质发票</option>
+  					<option value ="1">电子发票</option>
+					</select>
+				</div>
+				
 			</div>
 			<div class="invoiceContTitle">
 				<div class="amt_all">
@@ -82,6 +90,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>总额</td>
 					<td>订单日期</td>
 					<td>收票地址</td>
+				</tr>
+				<tr>
+				</tr>
+				<tr>
 				</tr>
 			</table>
 			<div class="invoiceMangePageList">
@@ -226,4 +238,11 @@ $(function(){
 		invoice.goInvoiceWC();
 	})
 });
+
+	$("#chooseFpType").change(function(){
+		var chooseVal =  $('#chooseFpType option:selected').val();
+		invoice.invoiceManageList();
+	});
+
+
 </script>

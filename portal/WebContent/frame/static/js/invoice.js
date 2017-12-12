@@ -236,7 +236,6 @@ var invoice = {
 		$(".invoiceMiddleTitle .groupInput").find("input,select").each(function(){
 			data[$(this).attr("name")] = $(this).val();
 		});
-		
 		return data;
 	},
 	invoiceManageListUser:function(pageNo){
@@ -269,7 +268,8 @@ var invoice = {
 	        			for(var j=0;j<row.length;j++){
 	        				html.push("<tr data-custno='"+row[j].custNo+"'>");
 	        				html.push("<td>"+row[j].custName+"</td>");		
-	        				html.push("<td>"+row[j].phone+"</td></tr>");	
+	        				html.push("<td>"+row[j].phone+"</td>");	
+	        				html.push("<td>"+row[j].applyNo+"</td></tr>");	
 	        			}
 	        			$invoice.nextAll().remove();
 	        			$invoice.after(html.join(""));
@@ -277,7 +277,7 @@ var invoice = {
 	        			$(".invoiceMiddleTitle1 .allPage").text(data.obj.total);
 	        			$(".invoiceMiddleTitle1 .perPage").text(data.obj.pageSize);
 	        			invoice.pageListLayUi(data,"page_list3",function(curr){
-	        				invoice.invoiceManageList(curr);
+	        				invoice.invoiceManageListUser(curr);
 	        				$("#checkAll").removeAttr("checked");
 	        			});
 	        		}else{
@@ -304,6 +304,7 @@ var invoice = {
 		var before;
 		pageNo = pageNo || 1;
 		data.pageNo = pageNo;
+		data.billNatrue = $('#chooseFpType option:selected').val();
 		$.ajax({
 			url: "user/getMyOrderNoBill.do",
 	        type: "post",
@@ -400,6 +401,9 @@ var invoice = {
 		
 		var data  = custCat;
 		var objs = {};
+		//选择多个买家
+		
+		
 		if(JSON.stringify(data) == "{}"){
 			layer.msg("请选择订单！");
 		}else{

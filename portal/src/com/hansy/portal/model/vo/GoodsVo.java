@@ -12,7 +12,7 @@ public class GoodsVo {
 	private String custNo;
 	private String custName;
 	private String phone;
-	
+	private String applyNo;//发票序号
 	
 	public String getPhone() {
 		return phone;
@@ -75,13 +75,20 @@ public class GoodsVo {
 		this.guigee = guigee;
 	}
 	
+	public String getApplyNo() {
+		return applyNo;
+	}
+	public void setApplyNo(String applyNo) {
+		this.applyNo = applyNo;
+	}
 	@Override
 	public String toString() {
 		return "GoodsVo [goodsName=" + goodsName + ", totalAmt=" + totalAmt
 				+ ", totalNum=" + totalNum + ", guigee=" + guigee
 				+ ", orderNo=" + orderNo + ", updateDate=" + updateDate
 				+ ", orderType=" + orderType + ", custNo=" + custNo
-				+ ", custName=" + custName + ", phone=" + phone + "]";
+				+ ", custName=" + custName + ", phone=" + phone + ", applyNo="
+				+ applyNo + "]";
 	}
 	
 	

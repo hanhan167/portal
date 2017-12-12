@@ -26,6 +26,7 @@
 		<result property="tableKey" column="TABLE_KEY"/>
 		<result property="startTime" column="START_TIME"/>
 		<result property="endTime" column="END_TIME"/>
+		<result property="applyNo" column="APPLY_NO"/>
 	</resultMap>
 	<sql id="allColumns">
 		ORDER_NO ,
@@ -51,7 +52,8 @@
 	SUPPLY_NO,
 	START_TIME,
 	END_TIME,
-	TABLE_KEY
+	TABLE_KEY,
+	APPLY_NO
 	</sql>
 	
 	<insert id="save" parameterClass="com.hansy.portal.model.vo.TBusBillVo">
@@ -79,7 +81,8 @@
 	          #supplyNo#,
 	          #startTime#,
 	          #endTime#,
-	          #tableKey#
+	          #tableKey#,
+	          #applyNo#
 	         ) 
 	</insert>
 	
@@ -115,6 +118,11 @@ BILL_RECEIVE_MAIL billReceiveMail
 	   <isNotEmpty property="orderNo" prepend="and">  
 		                <![CDATA[ 
 		                    ORDER_NO = #orderNo# 
+		                ]]>  
+	  </isNotEmpty>
+	  <isNotEmpty property="billNatrue" prepend="and">  
+		                <![CDATA[ 
+		                    BILL_NATRUE = #billNatrue# 
 		                ]]>  
 	  </isNotEmpty>
         <isNotEmpty property="supplyNo" prepend="and">
@@ -165,6 +173,11 @@ BILL_RECEIVE_MAIL billReceiveMail
 		                    CUST_NO = #custNo# 
 		                ]]>  
 	  </isNotEmpty>
+	    <isNotEmpty property="billNatrue" prepend="and">  
+		                <![CDATA[ 
+		                    BILL_NATRUE = #billNatrue# 
+		                ]]>  
+	  </isNotEmpty>
 	    <isNotEmpty property="startTime" prepend="and">
    						  <![CDATA[ 
 		                   INSERT_DT>= #startTime#
@@ -177,4 +190,46 @@ BILL_RECEIVE_MAIL billReceiveMail
 	</isNotEmpty>  
 	  </dynamic> 
 	</select>
+	
+	
+	<!-- 查询客户姓名和电话bycustNo -->
+	<select id = "getOrderCustName" parameterClass="map" resultClass="com.hansy.portal.model.vo.GoodsVo">
+   SELECT t1.cust_name custName,
+          t1.user_phone phone,
+          apply_no  applyNo
+      FROM t_user_base_info t1
+INNER JOIN 
+(SELECT DISTINCT   t.cust_no,t.supply_no,t.apply_no FROM T_BUS_BILL t ) t2
+ON t1.cust_no=t2.cust_no  where 1=1
+                             <dynamic prepend="">	
+  <isNotEmpty property="query" prepend="and">
+   						  <![CDATA[ 
+   						    (t2.cust_name  like '%$query$%' or t2.user_phone like '%$query$%')
+		                ]]>
+			</isNotEmpty>
+		</dynamic>
+   
+		</select>
+	<!-- 查询客户姓名和电话bycustNo -->
+	<select id = "getOrderCustNameTotal" parameterClass="map" resultClass="java.lang.Integer">
+        SELECT 	count(DISTINCT T1.apply_no)
+    	FROM 
+    		T_BUS_BILL T1 
+    	join 
+    		T_USER_BASE_INFO T2 
+    	on 
+    		T1.CUST_NO=T2.CUST_NO 
+    	WHERE 
+    		T1.BILL_STATUS = '1'
+                       <dynamic prepend="">	
+  						<isNotEmpty property="query" prepend="and">
+   						  <![CDATA[ 
+   						    (t2.cust_name  like '%$query$%' or t2.user_phone like '%$query$%')
+		                ]]>
+			</isNotEmpty>
+		</dynamic>
+   
+		</select>
+	
+	
 	</sqlMap>
