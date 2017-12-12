@@ -398,9 +398,10 @@ public class TUserBaseInfoServiceImpl extends BaseDao implements ITUserBaseInfoS
 	@Override
 	public Pager getMyOrderNoBillDetail(Map<String, Object> map, Pager pager) {
 		List<GoodsVo> list=new ArrayList<GoodsVo>();
+		String applyNo = (String) map.get("applyNo");
 		//获取pager后的list
 		try {
-			list=getSqlMapClientTemplate().queryForList("busBill1.getMyOrderNoBillDetail", map, (pager.getPageNo()-1)*pager.getPageSize(), pager.getPageSize());
+			list=getSqlMapClientTemplate().queryForList("busBill1.getMyOrderNoBillDetail", applyNo, (pager.getPageNo()-1)*pager.getPageSize(), pager.getPageSize());
 			System.out.println(list.toString());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

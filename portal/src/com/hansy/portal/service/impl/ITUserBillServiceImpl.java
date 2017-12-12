@@ -1,6 +1,9 @@
 
 package com.hansy.portal.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import com.hansy.portal.common.BusinessMap;
@@ -55,10 +58,12 @@ public class ITUserBillServiceImpl extends BaseDao implements ITUserBillService{
 	}
 
 	@Override
-	public BusinessMap<Object> getById(String id) {
+	public BusinessMap<Object> getById(String applyNo) {
 		BusinessMap<Object> bMap=new BusinessMap<Object>();
+		Map<String, Object> map = new HashMap<>();
+		map.put("applyNo", applyNo);
 		try {
-			TBusBillVo tBusBill = (TBusBillVo) getSqlMapClientTemplate().queryForObject("busBill1.getByapplyNo", id);
+			TBusBillVo tBusBill = (TBusBillVo) getSqlMapClientTemplate().queryForObject("busBill1.getByapplyNo", map);
 			System.out.println(tBusBill.toString());
 			bMap.setInfoBody(tBusBill);
 		} catch (Exception e) {
