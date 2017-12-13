@@ -1162,9 +1162,12 @@ public class UserAction {
 	}
 		
 		//开发票第三步骤中保存发票的信息（注意保存的是订单与发票的关联关系，保存的不是最后的开票信息）
-		@RequestMapping("/saveCondition")
+		@RequestMapping(value="/saveConditionBill",method=RequestMethod.POST)
 		@ResponseBody
-		public BaseReslt<Object> saveCondition(HttpSession session,@RequestBody TBusCompleteBillVo tBusCompleteBillVo,String[] billNoArr)throws Exception{
+		public BaseReslt<Object> saveCondition(HttpSession session,String applyNo,String billMoney,String[] billNoArr)throws Exception{
+			System.out.println("进入action..........................................");
+			TBusCompleteBillVo tBusCompleteBillVo = new TBusCompleteBillVo();
+			
 			BaseReslt<Object> bReslt=new BaseReslt<Object>();
 			//以逗号隔开的billNo
 			StringBuffer billNoStr = new StringBuffer();
@@ -1180,10 +1183,12 @@ public class UserAction {
 			
 			TUserBaseInfoBo baseInfoVo=(TUserBaseInfoBo) session.getAttribute("loginUser");
 			String supplyNo = baseInfoVo.getCustNo();
-			String applyNo = tBusCompleteBillVo.getApplyNo();
+			
 			tBusCompleteBillVo = itBusBillService.getInvoiceByApplyNo(applyNo);
 			
 			Date date = new Date();
+			tBusCompleteBillVo.setBillMoney(Double.parseDouble(billMoney.substring(1)));
+			tBusCompleteBillVo.setApplyNo(applyNo);
 			tBusCompleteBillVo.setBillNo(billNoStr.toString());//以逗号隔开的billNo
 			tBusCompleteBillVo.setInsertDate(date);//新增时间
 			tBusCompleteBillVo.setBillDate(date);//开票时间

@@ -76,7 +76,7 @@ public class ITBusBillServiceImpl extends BaseDao implements ITBusBillService{
 		TBusCompleteBillVo tBusCompleteBillVo;
 		try {
 			tBusCompleteBillVo = (TBusCompleteBillVo) getSqlMapClientTemplate()
-					.queryForList("busBill1.getInvoiceByApplyNo", applyNo);
+					.queryForObject("busBill1.getInvoiceByApplyNo", applyNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

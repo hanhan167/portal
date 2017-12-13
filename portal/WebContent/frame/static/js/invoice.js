@@ -473,7 +473,6 @@ var invoice = {
 		        		$(".go_invoiceBill_title p span.registerAddress").text(data.map.address.registerAddress);//注册地址
 		        		if(row.length >0){
 		        			for(var j=0;j<row.length;j++){
-		        				debugger
 			        			html.push("<tr>");
 			        			html.push("<td align='left'>"+row[j].goodsName+"</td>");
 			        			html.push("<td>"+row[j].totalNum+"</td>");	
@@ -544,15 +543,15 @@ var invoice = {
 					
 					var before;
 					$.ajax({
-						url: "user/saveCondition.do",
+						url: "user/saveConditionBill.do",
 				        type: "post",
-				    	dataType: "json", 
 				    	async : false,
 				        cache : false,
 				        traditional: true,
+				  
 				        data:{
 				        	"applyNo":applyNo,
-				        	"totalMoney":totalMoney,
+				        	"billMoney":totalMoney,
 				        	 billNoArr:billNoArr
 				        },
 				        beforeSend:function(){
