@@ -565,31 +565,12 @@ var invoice = {
 				        	layer.close(before);
 				        	if(data.success){
 				        		layer.close(editPwLayer);
-				        		layer.msg("保存成功,跳转中...",{time:1},function(){
-				        			$(".invoiceTopNav .handle_teap").eq(3).addClass("active").siblings(".handle_teap").removeClass("active");
-				        			$(".invoiceMangeCount3").removeClass("hidden").siblings(".invoiceTeap").addClass("hidden");
-				        			
-				        			//快递列表
-				        			invoice.kdDict($("#logisticsName"));
+				        		layer.msg("保存成功,跳转中...",{time:2},function(){
+				        			location.reload();
 				        		});
-				        		$(".invoiceMangeCount3 .billNo").text(data.map.billNo);
-			        			var custNo = data.map.custNo;
-			        			$.ajax({
-		        				url:"user/getByCust.do",
-		        				type:"post",
-		        				data:{custNos:custNo},
-		        				success:function(data){
-		        					$(".invoiceMangeCount3 .billAddr").text(data.obj.billReceiveAddress);
-		        					$(".invoiceMangeCount3 .custName").text(data.obj.billReceiveName+"： ");
-		        					$(".invoiceMangeCount3 .phones").text(data.obj.billReceivePhone);
-		        					$(".invoiceMangeCount3 .billTitle").text(data.obj.billTitle);
-		        				},error:function(e){
-						        	layer.msg("错误，"+e.status);
-						        }
-		        			});
-				        	}else{
+				        		}else{
 				        		layer.msg(data.msg);
-				        	}
+				        		}
 				        },error:function(e){
 				        	layer.close(before);
 				        	layer.msg("错误，"+e.status);
