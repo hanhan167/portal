@@ -38,9 +38,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="groupInput">
 					<label>发票状态</label>
 					<select id="billStatus" name="billStatus">
-						<option value="">全部</option>
-						<option value="0">未寄送</option>
-						<option value="1">已寄送</option>
+						<option value="1">未寄送</option>
+						<option value="2">已寄送</option>
 					</select>
 				</div>
 				<div class="search" id="invoice_search"></div>
@@ -65,10 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 		<div class="invoiceTopNav hidden">
-			<div class="handle_teap teatpde1">1、选择用户<i>&nbsp;</i></div>
-			<div class="handle_teap teatpde1">2、选择订单开票<i>&nbsp;</i></div>
-			<!-- <div class="handle_teap teatpde2">3、开票信息、开票编号<i>&nbsp;</i></div> -->
-			<div class="handle_teap teatpde3 active ">3、发票地址、快递单号</div>
+			<div class="handle_teap teatpde3 active ">发票地址、快递单号</div>
 		</div>
 		<div class="invoiceMangeCount3 invoiceTeap hidden">
 			<div class="go_invoiceBill_title bgfff">
