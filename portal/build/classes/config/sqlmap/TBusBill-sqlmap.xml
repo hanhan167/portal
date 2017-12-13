@@ -262,7 +262,11 @@ SELECT DISTINCT BILL_NATRUE billNatrue,
 	BILL_TYPE billType,
 	CUST_NO custNo,
 	BILL_TITLE billTitle,
-	COMPANY_NAME companyName 
+	COMPANY_NAME companyName ,
+	BILL_RECEIVE_NAME billReceiveName,
+	BILL_RECEIVE_ADDRESS billReceiveAddress,
+	BILL_RECEIVE_PHONE billReceivePhone,
+	BILL_RECEIVE_MAIL billReceiveMail 
 from T_BUS_BILL WHERE APPLY_NO=#applyNo# 
 	
 	</select>
