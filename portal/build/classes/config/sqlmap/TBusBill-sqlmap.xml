@@ -94,6 +94,7 @@ DISTINCT
 	APPLY_NO applyNo,
 	BILL_TYPE billType,
 	BILL_TITLE billTitle,
+	OPEN_BAND openBand,
 	BILL_RECEIPT billReceipt,
 	BILL_CONTENT billContent,
 	BILL_RECEIVE_PHONE billReceivePhone,
