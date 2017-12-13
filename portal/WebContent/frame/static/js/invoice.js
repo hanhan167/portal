@@ -397,7 +397,6 @@ var invoice = {
 	},
 	//去开票
 	goInvoice:function(pageNo){
-		debugger;
 		var $invoice = $(".invoiceMangeCount2 .go_invoiceBill_table tr:first");
 		var before;
 		var data  = custCat;
@@ -424,7 +423,7 @@ var invoice = {
 			objs.orderNo = orderNo;
 			objs.custNos = custNo;
 			
-			$(".go_invoiceBill_title p span.money").text("￥"+allAmt);
+			$(".go_invoiceBill_title p span.money").text("￥"+allAmt);//总金额
 			
 			$.ajax({
 				url: "user/getMyOrderNoBillDetail.do",
@@ -445,13 +444,36 @@ var invoice = {
 		        	if(data.success){
 		        		var html=[];
 		        		var check = "";
-		        		$(".go_invoiceBill_title p span.bandCard").text(data.map.address.billReceipt);
-		        		$(".go_invoiceBill_title p span.billTitle").text(data.map.address.billTitle);
-		        		$(".go_invoiceBill_title p span.companyName").text(data.map.address.companyName);
+		        		$(".go_invoiceBill_title p span.billReceipt").text(data.map.address.billReceipt);//纳税人识别号
+		        		$(".go_invoiceBill_title p span.billTitle").text(data.map.address.companyName);//个人/公司(抬头)
+		        		$(".go_invoiceBill_title p span.openBank").text(data.map.address.openBand);//开户行
+		        		$(".go_invoiceBill_title p span.bandCard").text(data.map.address.bandCard);//开户行账号
+		        		var type;
+		        		if(data.map.address.billType=="02")
+		        		{
+		        			type = "增值税发票";
+		        		}
+		        		else if(data.map.address.billType=="01")
+		        		{
+		        			type = "普通发票";
+		        		}
+		        		var nature;
+		        		if(data.map.address.billNatrue=="2")
+		        		{
+		        			nature = "纸质";
+		        		}
+		        		else if(data.map.address.billNatrue=="1")
+		        		{
+		        			nature = "电子";
+		        		}
+		        		$(".go_invoiceBill_title p span.billType").text(nature+type);//发票类型
+		        		$(".go_invoiceBill_title p span.registerPhone").text(data.map.address.registerPhone);//注册电话
+		        		$(".go_invoiceBill_title p span.registerAddress").text(data.map.address.registerAddress);//注册地址
+		        		debugger;
 		        		if(row.length >0){
 		        			for(var j=0;j<row.length;j++){
 			        			html.push("<tr>");
-			        			html.push("<td align='left'>"+row[j].goodsName+"</td>");	
+			        			html.push("<td align='left'>"+row[j].goodsName+"</td>");
 			        			html.push("<td>"+row[j].totalNum+"</td>");	
 			        			html.push("<td class='money'>￥"+row[j].totalAmt+"</td></tr>");
 		        			}	

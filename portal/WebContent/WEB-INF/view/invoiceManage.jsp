@@ -106,14 +106,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="invoiceMiddleTitle invoiceTeap hidden">
 			<div class="go_invoiceBill_title bgfff">
 				<div class="line-title">
-					<p class="fll">税务号：<span class="bandCard">--</span></p>
+					<p class="fll">税务号：<span class="billReceipt">--</span></p>
 					<p class="flr">开票金额合计：<span class="money">￥--</span></p>
 				</div>
 				<div class="line-title">
-					<p class="fll">发票抬头：<span class="billTitle">--</span></p>
-					<p class="fll">开票类型：<span>企业</span></p>
-					<p class="fll">发票类型：<span>增值税普通发票</span></p>
-					<p class="fll"><span class="companyName hidden"></span></p>
+					<p class="fll">名称：<span class="billTitle">--</span></p>
+					<p class="fll">开户行：<span class="openBank">--</span></p>
+					<p class="fll">开户行账号：<span class="bandCard">--</span></p>
+				</div>
+				<div class="line-title">
+					<p class="fll">发票类型：<span class="billType">--</span></p>
+					<p class="fll">电话：<span class="registerPhone">--</span></p>
+					<p class="fll">地址：<span class="registerAddress">--</span></p>
 				</div>
 			</div>
 			<div class="go_invoiceBill_table bgfff">
