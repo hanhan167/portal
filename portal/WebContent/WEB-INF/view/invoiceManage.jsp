@@ -103,6 +103,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div> -->
 		<!-- invoiceMangeCount2 invoiceTeap hidden -->
+		<input type="hidden"  id="typeAddress">
+		<input type="hidden"  id="applyNoHid">
 		<div class="invoiceMiddleTitle invoiceTeap hidden">
 			<div class="go_invoiceBill_title bgfff">
 				<div class="line-title">

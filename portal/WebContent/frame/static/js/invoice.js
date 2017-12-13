@@ -1,3 +1,4 @@
+var myNumVal = 1;
 var dict = {
 	"billStatus":{"0":"未寄送","1":"已寄送"},
 	"billNatrue":{"0":"电子发票","1":"纸质发票"},
@@ -302,7 +303,6 @@ var invoice = {
 		
 		var $invoice = $(".invoiceMiddleTitle.invoiceTeap tr:first");
 		data.custNos = $(".invoiceMiddleTitle.invoiceTeap").attr("data-custno");
-		alert(data.custNos);
 		var before;
 		pageNo = pageNo || 1;
 		data.pageNo = pageNo;
@@ -396,8 +396,8 @@ var invoice = {
 		$(".invoiceContTitle .amt_all .money").text("￥"+allAmt.toFixed(2));
 	},
 	//去开票
-	goInvoice:function(pageNo){
-		var $invoice = $(".invoiceMangeCount2 .go_invoiceBill_table tr:first");
+	goInvoice:function(pageNo){ /*invoiceMangeCount2 invoiceTeap hidden*/
+		var $invoice = $(".invoiceMiddleTitle  .go_invoiceBill_table tr:first");
 		var before;
 		var data  = custCat;
 		var objs = {};
@@ -466,12 +466,14 @@ var invoice = {
 		        		{
 		        			nature = "电子";
 		        		}
+		        		$("#typeAddress").val(nature+type);
+		        		$("#applyNoHid").val(applyNo);
 		        		$(".go_invoiceBill_title p span.billType").text(nature+type);//发票类型
 		        		$(".go_invoiceBill_title p span.registerPhone").text(data.map.address.registerPhone);//注册电话
 		        		$(".go_invoiceBill_title p span.registerAddress").text(data.map.address.registerAddress);//注册地址
-		        		debugger;
 		        		if(row.length >0){
 		        			for(var j=0;j<row.length;j++){
+		        				debugger
 			        			html.push("<tr>");
 			        			html.push("<td align='left'>"+row[j].goodsName+"</td>");
 			        			html.push("<td>"+row[j].totalNum+"</td>");	
@@ -505,50 +507,54 @@ var invoice = {
 			});
 		/*}*/
 	},
-	//确认开票
+	
+	
+	
 	goInvoiceQR:function(){
+		var myVal = $("#typeAddress").val();
 		var layerContent = "<div class='layer-public-style'><form onsubmit='return false' class='form-inline'><div class='form-group'>"+
 			"<label>发票类型：</label>"+
-			"<span>纸质发票</span></div><div class='form-group'>"+
+			"<span>"+myVal+"</span></div><div class='form-group'>"+
 			"<label>发票编号：</label>"+
-			"<input class='form-control' placeholder='请输入发票编号' id='billNo'></div></form></div>";
+			"<input class='form-control mybillNoVal' style='width: 138px; placeholder='请输入发票编号' id='billNo'><button style='margin-left: 9px;background-color: white;color: blue;' onclick='addTick()' type='button'>添加发票</button></div></form></div>";
 		var editPwLayer = layer.open({
 			type: 1,
 			title: '填写发票编号',
 			btn: ['确认','取消'],
 			btnAlign : 'c',
 			skin: 'tn-style', //加上自定义样式
-			area: ['320px', '180px'], //宽高
+			area: ['320px', '240px'], //宽高
 			content: layerContent,
 			yes:function(index){
-				var billNo = $("#billNo").val();
-				if(billNo == ""){
+				//var billNo = $(".mybillNoVal").val();
+				//alert(billNo);
+				var length = $(".mybillNoVal").length;
+				var billNoArr = new Array(length);//发票编号
+				var totalMoney = $(".go_invoiceBill_title p span.money").text();//总价钱
+				var i = 0;
+				$($(".mybillNoVal").each(function(){
+					billNoArr[i] = $(this).val();
+					i++;
+				}));
+				var applyNo = $("#applyNoHid").val();//发票序号
+		
+				if(billNoArr == ""){
 					layer.msg("请输入发票编号！")
 				}else{
-					var getObj = {};
-					getObj.orderList = [];
-					$.each(custCat,function(i,n){
-						var list = {};
-						list.orderNo = i;
-						list.billNo = billNo;
-						list.payDate = DateFormat(new Date());
-						$.each(n,function(i,n){
-							list[i] = n;
-						});
-						getObj.orderList.push(list);
-					});
-					var billMoney = $(".invoiceMangeCount2 .go_invoiceBill_title p span.money").text().replace("￥","");
-					var billTitle = $(".invoiceMangeCount2 .go_invoiceBill_title p span.billTitle").text();
-					var companyName = $(".invoiceMangeCount2 .go_invoiceBill_title p span.companyName").text();
-					getObj.billMoney = billMoney;
-					getObj.billTitle = billTitle;
-					getObj.companyName = companyName;
+					
 					var before;
 					$.ajax({
 						url: "user/saveCondition.do",
 				        type: "post",
-				        contentType : "application/json; charset=utf-8",
-				        data:JSON.stringify(getObj),
+				    	dataType: "json", 
+				    	async : false,
+				        cache : false,
+				        traditional: true,
+				        data:{
+				        	"applyNo":applyNo,
+				        	"totalMoney":totalMoney,
+				        	 billNoArr:billNoArr
+				        },
 				        beforeSend:function(){
 				        	before = layer.msg("保存中,请稍后...", {
 				        			 icon: 16
@@ -672,3 +678,24 @@ var invoice = {
 		}); 
 	}
 }
+
+
+
+//确认开票
+function addTick()
+{
+	myNumVal = myNumVal + 1;
+	$(".mybillNoVal").parent().append("<br><label class="+myNumVal+">发票编号：</label>"+
+		"<input  class='mybillNoVal form-control "+myNumVal+"' style='width: 138px; placeholder='请输入发票编号'><button style='margin-left: 9px;background-color: white;color: red;' onclick='deleteTick("+myNumVal+")' type='button'  class="+myNumVal+">删除</button>")
+}	
+
+function deleteTick(str)
+{
+	var myId = "."+str;
+	$("input").remove(myId);
+	$("label").remove(myId);
+	$("button").remove(myId);
+	$("br").remove();
+}
+
+
