@@ -109,7 +109,7 @@ OPEN_BAND openBand,
 BAND_CARD bandCard,
 BILL_RECEIVE_NAME billReceiveName,
 BILL_RECEIVE_MAIL billReceiveMail
-	from T_BUS_BILL where 1=1 
+	from T_BUS_BILL where BILL_STATUS = '1' 
 	 <dynamic prepend="">
 	   <isNotEmpty property="applyNo" prepend="and">  
 		                <![CDATA[ 
@@ -246,6 +246,24 @@ ON t1.cust_no=t2.cust_no   where 1=1
 		</dynamic>
    
 		</select>
+	<!--修改发票状态为已开发票 bus bill-->
+	<update id="updateStatus" parameterClass="java.lang.String" >
+		UPDATE T_BUS_BILL SET BILL_STATUS = '2' WHERE APPLY_NO = #applyNo#
+	</update>
+	<!--修改发票状态为已开发票 bus order -->
+	<update id="updateBillStatusOfOrder" parameterClass="java.lang.String" >
+		UPDATE T_BUS_ORDER SET INVOICSTATUS='001' WHERE ORDER_NO IN (
+			SELECT ORDER_NO FROM T_BUS_BILL where APPLY_NO=#applyNo#
+		)	
+	</update>
+	<select id="getInvoiceByApplyNo" parameterClass="java.lang.String" resultClass="com.hansy.portal.model.vo.TBusCompleteBillVo">
+SELECT DISTINCT BILL_NATRUE billNatrue,
+	BILL_TYPE billType,
+	CUST_NO custNo,
+	BILL_TITLE billTitle,
+	COMPANY_NAME companyName 
+from T_BUS_BILL WHERE APPLY_NO=#applyNo# 
 	
+	</select>
 	
 	</sqlMap>

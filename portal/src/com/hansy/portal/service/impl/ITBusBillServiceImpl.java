@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hansy.portal.common.BusinessMap;
 import com.hansy.portal.common.utils.Pager;
 import com.hansy.portal.model.vo.TBusBillVo;
+import com.hansy.portal.model.vo.TBusCompleteBillVo;
 import com.hansy.portal.service.ITBusBillService;
 import com.hansy.portal.service.base.BaseDao;
 
@@ -37,6 +38,50 @@ public class ITBusBillServiceImpl extends BaseDao implements ITBusBillService{
 		int count = (int) getSqlMapClientTemplate().queryForObject("busBill1.getBillByOrderNoTotal",map);
 		pager.setTotal(count);
 		return pager;
+	}
+
+	@Override
+	public BusinessMap<Object> updateBillStatus(String applyNo) {
+		BusinessMap<Object> bMap=new BusinessMap<>();
+		try {
+			getSqlMapClientTemplate().update("busBill1.updateStatus", applyNo);
+		} catch (Exception e) {
+			bMap.setIsSucc(false);
+			bMap.setMsg("修改发票状态失败（bus bill）");
+			e.printStackTrace();
+			return bMap;
+		}
+		bMap.setIsSucc(true);
+		return bMap;
+	}
+
+	@Override
+	public BusinessMap<Object> updateBillStatusOfOrder(String applyNo) {
+		BusinessMap<Object> bMap=new BusinessMap<>();
+		try {
+			getSqlMapClientTemplate().update("busBill1.updateBillStatusOfOrder", applyNo);
+		} catch (Exception e) {
+			bMap.setIsSucc(false);
+			bMap.setMsg("修改发票状态失败（bus order）");
+			e.printStackTrace();
+			return bMap;
+		}
+		bMap.setIsSucc(true);
+		return bMap;
+	}
+	
+	@Override
+	public TBusCompleteBillVo getInvoiceByApplyNo(String applyNo) {
+		
+		TBusCompleteBillVo tBusCompleteBillVo;
+		try {
+			tBusCompleteBillVo = (TBusCompleteBillVo) getSqlMapClientTemplate()
+					.queryForList("busBill1.getInvoiceByApplyNo", applyNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return tBusCompleteBillVo;
 	}
 
 }

@@ -17,7 +17,7 @@ public class TBusBillVo {
 	private String billContent;//发票内容
 	private String billReceivePhone;//收票人手机号
 	private String billReceiveAddress;//收票人邮箱
-	private String billStatus;//发票状态
+	private String billStatus;//发票状态.1:未开发票；2：已开发票
 	private Date insertDate;//新增时间
 	private	Date updateDate;//修改时间
 	private Double billMoney;//发票总金额

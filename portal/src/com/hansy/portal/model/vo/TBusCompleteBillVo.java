@@ -6,7 +6,7 @@ import java.util.Date;
 public class TBusCompleteBillVo {
 	private String billNo;				//发票编号
 	private String billNatrue;			//发票性质(纸质发票，电子发票)
-	private String billStatus;			//发票状态(0,1)
+	private String billStatus;			//发票状态(1:未寄送,2：已寄送)
 	private String billTitle;			//发票开头(个人公司)
 	private String companyName;			//公司名称
 	private Double billMoney;			//发票总金额
@@ -21,11 +21,19 @@ public class TBusCompleteBillVo {
 	private String custNo;				//客户编号
 	private String supplyNo;			//供方编号
 	private Date insertDate;			//新增时间
+	private String applyNo;			//申请编号
 	public String getBillNo() {
 		return billNo;
 	}
 	public void setBillNo(String billNo) {
 		this.billNo = billNo;
+	}
+	
+	public String getApplyNo() {
+		return applyNo;
+	}
+	public void setApplyNo(String applyNo) {
+		this.applyNo = applyNo;
 	}
 	public String getBillNatrue() {
 		return billNatrue;

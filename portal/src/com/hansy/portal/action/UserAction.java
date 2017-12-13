@@ -1136,26 +1136,13 @@ public class UserAction {
 			if (pageNo==null) {
 			pageNo=1;
 			}
-/*			orderNo="20170927134939000000,20170928164125000012";
-*/			int pageSize=5;
+			int pageSize=5;
 			Pager pager=new Pager();
 			pager.setPageNo(pageNo);
 			pager.setPageSize(pageSize);
 			//发票单位的custNo查询出地址
 			BusinessMap<Object> bMap1=itUserBillService.getById(applyNo);
-//			String orderNos[] = orderNo.split(",");
 			Map<String, Object>map =new HashMap<>();
-//			String checkIdArray[] = null;
-			/*String checkIds = "";
-			if(!StringUtil.isEmpty(orderNo)){
-				checkIdArray = orderNo.split(",");
-				for(int i = 0; i < checkIdArray.length; i++){
-					checkIds += "'" + checkIdArray[i] + "',";
-				}
-				checkIds = checkIds.substring(0, checkIds.length()-1);
-			}else{
-				checkIds = "''";
-			}*/
 			
 			map.put("applyNo", applyNo);
 			Pager resultPage=baseInfoService.getMyOrderNoBillDetail(map, pager);
@@ -1175,54 +1162,54 @@ public class UserAction {
 		//开发票第三步骤中保存发票的信息（注意保存的是订单与发票的关联关系，保存的不是最后的开票信息）
 		@RequestMapping("/saveCondition")
 		@ResponseBody
-		public BaseReslt<Object> saveCondition(HttpSession session,@RequestBody TBusPamentVoS list)throws Exception{
+		public BaseReslt<Object> saveCondition(HttpSession session,@RequestBody TBusCompleteBillVo tBusCompleteBillVo,String[] billNoArr)throws Exception{
 			BaseReslt<Object> bReslt=new BaseReslt<Object>();
-			Map<String, Object>map = new HashMap<>();
-			String custNos = null;
-			String billNo = null;
+			//以逗号隔开的billNo
+			StringBuffer billNoStr = new StringBuffer();
+			if(billNoArr == null || billNoArr.length == 0){
+				bReslt.setSuccess(false);
+				bReslt.setMsg("没有填写发票编号");
+				return bReslt;
+			}
+			billNoStr.append(billNoArr[0]);
+			for (int i = 1; i < billNoArr.length; i++) {
+				billNoStr.append(","+billNoArr[i]);
+			}
+			
 			TUserBaseInfoBo baseInfoVo=(TUserBaseInfoBo) session.getAttribute("loginUser");
-			String custNo = baseInfoVo.getCustNo();
+			String supplyNo = baseInfoVo.getCustNo();
+			String applyNo = tBusCompleteBillVo.getApplyNo();
+			tBusCompleteBillVo = itBusBillService.getInvoiceByApplyNo(applyNo);
+			
 			Date date = new Date();
-			for (TBusPamentVo tBusPamentVo:list.getOrderList()) {
-				tBusPamentVo.setTableKey(UUIDUtil.getParseUUID());
-				tBusPamentVo.setBillDate(date);
-				tBusPamentVo.setSupplyNo(custNo);
-				custNos =tBusPamentVo.getCustNo();
-				billNo =tBusPamentVo.getBillNo();
-			}
-			List<TBusPamentVo>orderList = list.getOrderList();
-			BusinessMap<Object> businessMap = itBusPamentService.savePament(orderList);
-			if(!businessMap.getIsSucc()){
+			tBusCompleteBillVo.setBillNo(billNoStr.toString());//以逗号隔开的billNo
+			tBusCompleteBillVo.setInsertDate(date);//新增时间
+			tBusCompleteBillVo.setBillDate(date);//开票时间
+			tBusCompleteBillVo.setBillStatus("1");//未寄送
+			tBusCompleteBillVo.setSupplyNo(supplyNo);//供方编号
+			//存入bus complete bill表
+			BusinessMap<Object> bMap1 = itBusCompleteBillService.save(tBusCompleteBillVo);
+			if(!bMap1.getIsSucc()){
 				bReslt.setSuccess(false);
-				bReslt.setMsg("添加发票信息失败");
+				bReslt.setMsg(bMap1.getMsg());
 				return bReslt;
 			}
-			TBusCompleteBillVo tBusCompleteBillVo = new TBusCompleteBillVo();
-			///gfhghg
-			tBusCompleteBillVo.setBillNo(billNo);
-			tBusCompleteBillVo.setBillNatrue("1");
-			tBusCompleteBillVo.setBillStatus("0");
-			tBusCompleteBillVo.setBillMoney(list.getBillMoney());
-			tBusCompleteBillVo.setBillDate(date);
-			tBusCompleteBillVo.setBillType("0");
-			tBusCompleteBillVo.setCustNo(custNos);
-			tBusCompleteBillVo.setSupplyNo(custNo);
-			tBusCompleteBillVo.setInsertDate(date);
-			tBusCompleteBillVo.setBillTitle(list.getBillTitle());
-			tBusCompleteBillVo.setCompanyName(list.getCompanyName());
-			BusinessMap<Object> businessMap1 = itBusCompleteBillService.save(tBusCompleteBillVo);
-			if(!businessMap1.getIsSucc()){
+			//更改bus bill表状态为已开发票
+			BusinessMap<Object> bMap2 = itBusBillService.updateBillStatus(applyNo);
+			if(!bMap2.getIsSucc()){
 				bReslt.setSuccess(false);
-				bReslt.setMsg("添加发票信息失败");
-				return bReslt;
+				bReslt.setMsg(bMap2.getMsg());
 			}
-			//gyyg
-			Map<String, Object>map1 = new HashMap<>();
-			map1.put("custNo", custNos);
-			map1.put("billNo", billNo);
-			bReslt.setMap(map1);
+			//更改bus order表状态为已开发票
+			BusinessMap<Object> bMap3 = itBusBillService.updateBillStatusOfOrder(applyNo);
+			if(!bMap3.getIsSucc()){
+				bReslt.setSuccess(false);
+				bReslt.setMsg(bMap3.getMsg());
+			}
+			
 			return bReslt;
 		}
+		
 		//开发票第四步(获取用户的地址信息)
 		@RequestMapping("/getByCust")
 		@ResponseBody
@@ -1240,7 +1227,7 @@ public class UserAction {
 				bReslt.setSuccess(true);
 				return bReslt;
 		}
-		//开发票第四步(保存最终完成的订单)
+		//开发票第四步(寄送发票)
 		@RequestMapping("/saveComplete")
 		@ResponseBody
 		public BaseReslt<Object> saveComplete(HttpSession session,TBusCompleteBillVo tBusCompleteBillVo) throws Exception{
