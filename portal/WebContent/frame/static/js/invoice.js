@@ -1,6 +1,6 @@
 var myNumVal = 1;
 var dict = {
-	"billStatus":{"0":"未寄送","1":"已寄送"},
+	"billStatus":{"1":"未寄送","2":"已寄送"},
 	"billNatrue":{"0":"电子发票","1":"纸质发票"},
 	"billType":{"0":"增值税普通发票"},
 	"logisticsName":{"1":"圆通快递","2":"中通快递","3":"申通快递","4":"韵达快递","5":"顺丰快递","6":"邮政快递","20":"其它"},
@@ -28,6 +28,9 @@ var invoice = {
 		pageNo = pageNo || 1;
 		var data  = invoice.getInputVal();
 		var $invoice = $(".invoiceContennt .invoiceCont table tr:first");
+		if(data.billStatus == ""){
+			data.billStatus = "1";
+		}
 		data.pageNo = pageNo;
 		$.ajax({
 			url: "user/getBillPagePay.do",
@@ -46,10 +49,10 @@ var invoice = {
 		        			html.push("<tr data-id='"+rows[i].billNo+"' data-cust='"+rows[i].custNo+"'><td>￥"+rows[i].billMoney+"</td>");
 		        			html.push("<td>"+rows[i].billNo+"</td>");
 		        			html.push("<td>"+DateFormat(rows[i].billDate)+"</td>");
-		        			html.push("<td>"+rows[i].billTitle+"</td>");
+		        			html.push("<td>"+rows[i].companyName+"</td>");
 		        			html.push("<td>"+dict["billNatrue"][rows[i].billNatrue]+"</td>");
 		        			html.push("<td>"+dict["billStatus"][rows[i].billStatus]+"</td>");
-		        			if(rows[i].billStatus == "0"){
+		        			if(rows[i].billStatus == "1"){
 		        				html.push("<td><button class='js_invoice'>寄送</button></td></tr>");
 		        			}else{
 		        				html.push("<td><button class='xq_invoice'>详情</button></td></tr>");

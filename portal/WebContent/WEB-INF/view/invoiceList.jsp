@@ -38,9 +38,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="groupInput">
 					<label>发票状态</label>
 					<select id="billStatus" name="billStatus">
-						<option value="">全部</option>
-						<option value="0">未寄送</option>
-						<option value="1">已寄送</option>
+						<option value="1">未寄送</option>
+						<option value="2">已寄送</option>
 					</select>
 				</div>
 				<div class="search" id="invoice_search"></div>
@@ -51,8 +50,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 						<th>发票金额</th>
 						<th>发票编号</th>
-						<th>发生时间</th>
-						<th>发票抬头</th>
+						<th>开票时间</th>
+						<th>名称</th>
 						<th>发票性质</th>
 						<th>状态</th>
 						<th>操作</th>
