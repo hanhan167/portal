@@ -73,6 +73,24 @@ public class ITUserBillServiceImpl extends BaseDao implements ITUserBillService{
 		bMap.setIsSucc(true);
 		return bMap;
 	}
+
+	@Override
+	public BusinessMap<Object> getAddressByIds(String custNo) {
+		BusinessMap<Object> bMap=new BusinessMap<Object>();
+		Map<String, Object> map = new HashMap<>();
+		map.put("custNo", custNo);
+		try {
+			TUserBillVo TUserBillVo = (TUserBillVo) getSqlMapClientTemplate().queryForObject("userBill.getAddressByIds", custNo);
+			//System.out.println(TUserBillVo.toString());
+			bMap.setInfoBody(TUserBillVo);
+		} catch (Exception e) {
+			bMap.setIsSucc(false);
+			bMap.setMsg("获取发票地址失败");
+			//e.printStackTrace();
+		}
+		bMap.setIsSucc(true);
+		return bMap;
+	}
 	}
 
 

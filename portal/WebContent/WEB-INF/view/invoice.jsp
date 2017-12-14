@@ -48,7 +48,7 @@ $(function(){
 	});
 	//查询
 	$.ajax({
-		url:'user/getByIds.do',
+		url:'user/getAddressByIds.do',
 		type:"get",
 		success:function(data){
 			if(data.success){

@@ -9,5 +9,6 @@ public interface ITUserBillService {
 	BusinessMap<Object> delete(String orderNo);
 	BusinessMap<Object> update(TUserBillVo tUserBill);
 	BusinessMap<Object> getById(String id);
+	BusinessMap<Object> getAddressByIds(String custNo);
 }
 
