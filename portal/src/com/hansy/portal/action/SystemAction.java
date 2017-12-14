@@ -860,6 +860,10 @@ public class SystemAction {
 		return "redirect:"+transActionUrl+"?custNo="+baseInfoVo.getCustNo();
 	}
 	
+	
+	
+	
+	
 	@RequestMapping("/toCutter")
 	public String toCutter(){
 		String cutterUrl=Config.getInstance().getValue("cutterUrl");
