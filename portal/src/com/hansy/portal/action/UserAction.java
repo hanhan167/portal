@@ -997,6 +997,24 @@ public class UserAction {
 			return bReslt;
 	}
 	
+	@RequestMapping("/getAddressByIds")
+	@ResponseBody
+	public BaseReslt<Object> getAddressByIds(TUserBillVo TUserBillVo,HttpSession session){
+		BaseReslt<Object> bReslt=new BaseReslt<Object>();
+		//根据custNo获取用户
+		TUserBaseInfoBo baseInfoVo=(TUserBaseInfoBo) session.getAttribute("loginUser");
+		BusinessMap<Object> bMap1=itUserBillService.getAddressByIds(baseInfoVo.getCustNo());
+			if (bMap1.getIsSucc()==false) {
+				bReslt.setMsg(bMap1.getMsg());
+				bReslt.setSuccess(false);
+				return bReslt;
+			}
+			bReslt.setObj(bMap1.getInfoBody());
+			bReslt.setSuccess(true);
+			return bReslt;
+	}
+	
+	
 	//发票的条件查询
 	@RequestMapping("/getBillPagePay")
 	@ResponseBody

@@ -166,4 +166,11 @@ BILL_RECEIVE_MAIL
 		select *
 		from T_USER_BILL t where t.CUST_NO=#custNo# 
 	</select>	
+	
+	<!-- 查询地址信息 -->
+	<select id="getAddressByIds" parameterClass="string" resultMap="userBillResultMap">
+		select *
+		from T_USER_BILL t where t.CUST_NO=#custNo# 
+	</select>	
+	
 	</sqlMap>
