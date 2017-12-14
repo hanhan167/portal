@@ -73,7 +73,7 @@ INSERT_DATE
 	<dynamic>
 	   <isNotEmpty property="billNo" prepend="and">  
 		                <![CDATA[ 
-		                    BILL_NO = #billNo# 
+		                    BILL_NO like '%' || #billNo# || '%'
 		                ]]>  
 	  </isNotEmpty>
 	</dynamic>
