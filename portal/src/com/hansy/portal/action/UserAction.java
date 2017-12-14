@@ -1237,15 +1237,21 @@ public class UserAction {
 		//开发票第四步(寄送发票)
 		@RequestMapping("/saveComplete")
 		@ResponseBody
-		public BaseReslt<Object> saveComplete(HttpSession session,TBusCompleteBillVo tBusCompleteBillVo) throws Exception{
+		public BaseReslt<Object> saveComplete(HttpSession session,String billNo,String logisticsName,String expressNumber) throws Exception{
 			BaseReslt<Object> bReslt=new BaseReslt<Object>();
-			TUserBillVo tUserBillVo =(TUserBillVo)session.getAttribute("TUserBillVo");
+			
+			TBusCompleteBillVo tBusCompleteBillVo = new TBusCompleteBillVo();
+			tBusCompleteBillVo.setBillNo(billNo);
+			tBusCompleteBillVo.setLogisticsName(logisticsName);//物流公司
+			tBusCompleteBillVo.setExpressNumber(expressNumber);//物流编号
+			tBusCompleteBillVo.setBillStatus("2");//已寄送
+			BusinessMap<Object> bMap1 = itBusCompleteBillService.update(tBusCompleteBillVo);
+/*			TUserBillVo tUserBillVo =(TUserBillVo)session.getAttribute("TUserBillVo");
 			tBusCompleteBillVo.setBillReceivePhone(tUserBillVo.getBillReceivePhone());
 			tBusCompleteBillVo.setBillReceiveAddress(tUserBillVo.getRegisterAddress());
 			tBusCompleteBillVo.setBillReceiveName(tUserBillVo.getBillReceiveName());
 			tBusCompleteBillVo.setBillReceiveMail(tUserBillVo.getBillReceiveMail());
-			tBusCompleteBillVo.setBillStatus("1");
-			BusinessMap<Object> bMap1 = itBusCompleteBillService.update(tBusCompleteBillVo);
+*/			
 			if (bMap1.getIsSucc()==false) {
 				bReslt.setMsg(bMap1.getMsg());
 				bReslt.setSuccess(false);
