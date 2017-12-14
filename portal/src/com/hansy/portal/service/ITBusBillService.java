@@ -29,7 +29,7 @@ public interface ITBusBillService {
 	/**
 	 *更改发票状态为已开发票 bus order
 	 */
-	BusinessMap<Object> updateBillStatusOfOrder(String applyNo);
+	BusinessMap<Object> updateBillStatusOfOrder(String billNo);
 	/**
 	 *从bus bill表获取需要存储的发票数据 
 	 */

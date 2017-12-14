@@ -1207,12 +1207,6 @@ public class UserAction {
 				bReslt.setSuccess(false);
 				bReslt.setMsg(bMap2.getMsg());
 			}
-			//更改bus order表状态为已开发票
-			BusinessMap<Object> bMap3 = itBusBillService.updateBillStatusOfOrder(applyNo);
-			if(!bMap3.getIsSucc()){
-				bReslt.setSuccess(false);
-				bReslt.setMsg(bMap3.getMsg());
-			}
 			
 			return bReslt;
 		}
@@ -1246,6 +1240,13 @@ public class UserAction {
 			tBusCompleteBillVo.setExpressNumber(expressNumber);//物流编号
 			tBusCompleteBillVo.setBillStatus("2");//已寄送
 			BusinessMap<Object> bMap1 = itBusCompleteBillService.update(tBusCompleteBillVo);
+			
+			//更改bus order表状态为已开发票
+			BusinessMap<Object> bMap3 = itBusBillService.updateBillStatusOfOrder(billNo);
+			if(!bMap3.getIsSucc()){
+				bReslt.setSuccess(false);
+				bReslt.setMsg(bMap3.getMsg());
+			}
 /*			TUserBillVo tUserBillVo =(TUserBillVo)session.getAttribute("TUserBillVo");
 			tBusCompleteBillVo.setBillReceivePhone(tUserBillVo.getBillReceivePhone());
 			tBusCompleteBillVo.setBillReceiveAddress(tUserBillVo.getRegisterAddress());

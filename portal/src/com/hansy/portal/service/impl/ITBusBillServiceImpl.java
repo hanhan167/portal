@@ -56,10 +56,10 @@ public class ITBusBillServiceImpl extends BaseDao implements ITBusBillService{
 	}
 
 	@Override
-	public BusinessMap<Object> updateBillStatusOfOrder(String applyNo) {
+	public BusinessMap<Object> updateBillStatusOfOrder(String billNo) {
 		BusinessMap<Object> bMap=new BusinessMap<>();
 		try {
-			getSqlMapClientTemplate().update("busBill1.updateBillStatusOfOrder", applyNo);
+			getSqlMapClientTemplate().update("busBill1.updateBillStatusOfOrder", billNo);
 		} catch (Exception e) {
 			bMap.setIsSucc(false);
 			bMap.setMsg("修改发票状态失败（bus order）");
