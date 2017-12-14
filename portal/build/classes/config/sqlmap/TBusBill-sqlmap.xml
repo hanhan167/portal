@@ -254,7 +254,7 @@ ON t1.cust_no=t2.cust_no   where 1=1
 	<update id="updateBillStatusOfOrder" parameterClass="java.lang.String" >
 		UPDATE T_BUS_ORDER SET INVOICSTATUS='001' WHERE ORDER_NO IN (
 			SELECT ORDER_NO FROM T_BUS_BILL where APPLY_NO=(
-				SELECT APPLY_NO FROM T_BUS_COMPLETE_BILL WHERE BILL_NO = 'billNo'
+				SELECT APPLY_NO FROM T_BUS_COMPLETE_BILL WHERE BILL_NO = #billNo#
 			)
 		)	
 	</update>
