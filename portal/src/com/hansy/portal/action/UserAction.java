@@ -1165,7 +1165,6 @@ public class UserAction {
 		@RequestMapping(value="/saveConditionBill",method=RequestMethod.POST)
 		@ResponseBody
 		public BaseReslt<Object> saveCondition(HttpSession session,String applyNo,String billMoney,String[] billNoArr)throws Exception{
-			System.out.println("进入action..........................................");
 			TBusCompleteBillVo tBusCompleteBillVo = new TBusCompleteBillVo();
 			
 			BaseReslt<Object> bReslt=new BaseReslt<Object>();
