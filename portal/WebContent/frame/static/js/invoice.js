@@ -1,8 +1,8 @@
 var myNumVal = 1;
 var dict = {
 	"billStatus":{"1":"未寄送","2":"已寄送"},
-	"billNatrue":{"0":"电子发票","1":"纸质发票"},
-	"billType":{"0":"增值税普通发票"},
+	"billNatrue":{"1":"电子发票","2":"纸质发票"},
+	"billType":{"02":"增值税发票","01":"普通发票"},
 	"logisticsName":{"1":"圆通快递","2":"中通快递","3":"申通快递","4":"韵达快递","5":"顺丰快递","6":"邮政快递","20":"其它"},
 	"orderType":{"091001":"试刀","091002":"购买"}
 };
@@ -25,6 +25,7 @@ var custCat = {};
 var invoice = {
 	//开票列表查询
 	invoiceList:function(pageNo){
+		
 		pageNo = pageNo || 1;
 		var data  = invoice.getInputVal();
 		var $invoice = $(".invoiceContennt .invoiceCont table tr:first");
@@ -82,14 +83,29 @@ var invoice = {
 	        }
 		});
 	},
+	//已经寄送详情
 	invoiceXQ:function($dom){
 		var billNo = $dom.parents("tr").attr("data-id");
 		
 		$(".invoiceContennt .invoiceListContent").addClass("hidden");
 		$(".invoiceContennt .invoiceXq").removeClass("hidden");
 		$(".invoiceContennt .callBackList").removeClass("hidden");
+		$(".go_invoiceBill_table").hide();
 		invoice.invoiceXQAjax(1,billNo);
 	},
+	
+	//未寄送详情
+	invoiceXQnot:function($dom){
+		var billNo = $dom.parents("tr").attr("data-id");
+		
+		$(".invoiceContennt .invoiceListContent").addClass("hidden");
+		$(".invoiceContennt .invoiceXq").removeClass("hidden");
+		$(".invoiceContennt .callBackList").removeClass("hidden");
+		$(".go_invoiceBill_table").show();
+		invoice.invoiceXQAjaxNot(1,billNo);
+	},
+	
+	
 	invoiceJS:function($dom){
 		var custNo = $dom.parents("tr").attr("data-cust");
 		var billNo = $dom.parents("tr").attr("data-id");
@@ -122,7 +138,7 @@ var invoice = {
 				var tBusCompleteBillVo = {};
 				var logisticsName = $("#logisticsName1").val();
 				var expressNumber = $("#expressNumber1").val();
-				var billNo = $(".invoiceContennt .invoiceMangeCount3 .go_invoiceBill_title .billNo").text();
+				var billNo = $(".invoiceContennt .invoiceXq .invoicelistItem .fl_tit .billNo").text();
 				tBusCompleteBillVo.logisticsName = logisticsName;
 				tBusCompleteBillVo.expressNumber = expressNumber;
 				tBusCompleteBillVo.billNo = billNo;
@@ -147,7 +163,8 @@ var invoice = {
 			        		$(".invoiceContennt .invoiceListContent").removeClass("hidden");
 			        		$(".invoiceContennt .invoiceMangeCount3").addClass("hidden");
 			        		$(".invoiceContennt .invoiceTopNav").addClass("hidden");
-			    			invoice.invoiceList();
+			        		$(".invoiceContennt .invoiceXq").addClass("hidden");
+			        		invoice.invoiceList();
 			        	}else{
 			        		layer.msg(data.msg);
 			        	}
@@ -158,7 +175,7 @@ var invoice = {
 				});}
 		});
 	},
-	
+	//已寄送详情显示
 	invoiceXQAjax:function(pageNo,billNo){
 		var $invoice = $(".invoiceContennt .invoiceXq .pageListBill tr:first");
 		var before;
@@ -199,16 +216,87 @@ var invoice = {
 	        		$(".invoiceXq table tr td[name='billDate']").text(DateFormat(map.billDate));
 	        		if(row.length >0){
 	        			for(var j=0;j<row.length;j++){
-	        				html.push("<tr><td>"+row[j].orderNo+"</td>");	
-	        				html.push("<td>"+row[j].orderType+"</td>");	
-	        				html.push("<td class='money'>￥"+row[j].totalAmt+"</td>");	
-	        				html.push("<td>"+row[j].updateDate+"</td>");	
+	        				html.push("<tr><td>"+row[j].goodsName+row[j].guigee+"</td>");	
+		        			/*	html.push("<td>"+row[j].orderType+"</td>");	*/
+		        				html.push("<td class='money'>￥"+row[j].totalAmt+"</td>");	
+		        				html.push("<td>"+row[j].totalNum+"</td>");	
 	        				
 	        			}
 	        			$invoice.nextAll().empty();
 	        			$invoice.after(html.join(""));
 	        			invoice.pageListLayUi(data,"pageNo_list1",function(curr){
 	        				invoice.invoiceXQAjax(curr,billNo);
+	        			});
+	        		}else{
+	        			$invoice.nextAll().empty();
+			        	$invoice.after("<tr align='center'><td colspan='4'>未查询到符合条件的数据！</td></tr>");
+	        		}
+	        	}else{
+	        		layer.msg("查询失败！");
+	        		$invoice.nextAll().empty();
+		        	$invoice.after("<tr align='center'><td colspan='4'>查询失败！</td></tr>");
+	        	}
+	        },
+	        error:function(e){
+	        	layer.msg("查询失败！");
+	        	$invoice.nextAll().empty();
+	        	$invoice.after("<tr align='center'><td colspan='4'>查询失败！</td></tr>");
+	        }
+		});
+	},
+	//未寄送详情显示
+	invoiceXQAjaxNot:function(pageNo,billNo){
+		var $invoice = $(".invoiceContennt .invoiceXq .pageListBill tr:first");
+		var before;
+		var pageNo = pageNo || 1;
+		$.ajax({
+			url: "user/getBillCompleteBill.do",
+	        type: "post",
+	        data:{"billNo":billNo,"pageNo":pageNo},
+	        beforeSend:function(){
+	        	$invoice.nextAll().empty();
+	        	before = layer.msg("查询中,请稍后...", {
+	        			  icon: 16
+	        			  ,shade: 0.01
+	        			  ,time:0
+	        			});
+	        	$invoice.after("<tr align='center'><td colspan='4'>查询中，请稍后...</td></tr>")
+	        },
+	        success: function (data) {
+	        	invoice.kdDict($("#logisticsName1"));
+	        	layer.close(before);
+	        	var picDict = ['billStatus','billNatrue','billType','logisticsName'];
+	        	var row = data.obj.rows;
+	        	var map = data.map.completeBill;
+	        	if(data.success){
+	        		
+	        		var html=[];
+	        		$(".invoiceXq .invoicelistItem .billNo").text(map.billNo);
+	        		$(".invoiceXq .invoicelistItem .money").text("￥"+map.billMoney);
+	        		$(".invoiceXq table.listNO tr td").each(function(){
+	        			var key = $(this).attr("name");
+	        			if(key){
+	        				$(this).text(map[key]);
+	        				for(var k=0;k<picDict.length;k++){
+	        					if(key == picDict[k]){
+	        						$(this).text(dict[key][map[key]]);
+	        					}
+	        				};
+	        			}
+	        		});
+	        		$(".invoiceXq table tr td[name='billDate']").text(DateFormat(map.billDate));
+	        		if(row.length >0){
+	        			for(var j=0;j<row.length;j++){
+	        				html.push("<tr><td>"+row[j].goodsName+row[j].guigee+"</td>");	
+	        			/*	html.push("<td>"+row[j].orderType+"</td>");	*/
+	        				html.push("<td class='money'>￥"+row[j].totalAmt+"</td>");	
+	        				html.push("<td>"+row[j].totalNum+"</td>");	
+	        				
+	        			}
+	        			$invoice.nextAll().empty();
+	        			$invoice.after(html.join(""));
+	        			invoice.pageListLayUi(data,"pageNo_list1",function(curr){
+	        				invoice.invoiceXQAjaxNot(curr,billNo);
 	        			});
 	        		}else{
 	        			$invoice.nextAll().empty();

@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<p class="fll"><span class="custName">--</span><span class="phones">--</span></p>
 				</div>
 			</div>
-			<div class="go_invoiceBill_table bgfff">
+			<!-- <div class="go_invoiceBill_table bgfff">
 				<form onsubmit="return false" class="form-inline">
 					<div class="form-group">
 						<label>快递名称：</label>
@@ -91,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 					<button id="goInvoiceWC1" style="padding:0 30px;margin:0!important;height:32px;float:right">完成</button>
 				</form>
-			</div>
+			</div> -->
 		</div>
 		<!-- 开票详情 -->
 		<div class="invoiceXq hidden">
@@ -112,8 +112,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr>
 					<td align="right">发票类型：</td>
 					<td name="billType">增值税普通发票</td>
-					<td align="right">发票抬头：</td>
-					<td name="billTitle">--</td>
+					<td align="right">名称：</td>
+					<td name="companyName">--</td>
 				</tr>
 				<tr>
 					<td align="right">申请时间：</td>
@@ -141,15 +141,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 			</table>
 			
-			<div class="invoicelistItem" style="border:none;margin-bottom:10px;">
+		<!-- 	<div class="invoicelistItem" style="border:none;margin-bottom:10px;">
 				<span>关联订单/账单</span>
-			</div>
+			</div> -->
 			<table class="table pageListBill">
 				<tr>
-					<td>订单编号</td>
-					<td>类型</td>
+					<td style="padding-left: 39px;">商品信息</td>
+					<!-- <td>类型</td> -->
 					<td>总额</td>
-					<td>订单日期</td>
+					<td>数量</td>
 				</tr>
 				<tr>
 					<td>D41265790217721</td>
@@ -170,6 +170,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>2017-02-28</td>
 				</tr>
 			</table>
+			<div class="go_invoiceBill_table bgfff"  style="display: none;height: 56px;">
+				<form onsubmit="return false" class="form-inline">
+					<div class="form-group" style="margin-top: 12px;margin-left: 22px;">
+						<label style="margin-top: 6px;">快递名称：</label>
+						<select class="form-control" id="logisticsName1">
+							<option value="">选择快递</option>
+						</select>
+					</div>
+					<div class="form-group" style="margin-top: 12px;">
+						<label style="margin-top: 54x;padding-top: 7px;">快递单号：</label>
+						<input class="form-control" id="expressNumber1" placeholder="请输入快递单号"  style="margin-top: 5px;"/>
+					</div>
+					<button id="goInvoiceWC1" style="margin-top: 12px;padding:0 30px;/* margin:0!important; */height:32px;float:right;margin-right: 34px;">完成</button>
+				</form>
+			</div>
+			
 			<div id="pageNo_list1" class="bgfff"></div>
 		
 		</div>
@@ -204,7 +220,7 @@ $(function(){
 		invoice.invoiceXQ($(this));
 	});
 	$(".invoiceContennt .invoiceListContent").on("click","table .js_invoice",function(){
-		invoice.invoiceJS($(this));
+		invoice.invoiceXQnot($(this));
 	});
 	
 	$(".invoiceContennt .callBackList").click(function(){
