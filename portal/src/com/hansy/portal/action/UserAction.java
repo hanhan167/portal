@@ -201,6 +201,26 @@ public class UserAction {
 	}
 	
 	/**
+	 * 个人信息指定开票
+	 * @description: TODO
+	 * @creator: cj
+	 * @createDate: 2017年2月27日 
+	 * @modifier:
+	 * @modifiedDate:
+	 * @return
+	 */
+	@RequestMapping("/toInformationOpenTicket")
+	public ModelAndView toInformationOpenTicket(){
+		String ifm = "123";
+		String url=Config.getInstance().getValue("toOpenTicket");
+		//ModelAndView view=new ModelAndView("information");
+		return new ModelAndView("redirect:"+url+"?ifm="+ifm);
+		
+	}
+	
+	
+	
+	/**
 	 * 个人基本信息
 	 * @description: TODO
 	 * @creator: cj

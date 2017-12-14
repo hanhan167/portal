@@ -64,6 +64,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="frame/static/js/company.js"></script>
 <script type="text/javascript">
 $(function(){
+	function GetQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null)
+			return unescape(r[2]);
+		return null;
+	}
+	
+
+	
 	var gradeimg = {
 			"grade001":"frame/static/img/grade1.png",
 			"grade002":"frame/static/img/grade2.png",
@@ -138,5 +148,13 @@ $(function(){
 	$(".content_left>ul>li:eq(10)").click(function(){
 		$(".content_right").load("user/toProductRank.do");
 	});
+	
+	
+	if(GetQueryString("ifm")=="123")
+	{
+		$(".content_left>ul>li:eq(5)").click();
+	}
+	
+	
 });
 </script>
