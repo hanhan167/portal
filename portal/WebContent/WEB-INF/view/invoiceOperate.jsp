@@ -41,66 +41,22 @@ layui.config({
 });
 
 $(function(){
-	$(".site_head button").click(function(){
-		$(this).parent().parent().load("user/toAddSite.do");
-	});
 	$.ajax({
-		url:'user/getByIds.do',
+		url:'user/getAddressByIds.do',
 		type:"get",
 		success:function(data){
 			if(data.success){
-				if(data.obj==null){//新增
-					var html=baidu.template('bd_t2');
-					$(".incoice_headline").html(html);
-				}else{//修改
-					var html=baidu.template('bd_t1',data);
-					$(".incoice_headline").html(html);
-				}
-			}else{
+				var html=baidu.template('bd_t1',data);
+				$(".incoice_headline").html(html);
+				
 				
 			}
 		}
 	});
-	//新增
-	$(document).on("click",".add>button:eq(0)",function(){
-		$("#vat-inv-type1").each(function(){
-			var param = {
-				companyName:$("[name=companyName]").val(),
-				billReceipt:$("[name=billReceipt]").val(),
-				registerAddress:$("[name=registerAddress]").val(),
-				registerPhone:$("[name=registerPhone]").val(),
-				openBand:$("[name=openBand]").val(),
-				bandCard:$("[name=bandCard]").val(),
-				billReceiveName:$("[name=billReceiveName]").val(),
-				billReceivePhone:$("[name=billReceivePhone]").val(),
-				billReceiveMail:$("[name=billReceiveMail]").val(),
-				billReceiveAddress:$("[name=billReceiveAddress]").val()
-			}
-			$.ajax({
-				url:'user/adds.do',
-				datatype:'json',
-				data:param,
-				type:"post",
-				success:function(data){
-					if(data.success){
-						layui.use('layer', function(){
-						  var layer = layui.layer;
-						  layer.msg("修改成功",{icon: 1,time: 1000});
-						});
-						$(".incoice_headline").parent().load("user/toInvoice.do")
-					}else{
-						layui.use('layer', function(){
-						  var layer = layui.layer;
-						  layer.msg(data.msg,{icon: 2,time: 1000});
-						});
-					}
-				}
-			});
-		});
-	});
+	
 	//修改
-	$(document).on("click",".update>button:eq(0)",function(){
-		$("#vat-inv-type1").each(function(){
+	$(document).on("click","#update>button:eq(0)",function(){
+		
 			var param = {
 				companyName:$("[name=companyName]").val(),
 				billReceipt:$("[name=billReceipt]").val(),
@@ -112,7 +68,7 @@ $(function(){
 				billReceivePhone:$("[name=billReceivePhone]").val(),
 				billReceiveMail:$("[name=billReceiveMail]").val(),
 				billReceiveAddress:$("[name=billReceiveAddress]").val()
-			}
+			};
 			$.ajax({
 				url:'user/updates.do',
 				datatype:'json',
@@ -120,20 +76,20 @@ $(function(){
 				type:"post",
 				success:function(data){
 					if(data.success){
-						layui.use('layer', function(){
-						  var layer = layui.layer;
-						  layer.msg("修改成功",{icon: 1,time: 1000});
-						});
-						$(".incoice_headline").parent().load("user/toInvoice.do")
-					}else{
-						layui.use('layer', function(){
-						  var layer = layui.layer;
-						  layer.msg(data.msg,{icon: 2,time: 1000});
+						layer.msg('修改成功'
+							,{icon: 1,time: 1000}
+							,function(){
+								location.href="user/toInformation.do?update=update"; 
 						});
 					}
 				}
 			});
-		});
+		
+	});
+	//取消
+	$(document).on("click","#update>button:eq(1)",function(){
+			//$(".site_head").parent().load("user/toInvoice.do");
+			location.href="user/toInformation.do?update=update"; 
 	});
 });
 baidu.template.LEFT_DELIMITER='<*';
@@ -211,7 +167,7 @@ baidu.template.RIGHT_DELIMITER='*>';
 					<span class="" id=""></span>
 				</div>
 			</div>
-			<div class="update">
+			<div class="update" id="update">
 				<button>保存</button>
 				<button>取消</button>
 			</div>

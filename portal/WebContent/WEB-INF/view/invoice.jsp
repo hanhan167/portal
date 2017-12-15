@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 	
-	<div class="site_head">
+	<div class="site_head" id="site_head"> 
 		<h4>发票管理</h4>
 		<button type="button" class="add_site"><img src="frame/static/img/add.png"/>添加新记录</button>
 	</div>
@@ -42,9 +42,11 @@ $(function(){
 	
 	var index =layer.load(2);
 	
-	$(".site_head button").click(function(){
-		//$(this).parent().parent().load("user/toInvoice.do");
+	/* $(document).on("click",".site_head button",function(){
 		$(this).parent().parent().load("user/toInvoiceOperate.do");
+	}); */
+	$("#site_head button").click(function(){
+		$(".site_head").parent().load("user/toInvoiceOperate.do");
 	});
 	//查询
 	$.ajax({
@@ -52,14 +54,20 @@ $(function(){
 		type:"get",
 		success:function(data){
 			if(data.success){
-				if(data.obj==null){
+				$(".add_site").text("编辑");
+				var html=baidu.template('bd_t1',data);
+				$("#incoice_headline").html(html);
+					layer.close(index);
+				
+				
+			/* 	if(data.obj==null){
 					layer.close(index);
 				}else{
 					$(".add_site").text("编辑");
 					var html=baidu.template('bd_t1',data);
 					$("#incoice_headline").html(html);
 					layer.close(index);
-				}
+				} */
 			}
 		}
 	});

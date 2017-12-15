@@ -154,6 +154,10 @@ $(function(){
 	{
 		$(".content_left>ul>li:eq(5)").click();
 	}
+	if(GetQueryString("update")=="update")
+	{
+		$(".content_left>ul>li:eq(7)").click();
+	}
 	
 	
 });
