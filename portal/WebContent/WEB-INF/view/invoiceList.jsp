@@ -95,8 +95,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<!-- 开票详情 -->
 		<div class="invoiceXq hidden">
-			<div class="xqInvoiceTop">
+			<!-- <div class="xqInvoiceTop">
 				<span class="title">开发票明细：</span>
+			</div> -->
+			<div class="go_invoiceBill_table bgfff"  style="display: none;height: 56px;">
+				<form onsubmit="return false" class="form-inline">
+					<div class="form-group" style="margin-top: 12px;margin-left: 22px;">
+						<label style="margin-top: 6px;">快递名称：</label>
+						<select class="form-control" id="logisticsName1">
+							<option value="">选择快递</option>
+						</select>
+					</div>
+					<div class="form-group" style="margin-top: 12px;">
+						<label style="margin-top: 54x;padding-top: 7px;">快递单号：</label>
+						<input class="form-control" id="expressNumber1" placeholder="请输入快递单号"  style="margin-top: 5px;"/>
+					</div>
+					<button id="goInvoiceWC1" style="margin-top: 12px;padding:0 30px;/* margin:0!important; */height:32px;float:right;margin-right: 34px;">完成</button>
+				</form>
 			</div>
 			<div class="invoicelistItem">
 				<div class="fl_tit">发票编号：<span class="billNo">--</span>	</div>
@@ -170,21 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>2017-02-28</td>
 				</tr>
 			</table>
-			<div class="go_invoiceBill_table bgfff"  style="display: none;height: 56px;">
-				<form onsubmit="return false" class="form-inline">
-					<div class="form-group" style="margin-top: 12px;margin-left: 22px;">
-						<label style="margin-top: 6px;">快递名称：</label>
-						<select class="form-control" id="logisticsName1">
-							<option value="">选择快递</option>
-						</select>
-					</div>
-					<div class="form-group" style="margin-top: 12px;">
-						<label style="margin-top: 54x;padding-top: 7px;">快递单号：</label>
-						<input class="form-control" id="expressNumber1" placeholder="请输入快递单号"  style="margin-top: 5px;"/>
-					</div>
-					<button id="goInvoiceWC1" style="margin-top: 12px;padding:0 30px;/* margin:0!important; */height:32px;float:right;margin-right: 34px;">完成</button>
-				</form>
-			</div>
+		
 			
 			<div id="pageNo_list1" class="bgfff"></div>
 		
