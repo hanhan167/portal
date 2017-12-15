@@ -81,7 +81,7 @@ public class TBusPamentImpl extends BaseDao implements ITBusPamentService{
 		try {
 			list=getSqlMapClientTemplate().queryForList("tbusPament.getBillByOrderNo", map, (pager.getPageNo()-1)*pager.getPageSize(), pager.getPageSize());
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		//获取总记录数
 		int count=0;
