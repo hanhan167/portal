@@ -117,6 +117,9 @@ function demo(curr,query,Sort1,Sort2,startTime,endTime){
 			startTime:startTime,
 			endTime:endTime,
 		},
+		beforeSend:function(){
+			$("#tabel").html("正在加载中...");
+		},
 		success:function(data){
 			var html ='<tr><th>粉丝名</th><th>等级</th><th>邮箱</th><th>电话</th><th>总消费</th><th>总购买量</th><th>上次登陆时间</th><th>累计奖励</th></tr><tr class="margin-tr"></tr>';
 	        $(data.obj.rows).each(function (n, Row) {

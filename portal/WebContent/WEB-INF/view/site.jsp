@@ -56,6 +56,9 @@ $(function(){
 			url:'user/getSitePage.do',
 			data:{pageNo:curr||1},
 			type:"get",
+			beforeSend:function(){
+				$(".site_box").html("正在加载中...");
+			},
 			success:function(data){
 				  $(".site_box").empty();
 		          $(data.obj.rows).each(function (n, Row) {

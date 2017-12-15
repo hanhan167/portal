@@ -1,5 +1,6 @@
 
 package com.hansy.portal.action;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -456,11 +457,12 @@ public class UserAction {
 	@RequestMapping("/getMyCustomerPage1")
 	@ResponseBody
 	public BaseReslt<Pager<MyCustomer>> getMyCustomerPage1(String Sort1,String Sort2,
-			Integer pageNo,HttpSession session,HttpServletRequest request,MyCustomer myCustomer){
+			Integer pageNo,HttpSession session,HttpServletRequest request,MyCustomer myCustomer) throws UnsupportedEncodingException{
 		Map<String, String>map = new HashMap<>();
 		TUserBaseInfoBo baseInfoVo=(TUserBaseInfoBo) session.getAttribute("loginUser");
 		if(myCustomer.getName()!=null&&myCustomer.getName()!=""){
-			map.put("name", myCustomer.getName());
+			String strName = new String(myCustomer.getName().getBytes("ISO-8859-1"),"utf-8");
+			map.put("name", strName);
 		}
 		if(myCustomer.getTotalAmt()!=null){
 			map.put("totalAmt", myCustomer.getTotalAmt()+"");
@@ -501,6 +503,7 @@ public class UserAction {
 		view.addObject("pageNo", pageNo);
 		return view;
 	}
+	
 	/**
 	 * 获取收货地址分页
 	 * @description: TODO
