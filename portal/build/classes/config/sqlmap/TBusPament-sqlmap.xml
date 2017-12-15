@@ -173,7 +173,7 @@ count(1)
 	  <dynamic prepend="">
 	   <isNotEmpty property="billNo" prepend="and">  
 		                <![CDATA[ 
-		                    t2.BILL_NO = #billNo# 
+		                      t2.BILL_NO like '%' || #billNo# || '%'
 		                ]]>  
 	  </isNotEmpty>
 	  
