@@ -25,7 +25,6 @@ var custCat = {};
 var invoice = {
 	//开票列表查询
 	invoiceList:function(pageNo){
-		
 		pageNo = pageNo || 1;
 		var data  = invoice.getInputVal();
 		var $invoice = $(".invoiceContennt .invoiceCont table tr:first");

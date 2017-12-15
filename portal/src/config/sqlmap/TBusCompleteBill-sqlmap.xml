@@ -70,17 +70,15 @@ INSERT_DATE
 	*
 	from T_BUS_COMPLETE_BILL where 1=1
 	
-	<dynamic>
+	<dynamic prepend="">
 	   <isNotEmpty property="billNo" prepend="and">  
 		                <![CDATA[ 
 		                    BILL_NO like '%' || #billNo# || '%'
 		                ]]>  
 	  </isNotEmpty>
-	</dynamic>
-	 <!-- <dynamic prepend="">
-	   <isNotEmpty property="orderNo" prepend="and">  
+	   <isNotEmpty property="supplyNo" prepend="and">  
 		                <![CDATA[ 
-		                    ORDER_NO = #orderNo# 
+		                    supplyNo = #supplyNo# 
 		                ]]>  
 	  </isNotEmpty>
        <isNotEmpty property="custNo" prepend="and">  
@@ -98,7 +96,7 @@ INSERT_DATE
 					        INSERT_DT< #endTime#
 					    ]]>
 	</isNotEmpty>  
-	  </dynamic>  -->
+	  </dynamic> 
 	</select>
 		<delete id="delete" parameterClass="string">
 		delete from T_BUS_COMPLETE_BILL t where t.BILL_NO=#billNo#
