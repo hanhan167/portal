@@ -17,6 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body style="background-color: #e2e2e2;">
 
 		<!--内容-->
+	<input type="hidden"  class="myBillVal">
 	<div class="invoiceContennt">
 		<div class="clearFix invoiceTop">
 			<h4>发票管理</h4>
@@ -100,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div> -->
 			<div class="go_invoiceBill_table bgfff"  style="display: none;height: 56px;">
 				<form onsubmit="return false" class="form-inline">
-					<div class="form-group" style="margin-top: 12px;margin-left: 22px;">
+					<div class="form-group" style="margin-top: 12px;margin-left: 2px;">
 						<label style="margin-top: 6px;">快递名称：</label>
 						<select class="form-control" id="logisticsName1">
 							<option value="">选择快递</option>
@@ -110,7 +111,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<label style="margin-top: 54x;padding-top: 7px;">快递单号：</label>
 						<input class="form-control" id="expressNumber1" placeholder="请输入快递单号"  style="margin-top: 5px;"/>
 					</div>
-					<button id="goInvoiceWC1" style="margin-top: 12px;padding:0 30px;/* margin:0!important; */height:32px;float:right;margin-right: 34px;">完成</button>
+					<div class="form-group" style="margin-top: 12px;">
+						<a class="myChange">修改</a>
+					</div>
+					<button id="goInvoiceWC1" style="margin-top: 15px;padding:0 30px;/* margin:0!important; */height: 31px;float:right;margin-right: 17px;">完成</button>
 				</form>
 			</div>
 			<div class="invoicelistItem">
@@ -148,7 +152,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td align="right">联系电话：</td>
 					<td name="billReceivePhone">--</td>
 				</tr>
-				<tr>
+				<tr class="wcPart">
 					<td align="right">物流公司：</td>
 					<td name="logisticsName">610000</td>
 					<td align="right">快递编号：</td>
@@ -187,6 +191,53 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</table>
 		
 			
+			<div id="pageNo_list1" class="bgfff"></div>
+		
+		</div>
+		
+			<!-- 修改部分 -->
+			<div class="invoiceXqbf" style="display: none">
+		
+			<div class="invoicelistItem">
+				<div class="fl_tit">发票编号：<input class="billNo"></div>
+				<div class="fr_money">发票金额：<input class="money"></div>
+			</div>
+			<table class="table listNO">
+				<tr>
+					<td align="right">发票性质：</td>
+					<td><input name="billNatrue"></td>
+					<td align="right">发票状态：</td>
+					<td><input name="billStatus"></td>
+				</tr>
+				<tr>
+					<td align="right">发票类型：</td>
+					<td><input name="billType"></td>
+					<td align="right">名称：</td>
+					<td><input name="companyName"></td>
+				</tr>
+				<tr>
+					<td align="right">申请时间：</td>
+					<td name="billDate">--</td>
+					<td align="right">发票编号：</td>
+					<td name="billNo">--</td>
+				</tr>
+				<tr>
+					<td align="right">收件人：</td>
+					<td><input name="billReceiveName"></td>
+					<td align="right">收取地址：</td>
+					<td><input name="billReceiveAddress"></td>
+				</tr>
+				<tr>
+					<td align="right">邮编：</td>
+					<td><input name="billReceiveMail"></td>
+					<td align="right">联系电话：</td>
+					<td><input name="billReceivePhone"></td>
+				</tr>
+			</table>
+			
+		<!-- 	<div class="invoicelistItem" style="border:none;margin-bottom:10px;">
+				<span>关联订单/账单</span>
+			</div> -->		
 			<div id="pageNo_list1" class="bgfff"></div>
 		
 		</div>
