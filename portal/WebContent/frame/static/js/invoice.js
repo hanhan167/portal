@@ -271,8 +271,8 @@ var invoice = {
 	        	var row = data.obj.rows;
 	        	var map = data.map.completeBill;
 	        	if(data.success){
-	        		
 	        		var html=[];
+	        		$(".myApplyNoVal").val(map.applyNo);
 	        		$(".invoiceXq .invoicelistItem .billNo").text(map.billNo);
 	        		$(".invoiceXq .invoicelistItem .money").text("￥"+map.billMoney);
 	        		$(".invoiceXq table.listNO tr td").each(function(){
@@ -772,8 +772,8 @@ function deleteTick(str)
 }
 
 $(".myChange").click(function(){
-	debugger;
 	
+	$(".clearFix").hide();
 	$(".invoiceXq").hide();
 	$(".invoiceXqbf").show();
 	var billNo = $(".myBillVal").val();
@@ -804,11 +804,12 @@ $(".myChange").click(function(){
         		
         		var html=[];
         		
-        		$(".invoiceXqbf .invoicelistItem .billNo").val(map.billNo);
-        		$(".invoiceXqbf .invoicelistItem .money").val("￥"+map.billMoney);
+        		$(".invoiceXqbf table.listNO tr td input[name=billNo]").val(map.billNo);
+        		$(".invoiceXqbf table.listNO tr td[name=money]").text("￥"+map.billMoney);
+        		$(".invoiceXqbf table.listNO tr td select[name=billType]").val(map.billType);
+        		$(".invoiceXqbf table.listNO tr td select[name=billNatrue]").val(map.billNatrue);
         		$(".invoiceXqbf table.listNO tr td input").each(function(){
         			var key = $(this).attr("name");
-        			alert("key:"+key);
         			if(key){
         				$(this).val(map[key]);
         				for(var k=0;k<picDict.length;k++){
@@ -824,6 +825,35 @@ $(".myChange").click(function(){
         			invoice.pageListLayUi(data,"pageNo_list1",function(curr){
         				invoice.invoiceXQAjaxNot(curr,billNo);
         			});
+        			
+        		$(".makeSaveUpdate").click(function(){
+        			var billType = $(".invoiceXqbf table.listNO tr td select[name=billType] option:selected").val();
+        			var billNatrue = $(".invoiceXqbf table.listNO tr td select[name=billNatrue] option:selected").val();
+        			var money = $(".invoiceXqbf table.listNO tr td[name=money]").text();
+        			var moneyStr = money.substring(1);
+        			$.ajax({
+        				url:"user/updateCompleteBill.do",
+        				type:"post",
+        				data:{
+        					"applyNo":map.applyNo,
+        					"billNo":$(".invoiceXqbf table.listNO tr td input[name=billNo]").val(),
+        					"billMoney":moneyStr,
+        					"billReceiveName":$(".invoiceXqbf table.listNO tr td input[name=billReceiveName]").val(),
+        					"billReceiveAddress":$(".invoiceXqbf table.listNO tr td input[name=billReceiveAddress]").val(),
+        					"billReceiveMail":$(".invoiceXqbf table.listNO tr td input[name=billReceiveMail]").val(),
+        					"billReceivePhone":$(".invoiceXqbf table.listNO tr td input[name=billReceivePhone]").val(),
+        					"companyName":$(".invoiceXqbf table.listNO tr td input[name=companyName]").val(),
+        					"billType":billType,
+        					"billNatrue":billNatrue
+        				},
+        				success:function(data){
+        					location.reload();
+        				}
+        			});
+        		});	
+        			
+        			
+        			
         		}
         	else{
         		layer.msg("查询失败！");
@@ -837,5 +867,10 @@ $(".myChange").click(function(){
         	$invoice.after("<tr align='center'><td colspan='4'>查询失败！</td></tr>");
         }
 	});
+});
+
+
+$(".goBackShow").click(function(){
+	$(".content_right").load("user/toBillManageMenu.do");
 });
 

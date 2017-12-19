@@ -18,6 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		<!--内容-->
 	<input type="hidden"  class="myBillVal">
+	<input type="hidden"  class="myApplyNoVal">
 	<div class="invoiceContennt">
 		<div class="clearFix invoiceTop">
 			<h4>发票管理</h4>
@@ -198,28 +199,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<!-- 修改部分 -->
 			<div class="invoiceXqbf" style="display: none">
 		
-			<div class="invoicelistItem">
-				<div class="fl_tit">发票编号：<input class="billNo"></div>
-				<div class="fr_money">发票金额：<input class="money"></div>
-			</div>
+		
 			<table class="table listNO">
 				<tr>
+					<td align="right">发票编号：</td>
+					<td><input name="billNo"></td>
+					<td align="right">发票金额：</td>
+					<td name="money"></td>
+				</tr>
+				<tr>
 					<td align="right">发票性质：</td>
-					<td><input name="billNatrue"></td>
+					<td><select name='billNatrue'>
+  					<option value="2">纸质发票</option>
+  					<option value="1">电子发票</option>
+					</select></td>
 					<td align="right">发票状态：</td>
-					<td><input name="billStatus"></td>
+					<td><input name="billStatus"  readonly="readonly"></td>
 				</tr>
 				<tr>
 					<td align="right">发票类型：</td>
-					<td><input name="billType"></td>
+					<td><select name='billType'>
+  					<option value="01">普通发票</option>
+  					<option value="02">增值税发票</option>
+					</select></td>
 					<td align="right">名称：</td>
 					<td><input name="companyName"></td>
-				</tr>
-				<tr>
-					<td align="right">申请时间：</td>
-					<td name="billDate">--</td>
-					<td align="right">发票编号：</td>
-					<td name="billNo">--</td>
 				</tr>
 				<tr>
 					<td align="right">收件人：</td>
@@ -233,8 +237,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td align="right">联系电话：</td>
 					<td><input name="billReceivePhone"></td>
 				</tr>
+				
 			</table>
-			
+					
+			<div>
+				<button class="goBackShow" style="float: right;">返回</button>
+				<button class="makeSaveUpdate" style="float: right;">确认修改</button>
+			</div>		
+				
 		<!-- 	<div class="invoicelistItem" style="border:none;margin-bottom:10px;">
 				<span>关联订单/账单</span>
 			</div> -->		
