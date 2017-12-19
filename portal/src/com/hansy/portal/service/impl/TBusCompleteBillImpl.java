@@ -55,6 +55,7 @@ public class TBusCompleteBillImpl extends BaseDao implements ITBusCompleteBillSe
 			bMap.setIsSucc(false);
 			bMap.setMsg("更新发票地址失败");
 			System.out.println(e.getStackTrace());
+			return bMap;
 		}
 		bMap.setIsSucc(true);
 		return bMap;

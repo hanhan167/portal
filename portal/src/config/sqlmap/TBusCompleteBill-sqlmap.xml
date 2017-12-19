@@ -105,6 +105,11 @@ INSERT_DATE
 	<update id="update" parameterClass="com.hansy.portal.model.vo.TBusCompleteBillVo">
 		update T_BUS_COMPLETE_BILL t
 		<dynamic prepend="set">  
+            <isNotEmpty property="billNo" prepend=",">  
+                <![CDATA[  
+                    t.BILL_NO = #billNo# 
+                ]]>  
+            </isNotEmpty>  
             <isNotEmpty property="billNatrue" prepend=",">  
                 <![CDATA[  
                     t.BILL_NATRUE = #billNatrue# 
@@ -187,7 +192,7 @@ INSERT_DATE
             </isNotEmpty> 
         </dynamic> 
         <dynamic prepend="WHERE">  
-        	t.BILL_NO = #billNo#  
+        	t.APPLY_NO = #applyNo#  
    		 </dynamic> 
 	</update>
 	

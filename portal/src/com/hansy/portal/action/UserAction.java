@@ -1059,7 +1059,7 @@ public class UserAction {
 		
 	}
 
-	//点进去之后的查询
+	//发票列表详情查询 TODO
 	@RequestMapping("/getBillCompleteBill")
 	@ResponseBody
 	public BaseReslt<Object> getBillCompleteBill(Integer pageNo,HttpSession session,String billNo){
@@ -1088,6 +1088,21 @@ public class UserAction {
 			bReslt.setSuccess(false);
 			return bReslt;
 		}
+	}
+	//发票列表详情修改 TODO
+	@RequestMapping("/updateCompleteBill")
+	@ResponseBody
+	public BaseReslt<Object> updateCompleteBill(HttpSession session,TBusCompleteBillVo busCompleteBillVo){
+		BaseReslt<Object> bReslt=new BaseReslt<Object>();
+		
+		BusinessMap<Object> bMap = itBusCompleteBillService.update(busCompleteBillVo);
+		if(!bMap.getIsSucc()){
+			bReslt.setMsg(bMap.getMsg());
+			bReslt.setSuccess(false);
+		}
+		return bReslt;
+		
+		
 	}
 		//查询关联发票
 	@RequestMapping("/getContactOrder")
