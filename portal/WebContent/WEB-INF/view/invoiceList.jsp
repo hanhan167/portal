@@ -19,6 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<!--内容-->
 	<input type="hidden"  class="myBillVal">
 	<input type="hidden"  class="myApplyNoVal">
+	<input type="hidden"  class="billStatus">
 	<div class="invoiceContennt">
 		<div class="clearFix invoiceTop">
 			<h4>发票管理</h4>
@@ -112,15 +113,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<label style="margin-top: 54x;padding-top: 7px;">快递单号：</label>
 						<input class="form-control" id="expressNumber1" placeholder="请输入快递单号"  style="margin-top: 5px;"/>
 					</div>
-					<div class="form-group" style="margin-top: 12px;">
-						<a class="myChange">修改</a>
-					</div>
+					
 					<button id="goInvoiceWC1" style="margin-top: 15px;padding:0 30px;/* margin:0!important; */height: 31px;float:right;margin-right: 17px;">完成</button>
 				</form>
+				
 			</div>
 			<div class="invoicelistItem">
 				<div class="fl_tit">发票编号：<span class="billNo">--</span>	</div>
 				<div class="fr_money">发票金额：<span class="money">￥--</span></div>
+				<a class="myChange" style="margin-left: 48px;">修改信息</a>
 			</div>
 			<table class="table listNO">
 				<tr>
@@ -237,7 +238,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td align="right">联系电话：</td>
 					<td><input name="billReceivePhone"></td>
 				</tr>
-				
+				<tr class="wcPart" style="display: none;">
+					<td align="right">物流公司：</td>
+					<td>
+					<!-- <input name="logisticsName"> -->
+					<select name="logisticsName" class="form-control" id="logisticsName1">
+						<option value="1">圆通快递</option>
+						<option value="2">中通快递</option>
+						<option value="3">申通快递</option>
+						<option value="4">韵达快递</option>
+						<option value="5">顺丰快递</option>
+						<option value="6">邮政快递</option>
+						<option value="20">其它</option>
+					</select>
+					</td>
+					<td align="right">快递编号：</td>
+					<td><input name="expressNumber"></td>
+				</tr>
 			</table>
 					
 			<div>

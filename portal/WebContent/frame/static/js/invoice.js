@@ -91,6 +91,7 @@ var invoice = {
 		$(".invoiceContennt .callBackList").removeClass("hidden");
 		$(".go_invoiceBill_table").hide();
 		invoice.invoiceXQAjax(1,billNo);
+		$(".myBillVal").val(billNo);
 	},
 	
 	//未寄送详情
@@ -198,6 +199,7 @@ var invoice = {
 	        	var picDict = ['billStatus','billNatrue','billType','logisticsName'];
 	        	var row = data.obj.rows;
 	        	var map = data.map.completeBill;
+	        	$(".billStatus").val(map.billStatus);
 	        	if(data.success){
 	        		var html=[];
 	        		$(".invoiceXq .invoicelistItem .billNo").text(map.billNo);
@@ -772,9 +774,13 @@ function deleteTick(str)
 }
 
 $(".myChange").click(function(){
-	
 	$(".clearFix").hide();
 	$(".invoiceXq").hide();
+	var myValBillStatus  = $(".billStatus").val();
+	if(myValBillStatus=="2")
+	{
+		$(".wcPart").show();
+	}	
 	$(".invoiceXqbf").show();
 	var billNo = $(".myBillVal").val();
 	var $invoice = $(".invoiceContennt .invoiceXq .pageListBill tr:first");
@@ -797,7 +803,7 @@ $(".myChange").click(function(){
         success: function (data) {
         	invoice.kdDict($("#logisticsName1"));
         	layer.close(before);
-        	var picDict = ['billStatus','billNatrue','billType'];//,'logisticsName'
+        	var picDict = ['billStatus','billNatrue','billType','logisticsName'];//,'logisticsName'
         	var row = data.obj.rows;
         	var map = data.map.completeBill;
         	if(data.success){
@@ -808,6 +814,11 @@ $(".myChange").click(function(){
         		$(".invoiceXqbf table.listNO tr td[name=money]").text("￥"+map.billMoney);
         		$(".invoiceXqbf table.listNO tr td select[name=billType]").val(map.billType);
         		$(".invoiceXqbf table.listNO tr td select[name=billNatrue]").val(map.billNatrue);
+        		if(map.logisticsName!=null)
+        		{
+        			$(".invoiceXqbf table.listNO tr td select[name=logisticsName]").val(map.logisticsName);
+        		}	
+        		$(".invoiceXqbf table.listNO tr td select[name=billNatrue]").val();
         		$(".invoiceXqbf table.listNO tr td input").each(function(){
         			var key = $(this).attr("name");
         			if(key){
@@ -830,6 +841,7 @@ $(".myChange").click(function(){
         			var billType = $(".invoiceXqbf table.listNO tr td select[name=billType] option:selected").val();
         			var billNatrue = $(".invoiceXqbf table.listNO tr td select[name=billNatrue] option:selected").val();
         			var money = $(".invoiceXqbf table.listNO tr td[name=money]").text();
+        			var logisticsName = $(".invoiceXqbf table.listNO tr td select[name=logisticsName]").val();
         			var moneyStr = money.substring(1);
         			$.ajax({
         				url:"user/updateCompleteBill.do",
@@ -837,14 +849,16 @@ $(".myChange").click(function(){
         				data:{
         					"applyNo":map.applyNo,
         					"billNo":$(".invoiceXqbf table.listNO tr td input[name=billNo]").val(),
-        					"billMoney":moneyStr,
+        					"money":moneyStr,
         					"billReceiveName":$(".invoiceXqbf table.listNO tr td input[name=billReceiveName]").val(),
         					"billReceiveAddress":$(".invoiceXqbf table.listNO tr td input[name=billReceiveAddress]").val(),
         					"billReceiveMail":$(".invoiceXqbf table.listNO tr td input[name=billReceiveMail]").val(),
         					"billReceivePhone":$(".invoiceXqbf table.listNO tr td input[name=billReceivePhone]").val(),
         					"companyName":$(".invoiceXqbf table.listNO tr td input[name=companyName]").val(),
         					"billType":billType,
-        					"billNatrue":billNatrue
+        					"billNatrue":billNatrue,
+        					"logisticsName":logisticsName,
+        					"expressNumber":$(".invoiceXqbf table.listNO tr td input[name=expressNumber]").val()
         				},
         				success:function(data){
         					location.reload();
