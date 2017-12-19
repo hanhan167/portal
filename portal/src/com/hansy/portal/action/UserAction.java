@@ -1068,7 +1068,7 @@ public class UserAction {
 		}
 		BaseReslt<Object> bReslt=new BaseReslt<Object>();
 		int pageSize=5;
-		Pager pager=new Pager();
+		Pager<?> pager=new Pager();
 		pager.setPageNo(pageNo);
 		pager.setPageSize(pageSize);
 		Map<String, String>map = new HashMap<>();
@@ -1094,7 +1094,7 @@ public class UserAction {
 	@ResponseBody
 	public BaseReslt<Object> updateCompleteBill(HttpSession session,TBusCompleteBillVo busCompleteBillVo){
 		BaseReslt<Object> bReslt=new BaseReslt<Object>();
-		
+		busCompleteBillVo.setBillStatus("1");//状态改为未寄送
 		BusinessMap<Object> bMap = itBusCompleteBillService.update(busCompleteBillVo);
 		if(!bMap.getIsSucc()){
 			bReslt.setMsg(bMap.getMsg());
