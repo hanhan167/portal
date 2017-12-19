@@ -102,6 +102,7 @@ var invoice = {
 		$(".invoiceContennt .callBackList").removeClass("hidden");
 		$(".go_invoiceBill_table").show();
 		invoice.invoiceXQAjaxNot(1,billNo);
+		$(".myBillVal").val(billNo);
 	},
 	
 	
@@ -245,6 +246,7 @@ var invoice = {
 	},
 	//未寄送详情显示
 	invoiceXQAjaxNot:function(pageNo,billNo){
+		$(".wcPart").hide();
 		var $invoice = $(".invoiceContennt .invoiceXq .pageListBill tr:first");
 		var before;
 		var pageNo = pageNo || 1;
@@ -252,6 +254,7 @@ var invoice = {
 			url: "user/getBillCompleteBill.do",
 	        type: "post",
 	        data:{"billNo":billNo,"pageNo":pageNo},
+	      
 	        beforeSend:function(){
 	        	$invoice.nextAll().empty();
 	        	before = layer.msg("查询中,请稍后...", {
@@ -264,7 +267,7 @@ var invoice = {
 	        success: function (data) {
 	        	invoice.kdDict($("#logisticsName1"));
 	        	layer.close(before);
-	        	var picDict = ['billStatus','billNatrue','billType','logisticsName'];
+	        	var picDict = ['billStatus','billNatrue','billType'];//,'logisticsName'
 	        	var row = data.obj.rows;
 	        	var map = data.map.completeBill;
 	        	if(data.success){
@@ -768,4 +771,71 @@ function deleteTick(str)
 	$("br").remove();
 }
 
+$(".myChange").click(function(){
+	debugger;
+	
+	$(".invoiceXq").hide();
+	$(".invoiceXqbf").show();
+	var billNo = $(".myBillVal").val();
+	var $invoice = $(".invoiceContennt .invoiceXq .pageListBill tr:first");
+	var before;
+	var pageNo = pageNo || 1;
+	$.ajax({
+		url: "user/getBillCompleteBill.do",
+        type: "post",
+        data:{"billNo":billNo,"pageNo":pageNo},
+      
+        beforeSend:function(){
+        	$invoice.nextAll().empty();
+        	before = layer.msg("查询中,请稍后...", {
+        			  icon: 16
+        			  ,shade: 0.01
+        			  ,time:0
+        			});
+        	$invoice.after("<tr align='center'><td colspan='4'>查询中，请稍后...</td></tr>")
+        },
+        success: function (data) {
+        	invoice.kdDict($("#logisticsName1"));
+        	layer.close(before);
+        	var picDict = ['billStatus','billNatrue','billType'];//,'logisticsName'
+        	var row = data.obj.rows;
+        	var map = data.map.completeBill;
+        	if(data.success){
+        		
+        		var html=[];
+        		
+        		$(".invoiceXqbf .invoicelistItem .billNo").val(map.billNo);
+        		$(".invoiceXqbf .invoicelistItem .money").val("￥"+map.billMoney);
+        		$(".invoiceXqbf table.listNO tr td input").each(function(){
+        			var key = $(this).attr("name");
+        			alert("key:"+key);
+        			if(key){
+        				$(this).val(map[key]);
+        				for(var k=0;k<picDict.length;k++){
+        					if(key == picDict[k]){
+        						$(this).val(dict[key][map[key]]);
+        					}
+        				};
+        			}
+        		});
+        		$(".invoiceXqbf table tr td[name='billDate']").text(DateFormat(map.billDate));
+        			$invoice.nextAll().empty();
+        			$invoice.after(html.join(""));
+        			invoice.pageListLayUi(data,"pageNo_list1",function(curr){
+        				invoice.invoiceXQAjaxNot(curr,billNo);
+        			});
+        		}
+        	else{
+        		layer.msg("查询失败！");
+        		$invoice.nextAll().empty();
+	        	$invoice.after("<tr align='center'><td colspan='4'>查询失败！</td></tr>");
+        	}
+        },
+        error:function(e){
+        	layer.msg("查询失败！");
+        	$invoice.nextAll().empty();
+        	$invoice.after("<tr align='center'><td colspan='4'>查询失败！</td></tr>");
+        }
+	});
+});
 
