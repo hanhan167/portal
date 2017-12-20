@@ -32,7 +32,7 @@ public class TBusBillVo {
 	private Date startTime;
 	private Date endTime;
 	private String billNatrue;//发票状态 "0":"电子发票","1":"纸质发票"
-	private String supplyNo;//发票状态 "0":"电子发票","1":"纸质发票"
+	private String supplyNo;
 	private String tableKey;//主键
 	private String applyNo;//申请编号
 	private String billProvince;//省

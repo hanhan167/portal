@@ -224,7 +224,7 @@ BILL_AREA billArea
   apply_no applyNo
   FROM t_user_base_info t1
 INNER JOIN 
-(SELECT DISTINCT   t.cust_no,t.supply_no,t.apply_no FROM T_BUS_BILL t where BILL_STATUS = '1'  ) t2
+(SELECT DISTINCT   t.cust_no,t.supply_no,t.apply_no,t.INSERT_DT FROM T_BUS_BILL t where BILL_STATUS = '1'  ) t2
 ON t1.cust_no=t2.cust_no   where 1=1
                              <dynamic prepend="">	
   <isNotEmpty property="query" prepend="and">
@@ -233,7 +233,7 @@ ON t1.cust_no=t2.cust_no   where 1=1
 		                ]]>
 			</isNotEmpty>
 		</dynamic>
-   
+   order   by   t2.INSERT_DT DESC
 		</select>
 	<!-- 查询客户姓名和电话bycustNo 数量 -->
 	<select id = "getOrderCustNameTotal" parameterClass="map" resultClass="java.lang.Integer">
