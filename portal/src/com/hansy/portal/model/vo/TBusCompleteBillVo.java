@@ -22,6 +22,10 @@ public class TBusCompleteBillVo {
 	private String supplyNo;			//供方编号
 	private Date insertDate;			//新增时间
 	private String applyNo;			//申请编号
+	private String billProvince;//省
+	private String billCity;//市
+	private String billArea;//区
+	
 	public String getBillNo() {
 		return billNo;
 	}
@@ -131,6 +135,42 @@ public class TBusCompleteBillVo {
 	public void setInsertDate(Date insertDate) {
 		this.insertDate = insertDate;
 	}
+	
+	public String getBillProvince() {
+		return billProvince;
+	}
+	public void setBillProvince(String billProvince) {
+		this.billProvince = billProvince;
+	}
+	public String getBillCity() {
+		return billCity;
+	}
+	public void setBillCity(String billCity) {
+		this.billCity = billCity;
+	}
+	public String getBillArea() {
+		return billArea;
+	}
+	public void setBillArea(String billArea) {
+		this.billArea = billArea;
+	}
+	@Override
+	public String toString() {
+		return "TBusCompleteBillVo [billNo=" + billNo + ", billNatrue="
+				+ billNatrue + ", billStatus=" + billStatus + ", billTitle="
+				+ billTitle + ", companyName=" + companyName + ", billMoney="
+				+ billMoney + ", billDate=" + billDate + ", billType="
+				+ billType + ", billReceiveName=" + billReceiveName
+				+ ", billReceiveAddress=" + billReceiveAddress
+				+ ", billReceiveMail=" + billReceiveMail
+				+ ", billReceivePhone=" + billReceivePhone + ", logisticsName="
+				+ logisticsName + ", expressNumber=" + expressNumber
+				+ ", custNo=" + custNo + ", supplyNo=" + supplyNo
+				+ ", insertDate=" + insertDate + ", applyNo=" + applyNo
+				+ ", billProvince=" + billProvince + ", billCity=" + billCity
+				+ ", billArea=" + billArea + "]";
+	}
+	
 	
 }
 

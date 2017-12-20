@@ -23,6 +23,11 @@ public class TUserBillVo {
 	private String	billReceiveName;//收票人姓名
 	private String billReceiveMail;//收票人邮箱
 	private String billNatrue;//类型
+	private String applyNo;//申请编号
+	private String billProvince;//省
+	private String billCity;//市
+	private String billArea;//区
+	
 	public String getCustNo() {
 		return custNo;
 	}
@@ -139,6 +144,40 @@ public class TUserBillVo {
 	}
 	public void setBillReceiveMail(String billReceiveMail) {
 		this.billReceiveMail = billReceiveMail;
+	}
+
+	
+
+	public String getBillProvince() {
+		return billProvince;
+	}
+
+	public void setBillProvince(String billProvince) {
+		this.billProvince = billProvince;
+	}
+
+	public String getBillCity() {
+		return billCity;
+	}
+
+	public void setBillCity(String billCity) {
+		this.billCity = billCity;
+	}
+
+	public String getBillArea() {
+		return billArea;
+	}
+
+	public void setBillArea(String billArea) {
+		this.billArea = billArea;
+	}
+
+	public String getApplyNo() {
+		return applyNo;
+	}
+
+	public void setApplyNo(String applyNo) {
+		this.applyNo = applyNo;
 	}
 	
 }
