@@ -114,86 +114,103 @@ BILL_PROVINCE,
 	<update id="update" parameterClass="com.hansy.portal.model.vo.TBusCompleteBillVo">
 		update T_BUS_COMPLETE_BILL t
 		<dynamic prepend="set">  
+		
             <isNotEmpty property="billNo" prepend=",">  
                 <![CDATA[  
                     t.BILL_NO = #billNo# 
                 ]]>  
             </isNotEmpty>  
+            
             <isNotEmpty property="billNatrue" prepend=",">  
                 <![CDATA[  
                     t.BILL_NATRUE = #billNatrue# 
                 ]]>  
             </isNotEmpty>  
+            
             <isNotEmpty property="billStatus" prepend=",">  
                 <![CDATA[  
                     t.BILL_STATUS = #billStatus# 
                 ]]>  
             </isNotEmpty>  
+            
             <isNotEmpty property="billTitle" prepend=",">  
                 <![CDATA[  
                     t.BILL_TITLE = #billTitle# 
                 ]]>  
             </isNotEmpty>  
+            
             <isNotEmpty property="companyName" prepend=",">  
                 <![CDATA[  
                     t.COMPANY_NAME = #companyName# 
                 ]]>  
             </isNotEmpty>  
+            
             <isNotEmpty property="billMoney" prepend=",">  
                 <![CDATA[  
                     t.BILL_MONEY = #billMoney# 
                 ]]>  
             </isNotEmpty>  
+            
             <isNotEmpty property="billDate" prepend=",">  
                 <![CDATA[  
                     t.BILL_DATE = #billDate# 
                 ]]>  
             </isNotEmpty>  
+            
             <isNotEmpty property="billType" prepend=",">  
                 <![CDATA[  
                     t.BILL_TYPE = #billType# 
                 ]]>  
             </isNotEmpty>  
+            
             <isNotEmpty property="billReceiveName" prepend=",">  
                 <![CDATA[  
                     t.BILL_RECEIVE_NAME = #billReceiveName# 
                 ]]>  
-            </isNotEmpty>  
+            </isNotEmpty> 
+             
             <isNotEmpty property="billReceiveAddress" prepend=",">  
                 <![CDATA[  
                     t.BILL_RECEIVE_ADDRESS = #billReceiveAddress# 
                 ]]>  
-            </isNotEmpty>  
+            </isNotEmpty> 
+             
             <isNotEmpty property="billReceiveMail" prepend=",">  
                 <![CDATA[  
                     t.BILL_RECEIVE_MAIL = #billReceiveMail# 
                 ]]>  
-            </isNotEmpty>  
+            </isNotEmpty> 
+             
             <isNotEmpty property="billReceivePhone" prepend=",">  
                 <![CDATA[  
                     t.BILL_RECEIVE_PHONE = #billReceivePhone# 
                 ]]>  
             </isNotEmpty> 
+            
             <isNotEmpty property="logisticsName" prepend=",">  
                 <![CDATA[  
                     t.LOGISTICS_NAME = #logisticsName# 
                 ]]>  
             </isNotEmpty> 
+            
             <isNotEmpty property="expressNumber" prepend=",">  
                 <![CDATA[  
                     t.EXPRESS_NUMBER = #expressNumber# 
                 ]]>  
             </isNotEmpty> 
+            
             <isNotEmpty property="custNo" prepend=",">  
                 <![CDATA[  
                     t.CUST_NO = #custNo# 
                 ]]>  
             </isNotEmpty> 
+            
             <isNotEmpty property="supplyNo" prepend=",">  
                 <![CDATA[  
                     t.SUPPLY_NO = #supplyNo# 
                 ]]>  
             </isNotEmpty> 
+            
             <isNotEmpty property="insertDate" prepend=",">  
                 <![CDATA[  
                     t.INSERT_DATE = #insertDate# 
@@ -205,21 +222,25 @@ BILL_PROVINCE,
                     t.BILL_PROVINCE = #billProvince# 
                 ]]>  
             </isNotEmpty> 
+            
              <isNotEmpty property="billCity" prepend=",">  
                 <![CDATA[  
                     t.BILL_CITY = #billCity# 
                 ]]>  
             </isNotEmpty> 
+            
              <isNotEmpty property="billArea" prepend=",">  
                 <![CDATA[  
                     t.BILL_AREA = #billArea# 
                 ]]>  
             </isNotEmpty> 
-            
+      
         </dynamic> 
+        
         <dynamic prepend="WHERE">  
         	t.APPLY_NO = #applyNo#  
    		 </dynamic> 
+   		 
 	</update>
 	
 	

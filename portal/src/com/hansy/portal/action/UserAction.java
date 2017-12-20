@@ -1292,18 +1292,15 @@ public class UserAction {
 		//开发票第四步(寄送发票)
 		@RequestMapping("/saveComplete")
 		@ResponseBody
-		public BaseReslt<Object> saveComplete(HttpSession session,String billNo,String logisticsName,String expressNumber) throws Exception{
+		public BaseReslt<Object> saveComplete(HttpSession session,TBusCompleteBillVo tBusCompleteBillVo) throws Exception{
 			BaseReslt<Object> bReslt=new BaseReslt<Object>();
 			
-			TBusCompleteBillVo tBusCompleteBillVo = new TBusCompleteBillVo();
-			tBusCompleteBillVo.setBillNo(billNo);
-			tBusCompleteBillVo.setLogisticsName(logisticsName);//物流公司
-			tBusCompleteBillVo.setExpressNumber(expressNumber);//物流编号
+			
 			tBusCompleteBillVo.setBillStatus("2");//已寄送
 			BusinessMap<Object> bMap1 = itBusCompleteBillService.update(tBusCompleteBillVo);
 			
 			//更改bus order表状态为已开发票
-			BusinessMap<Object> bMap3 = itBusBillService.updateBillStatusOfOrder(billNo);
+			BusinessMap<Object> bMap3 = itBusBillService.updateBillStatusOfOrder(tBusCompleteBillVo.getBillNo());
 			if(!bMap3.getIsSucc()){
 				bReslt.setSuccess(false);
 				bReslt.setMsg(bMap3.getMsg());

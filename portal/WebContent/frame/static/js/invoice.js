@@ -143,13 +143,18 @@ var invoice = {
 				var tBusCompleteBillVo = {};
 				var logisticsName = $("#logisticsName1").val();
 				var expressNumber = $("#expressNumber1").val();
+				var myApplyNoVal = $(".myApplyNoVal").val();
+				alert("myApplyNoVal"+myApplyNoVal);
 				var billNo = $(".invoiceContennt .invoiceXq .invoicelistItem .fl_tit .billNo").text();
+				
 				tBusCompleteBillVo.logisticsName = logisticsName;
 				tBusCompleteBillVo.expressNumber = expressNumber;
 				tBusCompleteBillVo.billNo = billNo;
+				tBusCompleteBillVo.applyNo = myApplyNoVal;
 				if(logisticsName == ""||expressNumber==""){
 					layer.msg("请填写快递单号或快递名称!")
 				}else{
+				//$("#goInvoiceWC1").attr("disabled",true);
 				$.ajax({
 					url: "user/saveComplete.do",
 			        type: "post",
@@ -169,7 +174,7 @@ var invoice = {
 			        		$(".invoiceContennt .invoiceMangeCount3").addClass("hidden");
 			        		$(".invoiceContennt .invoiceTopNav").addClass("hidden");
 			        		$(".invoiceContennt .invoiceXq").addClass("hidden");
-			        		invoice.invoiceList();
+			        		$(".content_right").load("user/toBillManageMenu.do");
 			        	}else{
 			        		layer.msg(data.msg);
 			        	}
@@ -210,7 +215,12 @@ var invoice = {
 	        		var billCity = map.billCity;
 	        		var billArea = map.billArea;
 	        		var pcaAddress = province+billCity+billArea;
-	        		$(".invoiceXq table.listNO tr td[name=pcaAddress]").text(pcaAddress);
+	        		if(pcaAddress==0 || pcaAddress=="0")
+	        		{
+	        			pcaAddress = "";
+	        		}	
+	        		var moreMsgAd = map.billReceiveAddress;
+	        		$(".invoiceXq table.listNO tr td[name=pcaAddress]").text(pcaAddress+moreMsgAd);
 	        		$(".invoiceXq .invoicelistItem .billNo").text(map.billNo);
 	        		$(".invoiceXq .invoicelistItem .money").text("￥"+map.billMoney);
 	        		$(".invoiceXq table.listNO tr td").each(function(){
@@ -287,7 +297,12 @@ var invoice = {
 	        		var billCity = map.billCity;
 	        		var billArea = map.billArea;
 	        		var pcaAddress = province+billCity+billArea;
-	        		$(".invoiceXq table.listNO tr td[name=pcaAddress]").text(pcaAddress);
+	        		if(pcaAddress==0 || pcaAddress=="0")
+	        		{
+	        			pcaAddress = "";
+	        		}	
+	        		var moreMsgAd = map.billReceiveAddress;
+	        		$(".invoiceXq table.listNO tr td[name=pcaAddress]").text(pcaAddress+moreMsgAd);
 	        		$(".myApplyNoVal").val(map.applyNo);
 	        		$(".invoiceXq .invoicelistItem .billNo").text(map.billNo);
 	        		$(".invoiceXq .invoicelistItem .money").text("￥"+map.billMoney);
@@ -651,6 +666,7 @@ var invoice = {
 				}else{
 					
 					var before;
+					$("#goInvoiceQR").attr("disabled",true);
 					$.ajax({
 						url: "user/saveConditionBill.do",
 				        type: "post",
@@ -674,8 +690,11 @@ var invoice = {
 				        	layer.close(before);
 				        	if(data.success){
 				        		layer.close(editPwLayer);
-				        		layer.msg("保存成功,跳转中...",{time:2},function(){
-				        			location.reload();
+				        		layer.msg('操作成功', {
+	        						icon: 1,
+	        						time: 1500
+	        					},function(){
+	        						$(".content_right").load("user/toBillManage.do");
 				        		});
 				        		}else{
 				        		layer.msg(data.msg);
@@ -827,6 +846,8 @@ $(".myChange").click(function(){
         		var billCity = map.billCity;
         		var billArea = map.billArea;
         		var pcaAddress = province+billCity+billArea;
+        		var billReceiveAddress = map.billReceiveAddress;
+        		$(".invoiceXqbf table.listNO tr td[name=billReceiveAddress]").text(billReceiveAddress);
         		$(".invoiceXqbf table.listNO tr td[name=pcaAddress]").text(pcaAddress);
         		$(".invoiceXqbf table.listNO tr td input[name=billNo]").val(map.billNo);
         		$(".invoiceXqbf table.listNO tr td[name=money]").text("￥"+map.billMoney);
@@ -870,8 +891,9 @@ $(".myChange").click(function(){
         			var billProvince = $(".invoiceXqbf table.listNO tr td select[name=input_province]").val();
         			var billCity = $(".invoiceXqbf table.listNO tr td select[name=input_city]").val();
         			var billArea = $(".invoiceXqbf table.listNO tr td select[name=input_area]").val();
-        			
         			var moneyStr = money.substring(1);
+        			alert($(".invoiceXqbf table.listNO tr td input[name=billReceiveAddress]").val());
+        			var billNo = $(".invoiceXqbf table.listNO tr td input[name=billNo]").val();
         			$.ajax({
         				url:"user/updateCompleteBill.do",
         				type:"post",
@@ -890,11 +912,25 @@ $(".myChange").click(function(){
         					"expressNumber":$(".invoiceXqbf table.listNO tr td input[name=expressNumber]").val(),
         					"billProvince":billProvince,
         					"billCity":billCity,
-        					"billArea":billArea
+        					"billArea":billArea,
+        					"billReceiveAddress":$(".invoiceXqbf table.listNO tr td input[name=billReceiveAddress]").val()
         				},
         				success:function(data){
-        					location.reload();
-        				}
+        					if(data.success){
+        					layer.msg('操作成功', {
+        						icon: 1,
+        						time: 1500
+        					},function(){
+        						location.reload();
+        					});
+        					}else{
+        						layer.open({
+       	    					 title: '错误信息'
+       	    					 ,content:data.msg
+        						}); 
+        						}
+        					}
+        			
         			});
         		});	
         			

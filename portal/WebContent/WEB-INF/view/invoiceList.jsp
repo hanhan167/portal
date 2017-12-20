@@ -145,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr>
 					<td align="right">收件人：</td>
 					<td name="billReceiveName">--</td>
-					<td align="right">详细地址：</td>
+					<td align="right">发票地址：</td>
 					<td name="billReceiveAddress">--</td>
 				</tr>
 				<tr>
@@ -233,7 +233,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr>
 					<td align="right">收件人：</td>
 					<td><input name="billReceiveName"></td>
-					<td align="right">详细地址：</td>
+					<td align="right">发票地址：</td>
 					<td><input name="billReceiveAddress"></td>
 				</tr>
 				<tr>
@@ -276,6 +276,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<select name="input_area" id="input_area" class="myNewSelectShow">
 				</select>
 				</td>
+				</tr>
+				<tr>
+				<td align="right">详细地址：</td>
+				<td><input name="billReceiveAddress"></td>
 				</tr>
 				
 			</table>
