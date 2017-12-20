@@ -6805,3 +6805,10 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+.myNewSelectShow{
+	width: 77%;
+    height: 35px;
+    padding: 6px 2px;
+    font-size: 14px;
+}

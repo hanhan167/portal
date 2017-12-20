@@ -145,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr>
 					<td align="right">收件人：</td>
 					<td name="billReceiveName">--</td>
-					<td align="right">收取地址：</td>
+					<td align="right">详细地址：</td>
 					<td name="billReceiveAddress">--</td>
 				</tr>
 				<tr>
@@ -159,6 +159,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td name="logisticsName">610000</td>
 					<td align="right">快递编号：</td>
 					<td name="expressNumber">18988923332732</td>
+				</tr>
+				<tr>
+					<td align="right">地址：</td>
+					<td name="pcaAddress">--</td>
 				</tr>
 			</table>
 			
@@ -229,7 +233,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr>
 					<td align="right">收件人：</td>
 					<td><input name="billReceiveName"></td>
-					<td align="right">收取地址：</td>
+					<td align="right">详细地址：</td>
 					<td><input name="billReceiveAddress"></td>
 				</tr>
 				<tr>
@@ -255,6 +259,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td align="right">快递编号：</td>
 					<td><input name="expressNumber"></td>
 				</tr>
+				<tr>
+				<td align="right">地址：</td>
+				<td>
+				省:
+				<select name="input_province" id="input_province" class="myNewSelectShow">
+				</select>
+				</td>
+				<td>
+				市:
+				<select name="input_city" id="input_city" class="myNewSelectShow">
+				</select>
+				</td>
+				<td>
+				区:
+				<select name="input_area" id="input_area" class="myNewSelectShow">
+				</select>
+				</td>
+				</tr>
+				
 			</table>
 					
 			<div>
@@ -279,6 +302,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="frame/static/js/bootstrap.min.js"></script>
 <script src="frame/static/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="frame/static/js/company.js"></script>
+<script type="text/javascript" src="frame/static/js/pdata.js"></script>
 <script type="text/javascript" src="frame/static/js/jQuery-jcDate.js"></script>
 <script type="text/javascript" src="frame/static/js/invoice.js?x=15"></script>
 <script type="text/javascript">

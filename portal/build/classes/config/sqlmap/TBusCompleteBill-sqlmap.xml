@@ -199,6 +199,23 @@ BILL_PROVINCE,
                     t.INSERT_DATE = #insertDate# 
                 ]]>  
             </isNotEmpty> 
+            
+             <isNotEmpty property="billProvince" prepend=",">  
+                <![CDATA[  
+                    t.BILL_PROVINCE = #billProvince# 
+                ]]>  
+            </isNotEmpty> 
+             <isNotEmpty property="billCity" prepend=",">  
+                <![CDATA[  
+                    t.BILL_CITY = #billCity# 
+                ]]>  
+            </isNotEmpty> 
+             <isNotEmpty property="billArea" prepend=",">  
+                <![CDATA[  
+                    t.BILL_AREA = #billArea# 
+                ]]>  
+            </isNotEmpty> 
+            
         </dynamic> 
         <dynamic prepend="WHERE">  
         	t.APPLY_NO = #applyNo#  

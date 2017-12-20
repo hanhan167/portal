@@ -1,3 +1,7 @@
+$(function(){
+	siteAdd();
+});
+
 var myNumVal = 1;
 var dict = {
 	"billStatus":{"1":"未寄送","2":"已寄送"},
@@ -202,6 +206,11 @@ var invoice = {
 	        	$(".billStatus").val(map.billStatus);
 	        	if(data.success){
 	        		var html=[];
+	        		var province = map.billProvince;
+	        		var billCity = map.billCity;
+	        		var billArea = map.billArea;
+	        		var pcaAddress = province+billCity+billArea;
+	        		$(".invoiceXq table.listNO tr td[name=pcaAddress]").text(pcaAddress);
 	        		$(".invoiceXq .invoicelistItem .billNo").text(map.billNo);
 	        		$(".invoiceXq .invoicelistItem .money").text("￥"+map.billMoney);
 	        		$(".invoiceXq table.listNO tr td").each(function(){
@@ -274,6 +283,11 @@ var invoice = {
 	        	var map = data.map.completeBill;
 	        	if(data.success){
 	        		var html=[];
+	        		var province = map.billProvince;
+	        		var billCity = map.billCity;
+	        		var billArea = map.billArea;
+	        		var pcaAddress = province+billCity+billArea;
+	        		$(".invoiceXq table.listNO tr td[name=pcaAddress]").text(pcaAddress);
 	        		$(".myApplyNoVal").val(map.applyNo);
 	        		$(".invoiceXq .invoicelistItem .billNo").text(map.billNo);
 	        		$(".invoiceXq .invoicelistItem .money").text("￥"+map.billMoney);
@@ -807,13 +821,24 @@ $(".myChange").click(function(){
         	var row = data.obj.rows;
         	var map = data.map.completeBill;
         	if(data.success){
-        		
+        		debugger;
         		var html=[];
-        		
+        		var province = map.billProvince;
+        		var billCity = map.billCity;
+        		var billArea = map.billArea;
+        		var pcaAddress = province+billCity+billArea;
+        		$(".invoiceXqbf table.listNO tr td[name=pcaAddress]").text(pcaAddress);
         		$(".invoiceXqbf table.listNO tr td input[name=billNo]").val(map.billNo);
         		$(".invoiceXqbf table.listNO tr td[name=money]").text("￥"+map.billMoney);
         		$(".invoiceXqbf table.listNO tr td select[name=billType]").val(map.billType);
         		$(".invoiceXqbf table.listNO tr td select[name=billNatrue]").val(map.billNatrue);
+        		$(".invoiceXqbf table.listNO tr td[name=pcaAddress]").text(pcaAddress);
+        		$(".invoiceXqbf table.listNO tr td select[name=input_province]").val(map.billProvince);
+        		$(".invoiceXqbf table.listNO tr td select[name=input_province]").change();
+        		$(".invoiceXqbf table.listNO tr td select[name=input_city]").val(map.billCity);
+        		$(".invoiceXqbf table.listNO tr td select[name=input_city]").change();
+        		$(".invoiceXqbf table.listNO tr td select[name=input_area]").val(map.billArea);
+        		
         		if(map.logisticsName!=null)
         		{
         			$(".invoiceXqbf table.listNO tr td select[name=logisticsName]").val(map.logisticsName);
@@ -842,6 +867,10 @@ $(".myChange").click(function(){
         			var billNatrue = $(".invoiceXqbf table.listNO tr td select[name=billNatrue] option:selected").val();
         			var money = $(".invoiceXqbf table.listNO tr td[name=money]").text();
         			var logisticsName = $(".invoiceXqbf table.listNO tr td select[name=logisticsName]").val();
+        			var billProvince = $(".invoiceXqbf table.listNO tr td select[name=input_province]").val();
+        			var billCity = $(".invoiceXqbf table.listNO tr td select[name=input_city]").val();
+        			var billArea = $(".invoiceXqbf table.listNO tr td select[name=input_area]").val();
+        			
         			var moneyStr = money.substring(1);
         			$.ajax({
         				url:"user/updateCompleteBill.do",
@@ -858,7 +887,10 @@ $(".myChange").click(function(){
         					"billType":billType,
         					"billNatrue":billNatrue,
         					"logisticsName":logisticsName,
-        					"expressNumber":$(".invoiceXqbf table.listNO tr td input[name=expressNumber]").val()
+        					"expressNumber":$(".invoiceXqbf table.listNO tr td input[name=expressNumber]").val(),
+        					"billProvince":billProvince,
+        					"billCity":billCity,
+        					"billArea":billArea
         				},
         				success:function(data){
         					location.reload();
@@ -888,3 +920,74 @@ $(".goBackShow").click(function(){
 	$(".content_right").load("user/toBillManageMenu.do");
 });
 
+function siteAdd() {
+	var html = "<option value=''>== 请选择 ==</option>";
+	$("#input_city").append(html);
+	$("#input_area").append(html);
+	$
+			.each(
+					pdata,
+					function(idx, item) {
+						if (parseInt(item.level) == 0) {
+							html += "<option value='" + item.names + "' exid='" + item.code + "'>"
+									+ item.names + "</option>";
+						}
+					});
+	$("#input_province").append(html);
+	$("#input_province")
+			.change(
+					function() {
+						if ($(this).val() == "")
+							return;
+						$("#input_city option").remove();
+						$("#input_area option").remove();
+						var code = $(this).find("option:selected").attr(
+								"exid");
+						code = code.substring(0, 2);
+						var html = "<option value=''>== 请选择 ==</option>";
+						$("#input_area").append(html);
+						$
+								.each(
+										pdata,
+										function(idx, item) {
+											if (parseInt(item.level) == 1
+													&& code == item.code
+															.substring(0, 2)) {
+												html += "<option value='" + item.names + "' exid='" + item.code + "'>"
+														+ item.names
+														+ "</option>";
+											}
+										});
+						$("#input_city").append(html);
+					});
+	$("#input_city")
+			.change(
+					function() {
+						if ($(this).val() == "")
+							return;
+						$("#input_area option").remove();
+						var code = $(this).find("option:selected").attr(
+								"exid");
+						code = code.substring(0, 4);
+						var html = "<option value=''>== 请选择 ==</option>";
+						$
+								.each(
+										pdata,
+										function(idx, item) {
+											if (parseInt(item.level) == 2
+													&& code == item.code
+															.substring(0, 4)) {
+												html += "<option value='" + item.names + "' exid='" + item.code + "'>"
+														+ item.names
+														+ "</option>";
+											}
+										});
+						$("#input_area").append(html);
+					});
+	//绑定
+	$("#input_province").val("北京市");
+	$("#input_province").change();
+	$("#input_city").val("市辖区");
+	$("#input_city").change();
+	$("#input_area").val("东城区");
+}
