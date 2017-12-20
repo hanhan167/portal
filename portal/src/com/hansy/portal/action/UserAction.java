@@ -982,7 +982,12 @@ public class UserAction {
 			return bReslt;
 	}
 	
-	
+	/**
+	 * 第二步（新）
+	 * @param TUserBillVo
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/getByIds")
 	@ResponseBody
 	public BaseReslt<Object> getById(TUserBillVo TUserBillVo,HttpSession session){
@@ -1240,6 +1245,7 @@ public class UserAction {
 			String supplyNo = baseInfoVo.getCustNo();
 			
 			tBusCompleteBillVo = itBusBillService.getInvoiceByApplyNo(applyNo);
+			
 			
 			Date date = new Date();
 			tBusCompleteBillVo.setBillMoney(Double.parseDouble(billMoney.substring(1)));

@@ -27,6 +27,9 @@
 		<result property="startTime" column="START_TIME"/>
 		<result property="endTime" column="END_TIME"/>
 		<result property="applyNo" column="APPLY_NO"/>
+		<result property="billProvince" column="BILL_PROVINCE"/>
+		<result property="billCity" column="BILL_CITY"/>
+		<result property="billArea" column="BILL_AREA"/>
 	</resultMap>
 	<sql id="allColumns">
 		ORDER_NO ,
@@ -53,7 +56,10 @@
 	START_TIME,
 	END_TIME,
 	TABLE_KEY,
-	APPLY_NO
+	APPLY_NO,
+	BILL_PROVINCE,
+	BILL_CITY,
+	BILL_AREA
 	</sql>
 	
 	<insert id="save" parameterClass="com.hansy.portal.model.vo.TBusBillVo">
@@ -108,7 +114,10 @@ REGISTER_PHONE registerPhone,
 OPEN_BAND openBand,
 BAND_CARD bandCard,
 BILL_RECEIVE_NAME billReceiveName,
-BILL_RECEIVE_MAIL billReceiveMail
+BILL_RECEIVE_MAIL billReceiveMail,
+BILL_PROVINCE billProvince,
+BILL_CITY billCity,
+BILL_AREA billArea
 	from T_BUS_BILL where BILL_STATUS = '1' 
 	 <dynamic prepend="">
 	   <isNotEmpty property="applyNo" prepend="and">  
@@ -268,7 +277,10 @@ SELECT DISTINCT BILL_NATRUE billNatrue,
 	BILL_RECEIVE_NAME billReceiveName,
 	BILL_RECEIVE_ADDRESS billReceiveAddress,
 	BILL_RECEIVE_PHONE billReceivePhone,
-	BILL_RECEIVE_MAIL billReceiveMail 
+	BILL_RECEIVE_MAIL billReceiveMail,
+	BILL_PROVINCE billProvince,
+	BILL_CITY billCity,
+	BILL_AREA billArea
 from T_BUS_BILL WHERE APPLY_NO=#applyNo# 
 	
 	</select>

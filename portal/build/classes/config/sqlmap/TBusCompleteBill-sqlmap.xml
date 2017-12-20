@@ -20,6 +20,9 @@
 		<result property="supplyNo" column="SUPPLY_NO"/>
 		<result property="insertDate" column="INSERT_DATE"/>
 		<result property="applyNo" column="APPLY_NO"/>
+		<result property="billProvince" column="BILL_PROVINCE"/>
+		<result property="billCity" column="BILL_CITY"/>
+		<result property="billArea" column="BILL_AREA"/>
 	</resultMap>
 	<sql id="allColumns">
 		BILL_NO,
@@ -39,7 +42,10 @@ EXPRESS_NUMBER,
 CUST_NO,
 SUPPLY_NO,
 APPLY_NO,
-INSERT_DATE
+INSERT_DATE,
+BILL_PROVINCE,
+	BILL_CITY,
+	BILL_AREA
 	
 	</sql>
 	<insert id="save" parameterClass="com.hansy.portal.model.vo.TBusCompleteBillVo">
@@ -61,7 +67,10 @@ INSERT_DATE
 	         #custNo#,
 	         #supplyNo#,
 	         #applyNo#,
-	         #insertDate#
+	         #insertDate#,
+	         #billProvince#,
+	         #billCity#,
+	         #billArea#
 	         ) 
 	</insert>
 	
