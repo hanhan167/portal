@@ -224,10 +224,10 @@ BILL_AREA billArea
   apply_no applyNo
   FROM t_user_base_info t1
 INNER JOIN 
-(SELECT DISTINCT   t.cust_no,t.supply_no,t.apply_no,t.INSERT_DT FROM T_BUS_BILL t where BILL_STATUS = '1'  ) t2
+(SELECT DISTINCT   t.cust_no,t.supply_no,t.apply_no,t.INSERT_DT FROM T_BUS_BILL t where BILL_STATUS = '1' and t.supply_no = #supplyNo# ) t2
 ON t1.cust_no=t2.cust_no   where 1=1
                              <dynamic prepend="">	
-  <isNotEmpty property="query" prepend="and">
+  	<isNotEmpty property="query" prepend="and">
    						  <![CDATA[ 
    						    (t1.cust_name  like '%$query$%' or t1.user_phone like '%$query$%')
 		                ]]>
@@ -245,7 +245,8 @@ ON t1.cust_no=t2.cust_no   where 1=1
     	on 
     		T1.CUST_NO=T2.CUST_NO 
     	WHERE 
-    		T1.BILL_STATUS = '1'
+    		T1.BILL_STATUS = '1' AND T1.SUPPLY_NO = #supplyNo#
+    		
                        <dynamic prepend="">	
   						<isNotEmpty property="query" prepend="and">
    						  <![CDATA[ 
