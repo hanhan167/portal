@@ -158,7 +158,12 @@ $(function(){
 	{
 		$(".content_left>ul>li:eq(7)").click();
 	}
-	
-	
+	//前端优化
+	$(".content_left>ul li").mouseover(function(){
+		$(this).css("background-color","#c2c2c2");
+	});
+	$(".content_left>ul li").mouseout(function(){
+		$(this).removeAttr("style");
+	});
 });
 </script>
