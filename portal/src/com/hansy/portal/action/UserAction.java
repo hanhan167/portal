@@ -1131,7 +1131,7 @@ public class UserAction {
 	//开发票(第一步)
 	@RequestMapping("/getOrderCustName")
 	@ResponseBody
-	public BaseReslt<Object> getOrderCustName(Integer pageNo,HttpSession session,String query)throws Exception{
+	public BaseReslt<Object> getOrderCustName(Integer pageNo,HttpSession session,String query,String billNatrue)throws Exception{
 		if (pageNo==null) {
 			pageNo=1;
 		}
@@ -1147,6 +1147,10 @@ public class UserAction {
 		if(""!=query&&null!=query)
 		{
 			map.put("query", query);
+		}
+		if("" != billNatrue && null != billNatrue)
+		{
+			map.put("billNatrue", billNatrue);
 		}
 		Pager resultPage=baseInfoService.getOrderCustName(map,pager);
 		bReslt.setObj(resultPage);

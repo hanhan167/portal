@@ -34,13 +34,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="groupInput">
 					<label style="width: 140px!important">用户名称/手机号码</label>
 					<input style="width:140px" type="text" placeholder="用户名称/手机号码" class="form-type" id="query" name="query">
+					<select id="billNatrue" name="billNatrue" style="margin-left: 10px;padding-top:0px;height: 24px">
+						<option value="">全部</option>
+						<option value="1">电子发票</option>
+						<option value="2">纸质发票</option>
+					</select>
 				</div>
 				<div class="search" id="invoice_search1"></div>
+				
 			</div>
 			<table class="table invoiceMangeList">
 				<tr>
 					<td>用户名称</td>
 					<td>手机号码</td>
+					<td>类型</td>
 					<td>发票序号</td>
 				</tr>
 			</table>
@@ -50,59 +57,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 		
-	<!-- 	<div class="invoiceMiddleTitle invoiceTeap hidden">
-			<div class="kaiInvoice">
-				<div class="groupInput">
-					<label>订单成功时间</label>
-					<input type="text" data-settime="true" placeholder="开始时间" class="form-type" id="startTime" name="startTime">
-					<span>~</span>
-					<input type="text" data-settime="true" placeholder="结束时间" class="form-type" id="endTime" name="endTime">
-				</div>
-				<div class="groupInput">
-					<label>可开票金额</label>
-					<input type="text" placeholder="开始金额" class="form-type" id="startAmt" name="startAmt">
-					<span>~</span>
-					<input type="text" placeholder="结束金额" class="form-type" id="endAmt" name="endAmt">
-				</div>
-				<div class="groupInput">
-					<label>订单编号</label>
-					<input style="width:140px" type="text" placeholder="订单编号/客户编号" class="form-type" id="query" name="query">
-				</div>
-				<div class="search" id="invoice_search"></div>
-				<div class="groupInput">
-					<select style="width:140px;height: 28px;" id="chooseFpType" class="form-type" id="query" name="query">
-  					<option value ="2" selected="selected">纸质发票</option>
-  					<option value ="1">电子发票</option>
-					</select>
-				</div>
-				
-			</div>
-			<div class="invoiceContTitle">
-				<div class="amt_all">
-					<p>已选总金额：<span class="money">￥0.00</span></p>
-				</div>
-			</div>
-			<table class="table invoiceMangeList">
-				<tr>
-					<td><input type="checkbox" id="checkAll"></td>
-					<td>订单编号</td>
-					<td>发票类型</td>
-					<td>总额</td>
-					<td>订单日期</td>
-					<td>收票地址</td>
-				</tr>
-				<tr>
-				</tr>
-				<tr>
-				</tr>
-			</table>
-			<div class="invoiceMangePageList">
-				<p>总共 <span class="allPage">--</span> 条，每页显示 <span class="perPage">-</span> 条！</p>
-				<div id="page_list"></div>
-				<button class="goInvoice" id="goInvoice">去开票</button>
-			</div>
-		</div> -->
-		<!-- invoiceMangeCount2 invoiceTeap hidden -->
 		<input type="hidden"  id="typeAddress">
 		<input type="hidden"  id="applyNoHid">
 		<div class="invoiceMiddleTitle invoiceTeap hidden">

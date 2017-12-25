@@ -366,6 +366,7 @@ var invoice = {
 	invoiceManageListUser:function(pageNo){
 		var data = {};
 		data.query = $("#query").val();
+		data.billNatrue = $("#billNatrue").val();
 		var $invoice = $(".invoiceMiddleTitle1.invoiceTeap tr:first");
 		var before;
 		pageNo = pageNo || 1;
@@ -389,11 +390,16 @@ var invoice = {
 	        	if(data.success){
 	        		var html=[];
 	        		var check = ""
+	        		var billNatrue = "纸质";
 	        		if(row.length >0){
 	        			for(var j=0;j<row.length;j++){
+	        				if(row[j].billNatrue == "1"){
+	        					billNatrue = "电子";
+	        				}
 	        				html.push("<tr data-custno='"+row[j].applyNo+"'>");
 	        				html.push("<td>"+row[j].custName+"</td>");		
 	        				html.push("<td>"+row[j].phone+"</td>");	
+	        				html.push("<td>"+billNatrue+"</td>");	
 	        				html.push("<td>"+row[j].applyNo+"</td></tr>");	
 	        			}
 	        			$invoice.nextAll().remove();

@@ -13,7 +13,16 @@ public class GoodsVo {
 	private String custName;
 	private String phone;
 	private String applyNo;//发票序号
+	private String billNatrue;//发票类型
 	
+	
+	
+	public String getBillNatrue() {
+		return billNatrue;
+	}
+	public void setBillNatrue(String billNatrue) {
+		this.billNatrue = billNatrue;
+	}
 	public String getPhone() {
 		return phone;
 	}
